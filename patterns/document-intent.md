@@ -1,0 +1,48 @@
+---
+title: Document Intent, Not Just Method
+one_liner: Code describes how; comments and specs must describe why — the reasoning that code cannot encode.
+dimensions: workflow-discipline
+---
+
+## What it is
+
+Code is a complete, executable record of *what* the system does and *how* it does it. But code cannot express the reasoning behind its own existence: why this approach rather than an alternative, what constraint the implementation is satisfying, what invariant must hold even as the code changes. When documentation is limited to restating the code in prose, it adds no information. When documentation captures intent — the decision rationale, the constraint being satisfied, the design alternative rejected and why — it becomes the only place that information lives. Agents reading code without intent documentation must reverse-engineer the reasoning, which they do unreliably. Agents reading intent documentation can apply, extend, and correct the code without contaminating it with false assumptions.
+
+A mature intent layer does not stop at scattered comments; it emits a durable **intent artifact set** that downstream agents can read, apply, and validate against:
+
+- **Intent brief** — the goal, non-goals, users, and constraints in human-readable form.
+- **Domain glossary** — terms of art, their local meanings, forbidden interpretations, and examples.
+- **User stories** — concrete scenarios that represent the desired behavior.
+- **Good/bad labeled examples** — cases for judgment and validation, in the domain's own language.
+- **Acceptance criteria** — observable proof that the work is done.
+- **Open questions** — items requiring human clarification before or during execution.
+- **Decision log** — assumptions made, tradeoffs weighed, and why a given path was chosen.
+- **Risk register** — compliance, security, operational, and reputation risks.
+
+These artifacts should live where agents can actually reach them — in the repository, a knowledge base, a workflow state directory, or a structured project bundle — not buried in a chat transcript no agent will read.
+
+## When to reach for it
+
+- Any time a decision was made among meaningful alternatives — document which alternatives were considered and why this one was chosen.
+- When a constraint is subtle and its violation would look like a valid improvement — comment the constraint and name the failure mode that removes it.
+- When an API or interface is shaped by an external requirement, a protocol, a legacy assumption, or a third-party contract — make that dependency explicit in the spec, not just the code.
+- Before handing a module to an agent for extension or refactoring — write a brief intent note so the agent preserves the reasoning, not just the structure.
+- When a workaround exists — document what it works around, not just what it does.
+
+## When NOT to
+
+- Trivial, self-evident code where intent and method are identical ("add one to the counter") — documentation here adds noise that obscures the signal.
+- Exploratory spike code that will be deleted — writing intent docs for throwaway work delays learning without adding value.
+- When the intent documentation would simply duplicate an already-clear spec that will be kept in sync — avoid duplication that creates drift.
+
+## Exemplars
+
+- Every major open-source project that survives decades of contribution does so because its architecture documents record the *why* behind design choices — without them, contributors optimize away the very constraints the design was built to preserve.
+- The Amplifier AGENTS.md convention stores intent at the agent level: not just what the agent does, but why it is scoped the way it is and what decisions shaped its behavior.
+- Peter Naur, "Programming as Theory Building" (1985) — https://pages.cs.wisc.edu/~remzi/Naur.pdf — classic antecedent: a program's real content is the theory of the problem that the programmers hold in their heads; documentation that fails to transfer that theory condemns successors to reverse-engineer or corrupt the design
+- Michael Nygard, "Documenting Architecture Decisions" — https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions — origin: introduced Architecture Decision Records as a lightweight per-decision format that captures context and reasoning, not just the decision, so future maintainers know what must remain true and why
+
+## Related
+
+- `patterns/interview-to-a-spec.md`
+- `patterns/good-pile-bad-pile.md`

@@ -1,0 +1,18 @@
+# OS / editor cruft
+.DS_Store
+*.swp
+
+# scratch
+*.tmp
+
+# Packaging output (regenerate via /wiki-publish)
+.wiki/dist/
+
+# Wheel interactive artifacts (regenerable via scripts/build-wheel.py).
+# The structured agent-facing forms (taxonomy.yaml, wheel.md, wheel.dot) ARE tracked.
+/wheel/explore.html
+/wheel/wheel.svg
+/wheel/wheel.png
+
+# NOTE: wiki/ rendered HTML IS committed on purpose — GitHub Pages serves the
+# site straight from the /wiki folder, no CI build required.

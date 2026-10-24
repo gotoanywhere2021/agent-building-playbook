@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API 变更时，先改测试 · 智能体构建手册</title>
+<style>
+:root { --ink:#182430; --muted:#5b6b7b; --faint:#8a97a6; --line:#e2e8ef;
+  --wash:#f5f7fa; --blue:#1a5fd0; --blue-d:#12449e; --chipbg:#edf1f7;
+  --mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,monospace; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; color:var(--ink); background:#fff;
+  font:15px/1.75 -apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB",
+    "Microsoft YaHei","Noto Sans SC","Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased; }
+a { color:var(--blue); text-decoration:none; }
+a:hover { color:var(--blue-d); text-decoration:underline; }
+:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+code { font-family:var(--mono); font-size:.88em; background:var(--wash);
+  border:1px solid var(--line); border-radius:4px; padding:.06em .32em; }
+
+/* ---- topbar ---- */
+.topbar { position:sticky; top:0; z-index:40; display:flex; align-items:center;
+  gap:14px; height:52px; padding:0 18px; background:#fff;
+  border-bottom:1px solid var(--line); }
+.brand { font-weight:700; letter-spacing:-.01em; color:var(--ink);
+  font-size:15px; white-space:nowrap; }
+.brand:hover { text-decoration:none; }
+.navtoggle { display:none; }
+.burger { display:none; font-size:15px; line-height:1; color:var(--ink);
+  cursor:pointer; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
+.qform { flex:1; max-width:420px; }
+.qform input { width:100%; height:32px; padding:0 12px; font:inherit;
+  font-size:13.5px; color:var(--ink); background:var(--wash);
+  border:1px solid var(--line); border-radius:6px; }
+.qform input:focus { outline:none; border-color:var(--blue); background:#fff; }
+.toplinks { margin-left:auto; display:flex; gap:4px; }
+.toplinks a { font-size:13.5px; color:var(--muted); padding:6px 10px; border-radius:6px; }
+.toplinks a:hover { background:var(--wash); color:var(--ink); text-decoration:none; }
+.toplinks a.on { color:var(--blue); font-weight:600; }
+
+/* ---- shell: sidebar | main | toc ---- */
+.shell { display:grid; grid-template-columns:272px minmax(0,1fr);
+  max-width:1440px; margin:0 auto; }
+.has-toc .shell { grid-template-columns:272px minmax(0,1fr) 212px; }
+.sidebar { border-right:1px solid var(--line); background:#fff;
+  padding:18px 12px 48px; position:sticky; top:52px;
+  height:calc(100vh - 52px); overflow:auto; }
+.side-label { font-size:11px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--faint); padding:0 10px 10px; }
+.tree details { margin:1px 0; }
+.tree summary { display:flex; align-items:center; gap:8px; cursor:pointer;
+  list-style:none; padding:5px 10px; border-radius:6px; font-weight:600;
+  font-size:13.5px; color:var(--ink); }
+.tree summary::-webkit-details-marker { display:none; }
+.tree summary::before { content:""; flex:0 0 auto; width:0; height:0;
+  border-left:4px solid var(--faint); border-top:3.5px solid transparent;
+  border-bottom:3.5px solid transparent; transition:transform .12s; }
+.tree details[open] > summary::before { transform:rotate(90deg); }
+.tree summary:hover { background:var(--wash); }
+.tree .n { margin-left:auto; font-size:11px; color:var(--faint); font-weight:500; }
+.tree .ov { display:block; font-size:12.5px; color:var(--muted);
+  padding:2px 10px 4px 22px; }
+.tree .dim > summary { margin-left:12px; font-weight:500; font-size:13px;
+  color:#33414f; }
+.tree .dim .leaf, .tree .dim .ov { margin-left:12px; }
+.tree .leaf { display:block; font-size:13px; color:var(--muted);
+  padding:3px 10px 3px 28px; border-radius:6px; line-height:1.5;
+  border-left:2px solid transparent; }
+.tree .leaf:hover { background:var(--wash); color:var(--ink); text-decoration:none; }
+.tree .leaf.on { background:#eaf1fb; color:var(--blue); font-weight:600;
+  border-left-color:var(--blue); }
+
+/* ---- main ---- */
+.main { padding:26px 34px 30px; min-width:0; }
+.crumb { font-size:13px; color:var(--muted); margin:0 0 16px; }
+.crumb a { color:var(--muted); }
+.crumb a:hover { color:var(--blue); }
+.crumb .sep { margin:0 7px; color:#b6c2cf; }
+.crumb .here { color:var(--ink); font-weight:600; }
+h1 { font-size:26px; line-height:1.3; letter-spacing:-.015em; margin:0 0 6px; }
+.lede { color:var(--muted); font-size:15.5px; margin:0 0 14px; max-width:74ch; }
+.chip { display:inline-block; font-size:11.5px; padding:2px 8px;
+  background:var(--chipbg); color:#3c4a59; border-radius:4px;
+  margin:0 4px 4px 0; }
+.chip.solid { background:var(--blue); color:#fff; }
+a.chip:hover { background:#dde7f5; text-decoration:none; }
+article.body { max-width:76ch; }
+article.body h2 { font-size:19px; margin:1.7em 0 .5em; }
+article.body h3 { font-size:16px; margin:1.4em 0 .4em; }
+article.body ul { padding-left:1.25rem; }
+article.body li { margin:.3em 0; }
+article.body table { border-collapse:collapse; margin:1em 0; width:100%; font-size:13.5px; }
+article.body th, article.body td { border:1px solid var(--line); padding:6px 10px;
+  text-align:left; vertical-align:top; }
+article.body th { background:var(--wash); }
+
+/* ---- landing ---- */
+.hero { padding:20px 0 22px; border-bottom:1px solid var(--line); margin-bottom:28px; }
+.kicker { font-size:11px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:8px; }
+.stats { color:var(--muted); font-size:13.5px; margin:10px 0 18px; }
+.stats b { color:var(--ink); }
+.cta { display:flex; gap:10px; flex-wrap:wrap; margin:0 0 8px; }
+.btn { display:inline-block; padding:8px 16px; background:var(--blue);
+  color:#fff; border-radius:6px; font-weight:600; font-size:14px; }
+.btn:hover { background:var(--blue-d); color:#fff; text-decoration:none; }
+.btn.ghost { background:#fff; color:var(--blue); border:1px solid var(--line); }
+.btn.ghost:hover { border-color:var(--blue); background:var(--wash); }
+.fam-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:14px; margin:14px 0 8px; }
+.famcard { display:block; border:1px solid var(--line); border-radius:8px;
+  padding:16px 18px; color:inherit; background:#fff; }
+.famcard:hover { border-color:var(--blue); text-decoration:none; }
+.fc-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+.fc-name { font-weight:700; font-size:16px; }
+.fc-count { color:var(--faint); font-weight:500; font-size:12.5px; white-space:nowrap; }
+.fc-gloss { display:block; color:var(--muted); font-size:13.5px; margin:6px 0 10px; }
+
+/* ---- catalog rows (explore / family pages / related) ---- */
+.bigsearch { width:100%; max-width:520px; height:36px; padding:0 12px;
+  font:inherit; border:1px solid var(--line); border-radius:6px; }
+.bigsearch:focus { outline:none; border-color:var(--blue); }
+.count { color:var(--muted); font-size:13px; margin:8px 0 4px; }
+.fam-sec { margin:1.4em 0 .6em; }
+.fam-sec > h2 { font-size:18px; margin:.9em 0 .1em; }
+.fam-sec .fam-gloss { color:var(--muted); font-size:13.5px; margin:0 0 .2em; }
+.dim-sec h3, .fam-sec h3 { font-size:14px; font-weight:600; color:#33414f;
+  margin:1.1em 0 .35em; }
+h2 .n, h3 .n { font-size:11.5px; color:var(--faint); font-weight:500;
+  margin-left:6px; }
+ul.rows { list-style:none; padding:0; margin:.3rem 0 1rem; }
+ul.rows li { padding:10px 12px; border:1px solid var(--line); border-radius:6px;
+  margin:0 0 8px; background:#fff; }
+ul.rows li:hover { border-color:#9fb8d8; background:var(--wash); }
+ul.rows .rt { font-weight:600; font-size:14px; display:block; }
+ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
+ul.rows .chips { display:block; margin-top:6px; }
+
+/* ---- related + toc rail ---- */
+.related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
+.related h2 { font-size:15px; margin:.2em 0 .5em; }
+
+/* ---- collapsible English original under a translated body ---- */
+details.original { margin-top:1.8em; border-top:1px dashed var(--line);
+  padding-top:1em; max-width:76ch; }
+details.original > summary { cursor:pointer; color:var(--muted);
+  font-size:13px; font-weight:600; list-style:none; }
+details.original > summary::-webkit-details-marker { display:none; }
+details.original > summary::before { content:"▸ "; }
+details.original[open] > summary::before { content:"▾ "; }
+details.original > summary:hover { color:var(--blue); }
+details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
+.toc { display:none; }
+.has-toc .toc { display:block; position:sticky; top:52px;
+  height:calc(100vh - 52px); overflow:auto; padding:26px 10px 48px 20px;
+  border-left:1px solid var(--line); }
+.toc-label { font-size:11px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--faint); margin-bottom:8px; }
+.toc ul { list-style:none; padding:0; margin:0; }
+.toc a { display:block; font-size:12.5px; color:var(--muted); padding:3px 0; }
+.toc a:hover { color:var(--blue); text-decoration:none; }
+.toc .l3 a { padding-left:12px; }
+
+.foot { border-top:1px solid var(--line); margin-top:34px; padding:16px 34px 34px;
+  color:var(--muted); font-size:12.5px; max-width:1440px; margin-left:auto; margin-right:auto; }
+
+@media (max-width:1220px) {
+  .has-toc .shell { grid-template-columns:272px minmax(0,1fr); }
+  .has-toc .toc { display:none; }
+}
+@media (max-width:960px) {
+  .burger { display:inline-flex; }
+  .toplinks { display:none; }
+  .shell, .has-toc .shell { grid-template-columns:minmax(0,1fr); }
+  .sidebar { position:fixed; left:0; top:52px; bottom:0; width:284px;
+    transform:translateX(-100%); transition:transform .18s; z-index:30;
+    box-shadow:0 8px 24px rgba(24,36,48,.12); }
+  .navtoggle:checked ~ .shell .sidebar { transform:none; }
+  .main { padding:20px 18px 24px; }
+  .foot { padding:16px 18px 30px; }
+}
+</style>
+</head>
+<body class="has-toc">
+<input type="checkbox" id="navtoggle" class="navtoggle" aria-hidden="true">
+<header class="topbar">
+<label class="burger" for="navtoggle" aria-label="切换导航">☰</label>
+<a class="brand" title="Agent-Building Playbook" href="../index.html">智能体构建手册</a>
+<form class="qform" action="../explore.html" role="search">
+  <input type="search" name="q" placeholder="搜索模式（Search patterns）…" aria-label="搜索模式">
+</form>
+<nav class="toplinks">
+  <a href="../index.html">首页（Home）</a>
+  <a href="../explore.html">浏览（Browse）</a>
+  <a href="https://github.com/ramparte/agent-building-playbook">GitHub ↗</a>
+</nav>
+</header>
+<div class="shell">
+<aside class="sidebar" aria-label="模式目录">
+<div class="side-label">目录（Catalog）</div>
+<nav class="tree">
+<details class="fam">
+<summary title="Mindset"><span>心智</span><span class="n">13</span></summary>
+<a class="ov" href="../families/mindset.html">总览（Overview）</a>
+<details class="dim">
+<summary title="meta-principles"><span>元原则</span><span class="n">8</span></summary>
+<a class="leaf" title="Code Is Cheap, Maintenance Isn&#x27;t" href="../patterns/code-is-cheap-maintenance-isnt.html">代码廉价，维护不廉价</a>
+<a class="leaf" title="Context Is a Finite Resource" href="../patterns/context-is-finite.html">上下文（Context）是有限资源</a>
+<a class="leaf" title="Fail-Loud Harnesses" href="../patterns/fail-loud-harnesses.html">让测试装置（Harness）大声失败</a>
+<a class="leaf" title="Fix Reliability Before Features" href="../patterns/reliability-before-features.html">先修可靠性（Reliability），再谈功能</a>
+<a class="leaf" title="From Personal Workflow to Shared Operating Model" href="../patterns/personal-to-shared-topology.html">从个人工作流到共享运营模型</a>
+<a class="leaf" title="Redesign the Work, Don&#x27;t Fill Human-Shaped Slots" href="../patterns/redesign-work-dont-fill-slots.html">重新设计工作，而不是填充人形空位</a>
+<a class="leaf" title="Start With the Least Agentic Thing" href="../patterns/start-least-agentic.html">从最不『智能体』的方案开始</a>
+<a class="leaf" title="Verify Independently — Agents Fake &quot;Done&quot;" href="../patterns/verify-independently.html">独立验证——智能体会假装『做完了』</a>
+</details>
+<details class="dim">
+<summary title="taste"><span>品味</span><span class="n">5</span></summary>
+<a class="leaf" title="Agents Amplify Experience" href="../patterns/agents-amplify-experience.html">智能体放大经验</a>
+<a class="leaf" title="Automate the Easy, Avoid the Mystery House" href="../patterns/automate-but-avoid-mystery-house.html">自动化简单的事，远离『鬼屋』</a>
+<a class="leaf" title="Build Five to Throw Away" href="../patterns/build-five-to-throw-away.html">先造五个，扔掉四个</a>
+<a class="leaf" title="Develop Your Taste" href="../patterns/develop-your-taste.html">刻意培养品味（Taste）</a>
+<a class="leaf" title="Find the Hard Stuff" href="../patterns/find-the-hard-stuff.html">找到真正难的部分</a>
+</details>
+</details>
+<details class="fam">
+<summary title="Context"><span>上下文</span><span class="n">19</span></summary>
+<a class="ov" href="../families/context.html">总览（Overview）</a>
+<details class="dim">
+<summary title="context-engineering"><span>上下文工程</span><span class="n">14</span></summary>
+<a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
+<a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
+<a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
+<a class="leaf" title="Anchor on Canonical Names" href="../patterns/anchor-on-canonical-names.html">锚定在规范名称（Canonical Name）上</a>
+<a class="leaf" title="Checkpoint to a Handoff File, Then Restart Clean" href="../patterns/checkpoint-handoff-file.html">先写交接（Handoff）文件，再干净重启</a>
+<a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
+<a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
+<a class="leaf" title="Hang Up, Call Back" href="../patterns/hang-up-call-back.html">挂断，重拨</a>
+<a class="leaf" title="Just-in-Time Retrieval Over Pre-Loading" href="../patterns/just-in-time-retrieval.html">即时检索（Just-in-Time）优于预加载</a>
+<a class="leaf" title="Persist Environment Facts" href="../patterns/persist-environment-facts.html">持久化环境事实</a>
+<a class="leaf" title="Repository Shape Is Cognitive Architecture" href="../patterns/repository-shape-is-cognitive-architecture.html">仓库形状就是认知架构</a>
+<a class="leaf" title="Scope and Expire Memory" href="../patterns/scope-and-expire-memory.html">给记忆划定作用域并让它过期</a>
+<a class="leaf" title="State the Target, Not the Prohibition" href="../patterns/state-the-target.html">陈述目标，而不是禁令</a>
+<a class="leaf" title="Use Sub-Agents as Context Sinks" href="../patterns/subagents-as-context-sinks.html">用子智能体（Sub-agent）当上下文回收站</a>
+</details>
+<details class="dim">
+<summary title="knowledge"><span>知识</span><span class="n">5</span></summary>
+<a class="leaf" title="Build a Pattern Registry" href="../patterns/build-a-pattern-registry.html">建一个模式注册表（Pattern Registry）</a>
+<a class="leaf" title="Gene Transfer — Port the Behavior, Not the Code" href="../patterns/gene-transfer.html">基因迁移——移植行为，而不是代码</a>
+<a class="leaf" title="Mine for Contradictions" href="../patterns/contradiction-extraction.html">挖掘矛盾（Contradiction）</a>
+<a class="leaf" title="Mine Transcripts Into Structured Knowledge" href="../patterns/mine-transcripts.html">把转录稿挖成结构化知识</a>
+<a class="leaf" title="Self-Modifying Context Needs Review" href="../patterns/self-modifying-context-needs-review.html">自我修改的上下文需要评审</a>
+</details>
+</details>
+<details class="fam">
+<summary title="Tooling"><span>工具</span><span class="n">10</span></summary>
+<a class="ov" href="../families/tooling.html">总览（Overview）</a>
+<details class="dim">
+<summary title="tool-design"><span>工具设计</span><span class="n">6</span></summary>
+<a class="leaf" title="Code Execution Beats Loading Hundreds of Tool Defs" href="../patterns/code-execution-tools.html">一次代码执行胜过上百个工具定义</a>
+<a class="leaf" title="Critic Applications" href="../patterns/critic-applications.html">批评者应用（Critic Application）</a>
+<a class="leaf" title="Design Tools for Agents, Not Humans" href="../patterns/tools-for-agents.html">为智能体设计工具，而不是为人</a>
+<a class="leaf" title="Let Agents Evaluate and Optimize Your Tools" href="../patterns/agents-optimize-tools.html">让智能体评估并优化你的工具</a>
+<a class="leaf" title="Namespace Tools, Write Unambiguous Descriptions" href="../patterns/namespace-tools.html">给工具划命名空间（Namespace），写无歧义描述</a>
+<a class="leaf" title="Prefer Search/Filter Over List-Everything" href="../patterns/search-over-list.html">给搜索/过滤，别给『全量列表』</a>
+</details>
+<details class="dim">
+<summary title="cost-routing"><span>成本路由</span><span class="n">4</span></summary>
+<a class="leaf" title="Delegation Is Token Economics" href="../patterns/delegation-token-economics.html">委派就是词元（Token）经济学</a>
+<a class="leaf" title="Invest the Expensive Model in the Harness" href="../patterns/invest-the-expensive-model-in-the-harness.html">把贵模型投资在护架（Harness）上</a>
+<a class="leaf" title="Match Model to Stage" href="../patterns/match-model-to-stage.html">按阶段匹配模型</a>
+<a class="leaf" title="Pull Models From Provisioned Roles" href="../patterns/role-based-routing.html">按预配角色（Role）引用模型</a>
+</details>
+</details>
+<details class="fam">
+<summary title="Orchestration"><span>编排</span><span class="n">29</span></summary>
+<a class="ov" href="../families/orchestration.html">总览（Overview）</a>
+<details class="dim">
+<summary title="orchestration"><span>编排</span><span class="n">16</span></summary>
+<a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
+<a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
+<a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
+<a class="leaf" title="Composable Orchestration Patterns" href="../patterns/composable-patterns.html">可组合的编排模式</a>
+<a class="leaf" title="Default to a Single-Threaded Linear Agent" href="../patterns/single-threaded-default.html">默认单线程线性智能体</a>
+<a class="leaf" title="Default to Clean-Slate Delegation" href="../patterns/clean-slate-delegation.html">默认干净起点（Clean-Slate）委派</a>
+<a class="leaf" title="Distinguish Workflows From Agents" href="../patterns/workflows-vs-agents.html">区分工作流（Workflow）与智能体（Agent）</a>
+<a class="leaf" title="Layer Guardrails and Human Escalation" href="../patterns/guardrails-and-escalation.html">分层护轨（Guardrail）与人工升级</a>
+<a class="leaf" title="Lead With Recon Before Action" href="../patterns/recon-before-action.html">行动之前先侦察（Recon）</a>
+<a class="leaf" title="Match the Topology to the Work" href="../patterns/match-topology-to-the-work.html">让拓扑（Topology）匹配工作</a>
+<a class="leaf" title="Parallel Attempts at One Task" href="../patterns/parallel-attempts-at-one-task.html">对同一任务的并行尝试</a>
+<a class="leaf" title="Put Deterministic Rails Around Model Judgment" href="../patterns/deterministic-rails.html">给模型判断装上确定性护栏</a>
+<a class="leaf" title="Run Independent Agents in Parallel" href="../patterns/parallel-independent-tracks.html">并行运行独立的智能体</a>
+<a class="leaf" title="Shape the Workflow as an Attractor" href="../patterns/shape-work-as-an-attractor.html">把工作流塑造成吸引子（Attractor）</a>
+<a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
+<a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
+</details>
+<details class="dim">
+<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">13</span></summary>
+<a class="leaf" title="Ablate the Harness as Models Improve" href="../patterns/self-ablating-harness.html">随模型进步给护架做减法（Ablate）</a>
+<a class="leaf" title="Bite-Sized Tasks" href="../patterns/bite-sized-tasks.html">一口大小（Bite-sized）的任务</a>
+<a class="leaf" title="Brownfield Is the Real Test" href="../patterns/brownfield-is-the-real-test.html">棕地（Brownfield）才是真正的考验</a>
+<a class="leaf" title="Decompose and Retry on Timeout" href="../patterns/decompose-on-timeout.html">超时就分解（Decompose）重试</a>
+<a class="leaf" title="Document Intent, Not Just Method" href="../patterns/document-intent.html">记录意图（Intent），而不只是方法</a>
+<a class="leaf" title="Finishing Is the Bottleneck, Not Starting" href="../patterns/finishing-is-the-bottleneck.html">瓶颈在收尾（Finishing），不在起跑</a>
+<a class="leaf" title="Gate the Phases Explicitly" href="../patterns/gate-the-phases.html">显式设置阶段闸门（Gate）</a>
+<a class="leaf" title="Hand Off With a Clear Stop Condition" href="../patterns/clear-stop-condition.html">带着明确停止条件（Stop Condition）交接</a>
+<a class="leaf" title="Implement to Learn" href="../patterns/implement-to-learn.html">用实现来学习（Implement to Learn）</a>
+<a class="leaf" title="Keep Specs in Sync" href="../patterns/keep-specs-in-sync.html">让规格（Spec）与实现同步</a>
+<a class="leaf" title="Prove the Pipeline on 2 Before 20" href="../patterns/prove-on-small-sample.html">先在 2 个上验证，再上 20 个</a>
+<a class="leaf" title="Rebuild Often" href="../patterns/rebuild-often.html">经常重建（Rebuild）</a>
+<a class="leaf" title="Work Backward From the Shipping Dock" href="../patterns/work-backward-from-the-shipping-dock.html">从发货码头倒推工作</a>
+</details>
+</details>
+<details class="fam" open>
+<summary title="Trust"><span>信任</span><span class="n">25</span></summary>
+<a class="ov" href="../families/trust.html">总览（Overview）</a>
+<details class="dim" open>
+<summary title="verification"><span>验证</span><span class="n">10</span></summary>
+<a class="leaf" title="Adversarial Parallel Review" href="../patterns/adversarial-parallel-review.html">对抗式并行评审（Adversarial Parallel Review）</a>
+<a class="leaf" title="Designing the Agentic Loop Is the Core Skill" href="../patterns/design-the-loop.html">设计智能体循环（Loop）是核心技能</a>
+<a class="leaf" title="Eval-Driven Development" href="../patterns/eval-driven-development.html">评估（Eval）驱动开发</a>
+<a class="leaf" title="Evals Are a Standing Capability, Not a One-Time Gate" href="../patterns/standing-eval-capability.html">评估是常备能力，不是一次性闸门</a>
+<a class="leaf" title="Evidence Before Assertions" href="../patterns/evidence-before-assertions.html">证据（Evidence）先于断言</a>
+<a class="leaf" title="Give Agents the Ability to Verify Their Own Work" href="../patterns/self-verification.html">给智能体验证自身工作的能力</a>
+<a class="leaf" title="Incremental Validation: The 3-File Rule" href="../patterns/three-file-rule.html">增量验证：三文件规则（3-File Rule）</a>
+<a class="leaf" title="Test What the Product Does, Not How" href="../patterns/test-what-not-how.html">测试产品做什么，而不是怎么做</a>
+<a class="leaf on" title="Tests Are Code — Update Them First on API Change" href="../patterns/tests-first-on-api-change.html">API 变更时，先改测试</a>
+<a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
+</details>
+<details class="dim">
+<summary title="reliability"><span>可靠性</span><span class="n">9</span></summary>
+<a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
+<a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
+<a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
+<a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
+<a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
+<a class="leaf" title="Mark Un-Run Steps Inline for Review" href="../patterns/mark-skipped-steps.html">把未执行的步骤就地标出</a>
+<a class="leaf" title="Separate Merge From Exposure" href="../patterns/separate-merge-from-exposure.html">把合并（Merge）与暴露（Exposure）分开</a>
+<a class="leaf" title="Separate the Proposer From the Authority" href="../patterns/proposer-authority-separation.html">把提议方与批准方分开</a>
+<a class="leaf" title="Use a Second Agent as Auditor" href="../patterns/auditor-agent.html">用第二个智能体当审计员（Auditor）</a>
+</details>
+<details class="dim">
+<summary title="observability"><span>可观测性</span><span class="n">6</span></summary>
+<a class="leaf" title="Build an Awareness Layer That Watches Your Work" href="../patterns/awareness-layer.html">建一个盯着你工作的感知层（Awareness Layer）</a>
+<a class="leaf" title="If It&#x27;s Important, Emit an Event" href="../patterns/emit-events.html">重要的事就发事件（Event）</a>
+<a class="leaf" title="Run Real Workloads in Their Proper Environment" href="../patterns/real-environment-execution.html">在真实环境跑真实负载</a>
+<a class="leaf" title="Supervise Many Agents Through One Interface" href="../patterns/supervise-many-agents.html">用一个界面监督多个智能体</a>
+<a class="leaf" title="The Agent&#x27;s Struggle Is a Signal" href="../patterns/agent-struggle-is-a-signal.html">智能体的挣扎是信号（Signal）</a>
+<a class="leaf" title="Use Session History as Primary Evidence" href="../patterns/session-archaeology.html">把会话历史当第一手证据</a>
+</details>
+</details>
+<details class="fam">
+<summary title="People"><span>人</span><span class="n">17</span></summary>
+<a class="ov" href="../families/people.html">总览（Overview）</a>
+<details class="dim">
+<summary title="human-factors"><span>人因</span><span class="n">9</span></summary>
+<a class="leaf" title="Attention Is the Scarce Resource" href="../patterns/attention-is-the-scarce-resource.html">注意力（Attention）才是稀缺资源</a>
+<a class="leaf" title="Coaches and Players" href="../patterns/coaches-and-players.html">教练（Coach）与球员（Player）</a>
+<a class="leaf" title="Design for Emotional Ownership" href="../patterns/design-for-emotional-ownership.html">为情感归属（Ownership）而设计</a>
+<a class="leaf" title="Earn the Interruption" href="../patterns/earn-the-interruption.html">挣得这次打断（Interruption）</a>
+<a class="leaf" title="Governance Is Infrastructure, Not a Document" href="../patterns/governance-is-infrastructure.html">治理（Governance）是基础设施，不是文档</a>
+<a class="leaf" title="Leverage Over Efficiency" href="../patterns/leverage-over-efficiency.html">杠杆（Leverage）优于效率（Efficiency）</a>
+<a class="leaf" title="Match the Agent Metaphor to the Layer" href="../patterns/match-agent-metaphor-to-layer.html">让智能体隐喻（Metaphor）匹配所在层</a>
+<a class="leaf" title="Nontechnical Owners, With Guardrails" href="../patterns/nontechnical-owners-with-guardrails.html">非技术负责人，配上护轨</a>
+<a class="leaf" title="The New Literacy Is Operating, Not Prompting" href="../patterns/the-new-literacy-is-operating.html">新素养是『操作（Operating）』，不是提示词</a>
+</details>
+<details class="dim">
+<summary title="intent"><span>意图</span><span class="n">8</span></summary>
+<a class="leaf" title="Decision Theater" href="../patterns/decision-theater.html">决策剧场（Decision Theater）</a>
+<a class="leaf" title="Don&#x27;t Automate the Workaround" href="../patterns/dont-automate-the-workaround.html">别把权宜之计（Workaround）自动化</a>
+<a class="leaf" title="Good Pile, Bad Pile" href="../patterns/good-pile-bad-pile.html">好堆与坏堆（Good Pile, Bad Pile）</a>
+<a class="leaf" title="Interview to a Spec Before Implementing" href="../patterns/interview-to-a-spec.html">先访谈出规格（Spec），再实现</a>
+<a class="leaf" title="People Edit Better Than They Author" href="../patterns/people-edit-better-than-they-author.html">人更擅长编辑（Edit），而不是从零写（Author）</a>
+<a class="leaf" title="Requirements Are Disguised Solutions" href="../patterns/requirements-are-disguised-solutions.html">需求（Requirement）是伪装的解决方案</a>
+<a class="leaf" title="Shadow the User, Then Transform the Transcript" href="../patterns/shadow-then-transform.html">先跟随观察（Shadow），再变换转录</a>
+<a class="leaf" title="Simulated Review Squad" href="../patterns/simulated-review-squad.html">模拟评审团（Simulated Review Squad）</a>
+</details>
+</details>
+</nav>
+</aside>
+<main class="main">
+<nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">API 变更时，先改测试</span></nav>
+<h1>API 变更时，先改测试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Tests Are Code — Update Them First on API Change</p><p class="lede">API 变了先更新测试再改实现——测试就是规格，先改它逼你在动手前定义这次变更意味着什么。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<p>测试不是对可用代码的注解——它们是关于代码应该做什么的可执行规范（specification）。当 API 变更时，测试表达的是新契约（contract）。先更新测试——在动实现之前——迫使你为『变更后的 API 应该做什么』做出具体决定，暴露会被破坏的调用方（因为测试更新会把它们显形），并产出一套失败的测试来引导实现。相反的顺序——先改实现、再把测试改成匹配——会让实现定义规范，而不是规范定义实现。这是测试积累『测试漂移（test drift）』的主要途径：测试描述的是代码*做什么*而不是它*应该做什么*，且永远抓不到这个差别。在 API 变更时先更新测试，与 TDD 中『先写测试再写代码』是同一条纪律，应用于修改场景：测试即规范，规范先于构建。它还产生一个清晰的提交边界（commit boundary）——『更新测试以反映新 API 形态』是一个可评审的产物，先说明变更是什么；『更新实现以匹配新规范』再说明变更如何实现。</p>
+<h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
+<ul><li>任何 API 签名变更时（参数增删、重命名或改类型）——先更新调用方的测试期望，再更新实现，然后验证尚未更新的调用方会被新失败的测试捕获。</li><li>重构接口时：先针对重构后的目标接口写测试，验证它们对当前实现失败，然后执行重构直至测试通过。</li><li>修复由错误行为引起的 bug 时：先写一个证明当前行为错误的测试（它失败），再修复实现直至测试通过。不要先修复、再事后补回归测试。</li><li>评审他人的 API 变更时：问一句测试是否先于实现被更新。若不是，测试描述的是被建出来的东西，而非打算建的东西。</li><li>当测试套件陈旧、未在 CI 中运行时：第一任务是让它跑起来，而不是跳过测试。跑不起来的测试不是测试——它们是注释。</li></ul>
+<h3 id="when-not-to">慎用场景（When NOT to）</h3>
+<ul><li>被变更的 API 还没有测试时——先为当前行为写测试，再按目标新行为更新它们，然后实现。不要直接跳到实现。</li><li>变更是纯粹内部重构、无可观察行为变化时——测试不应变化，并应全程通过。重构期间测试若变了，说明重构也在改变行为。</li><li>被变更的 API 没有测试、且不投入大量基础设施工作就无法测试时——优先建设基础设施以便纪律可被应用，而不是制造一个不讲原则的例外。</li></ul>
+<h3 id="exemplars">实例（Exemplars）</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议构建评估（eval）并对照其迭代实现；在动系统之前先更新评估以编码目标行为，正是这一立场应用于 API 变更</li><li>Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — superpowers 的实现者智能体在严格 TDD 下工作，配有建立在红-绿-重构（red-green-refactor）循环之上的 test-driven-development 技能；应用到修改场景，该纪律变为：先把测试更新为新契约，再更新代码使其通过</li><li>Kent Beck，*Test-Driven Development: By Example*（2002）— https://www.informit.com/store/test-driven-development-by-example-9780321146533 — 经典先例：确立了红-绿-重构循环，失败的测试先写、即规范；在实现之前更新测试，正是这条纪律应用于修改场景</li></ul>
+<h3 id="related">相关模式（Related）</h3>
+<ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="keep-specs-in-sync.html"><code>patterns/keep-specs-in-sync.md</code></a></li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
+<p>Tests are not annotations on working code — they are executable specifications of what the code is supposed to do. When an API changes, the tests express the new contract. Updating the tests first — before touching the implementation — forces a concrete decision about what the changed API should do, surfaces the callers that will break (because the test updates reveal them), and produces a failing test suite that guides the implementation. The alternative order — change the implementation first, then update the tests to match — allows the implementation to define the spec rather than the spec defining the implementation. This is the primary way that tests accumulate &quot;test drift&quot;: the tests describe what the code does, not what it should do, and they never catch the difference. Updating tests first on API change is the same discipline as writing tests before code in TDD, applied to the modify case: the test is the spec, and the spec precedes the build. It also produces a clear commit boundary — &quot;update tests to reflect new API shape&quot; is a reviewable artifact that says what the change is before &quot;update implementation to match new spec&quot; says how the change was made.</p>
+<h3 id="when-to-reach-for-it-2">When to reach for it</h3>
+<ul><li>Any time an API signature changes (parameters added, removed, renamed, or retyped) — update callers&#x27; test expectations first, then update the implementation, then verify that callers not yet updated are caught by the newly failing tests.</li><li>When refactoring an interface: write the tests against the intended post-refactor interface first, verify they fail against the current implementation, then do the refactor until they pass.</li><li>When fixing a bug that is caused by incorrect behavior: write a test that proves the current behavior is wrong (it fails), then fix the implementation until the test passes. Do not fix first and add a regression test after.</li><li>When reviewing another person&#x27;s API change: ask whether the tests were updated before the implementation. If not, the tests describe what was built rather than what was intended.</li><li>When the test suite is stale and not running in CI: the first task is to make it run, not to skip tests. Tests that cannot run are not tests — they are comments.</li></ul>
+<h3 id="when-not-to-2">When NOT to</h3>
+<ul><li>When tests are not yet written for the API being changed — in that case, write tests for the current behavior first, then update them for the intended new behavior, then implement. Do not skip to implementation.</li><li>When the change is a pure internal refactor with no observable behavior change — the tests should not change and should continue to pass throughout. If the tests change during a refactor, the refactor is also changing behavior.</li><li>When the API being changed has no tests and cannot be tested without significant infrastructure work — prioritize building the infrastructure so the discipline can be applied, rather than making an unprincipled exception.</li></ul>
+<h3 id="exemplars-2">Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends building evals and iterating implementations against them; updating the eval to encode intended behavior before touching the system is that stance applied to API changes</li><li>Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers implementer agent works under strict TDD, with a test-driven-development skill built on the red-green-refactor cycle; applied to the modify case, that discipline becomes: update the test to the new contract first, then update the code to pass it</li><li>Kent Beck, *Test-Driven Development: By Example* (2002) — https://www.informit.com/store/test-driven-development-by-example-9780321146533 — classic antecedent: established the red-green-refactor cycle where the failing test is written first as the spec; updating tests before implementation is this discipline applied to the modify case</li></ul>
+<h3 id="related-2">Related</h3>
+<ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="keep-specs-in-sync.html"><code>patterns/keep-specs-in-sync.md</code></a></li></ul></article></details>
+</main>
+<aside class="toc"><div class="toc-label">本页内容（On this page）</div><ul><li class="l3"><a href="#what-it-is">这是什么（What it is）</a></li><li class="l3"><a href="#when-to-reach-for-it">适用场景（When to reach for it）</a></li><li class="l3"><a href="#when-not-to">慎用场景（When NOT to）</a></li><li class="l3"><a href="#exemplars">实例（Exemplars）</a></li><li class="l3"><a href="#related">相关模式（Related）</a></li></ul></aside>
+</div>
+<footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
+使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
+&middot; <a href="../explore.html">浏览目录</a></footer>
+</body>
+</html>

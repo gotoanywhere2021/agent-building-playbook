@@ -1,0 +1,480 @@
+{
+  "_comment": "人工维护的中文文案层（不是生成物）。publish.sh 渲染 wiki/ 时套用；缺某条则回退英文。family 键与 dimension 键须与 wheel/taxonomy.yaml 中的英文名一致；pattern 键为文件名 slug。",
+  "families": {
+    "Mindset": { "name": "心智", "gloss": "动手构建之前，如何思考、看重什么。" },
+    "Context": { "name": "上下文", "gloss": "模型看到什么、记住什么。" },
+    "Tooling": { "name": "工具", "gloss": "模型的双手，以及这双手的代价。" },
+    "Orchestration": { "name": "编排", "gloss": "工作如何被塑形、分解与执行。" },
+    "Trust": { "name": "信任", "gloss": "让结果正确、可靠、可观察。" },
+    "People": { "name": "人", "gloss": "人的意图、注意力与杠杆。" }
+  },
+  "dimensions": {
+    "meta-principles": "元原则",
+    "taste": "品味",
+    "context-engineering": "上下文工程",
+    "knowledge": "知识",
+    "tool-design": "工具设计",
+    "cost-routing": "成本路由",
+    "orchestration": "编排",
+    "workflow-discipline": "工作流纪律",
+    "verification": "验证",
+    "reliability": "可靠性",
+    "observability": "可观测性",
+    "human-factors": "人因",
+    "intent": "意图"
+  },
+  "patterns": {
+    "code-is-cheap-maintenance-isnt": {
+      "title": "代码廉价，维护不廉价",
+      "one_liner": "AI 生成的代码像『免费的小狗』——只要它还活着，就得有人喂养、加固和维护。"
+    },
+    "context-is-finite": {
+      "title": "上下文（Context）是有限资源",
+      "one_liner": "精心筛选出最小的高信噪比词元（token）集合——每一点噪声都在稀释每一点信号。"
+    },
+    "fail-loud-harnesses": {
+      "title": "让测试装置（Harness）大声失败",
+      "one_liner": "构建会醒目失败的测试装置——悄悄用自己的答案顶替的装置，会把智能体的失败对你隐藏起来。"
+    },
+    "reliability-before-features": {
+      "title": "先修可靠性（Reliability），再谈功能",
+      "one_liner": "真正的敌人是不稳定而不是能力不足——『时灵时不灵』的系统比『稳定地失败』的系统更难改进。"
+    },
+    "personal-to-shared-topology": {
+      "title": "从个人工作流到共享运营模型",
+      "one_liner": "工程师个人的强大工作流无法自动组合成团队运营模型，局部最优的智能体方案还可能违反战略与共同品味；组织需要共享工件、评审规范、可观测性与模式。"
+    },
+    "redesign-work-dont-fill-slots": {
+      "title": "重新设计工作，而不是填充人形空位",
+      "one_liner": "把每个人类角色换成等价的智能体只会保留旧的低效；用『AI 生成代码占比』衡量成熟度也量错了东西——应围绕模型与工具的新能力重新设计工作本身。"
+    },
+    "start-least-agentic": {
+      "title": "从最不『智能体』的方案开始",
+      "one_liner": "许多看起来需要多智能体（multi-agent）工作流的问题，其实只需一次精心构造的 LLM 调用。"
+    },
+    "verify-independently": {
+      "title": "独立验证——智能体会假装『做完了』",
+      "one_liner": "不可观察的步骤等于没执行——把『已完成』当作一个必须被独立验证的断言。"
+    },
+    "agents-amplify-experience": {
+      "title": "智能体放大经验",
+      "one_liner": "智能体成倍放大使用者的产出——好的判断力被放大成好的结果，差的判断力被放大成规模化的自信错误。"
+    },
+    "automate-but-avoid-mystery-house": {
+      "title": "自动化简单的事，远离『鬼屋』",
+      "one_liner": "只自动化你完全理解的部分；永远不要让自动化把你带进一个没人知道它为什么能跑的系统。"
+    },
+    "build-five-to-throw-away": {
+      "title": "先造五个，扔掉四个",
+      "one_liner": "还没弄清需求时，并行构建多个变体——比较它们会揭示你真正在乎什么。"
+    },
+    "develop-your-taste": {
+      "title": "刻意培养品味（Taste）",
+      "one_liner": "品味——识别质量、察觉不对劲的能力——是一门必须刻意修炼的手艺，不会从堆砌产出中自然长出。"
+    },
+    "find-the-hard-stuff": {
+      "title": "找到真正难的部分",
+      "one_liner": "主动寻找问题里真正困难的地方——真正的工作几乎从不在它看起来该在的地方。"
+    },
+    "write-select-compress-isolate": {
+      "title": "四个动作：写出、选取、压缩、隔离",
+      "one_liner": "每一个上下文管理决策都是四个动作之一——写出（write）、选取（select）、压缩（compress）、或隔离（isolate）到子智能体。"
+    },
+    "long-horizon-memory": {
+      "title": "长时程记忆：压缩、笔记、隔离",
+      "one_liner": "长跑任务需要三种记忆策略——随历史老化而压缩（compaction）、维护滚动笔记文件、把子任务隔离到独立会话，以防上下文崩塌。"
+    },
+    "thin-pointers": {
+      "title": "薄指针（Thin Pointers），零污染",
+      "one_liner": "在智能体之间传递文件路径与引用而非完整内容——让每个智能体只在需要时拉取它需要的部分。"
+    },
+    "anchor-on-canonical-names": {
+      "title": "锚定在规范名称（Canonical Name）上",
+      "one_liner": "一个广为人知的领域术语——『TDD 伦敦学派』『arc42』——能激活模型训练中学到的整套方法论，远比一段转述可靠；点名概念，而不是描述它。"
+    },
+    "checkpoint-handoff-file": {
+      "title": "先写交接（Handoff）文件，再干净重启",
+      "one_liner": "当上下文失控或会话必须结束时，写一份结构化交接文件，精确记录下一个会话所需的一切，然后只带着它全新开始。"
+    },
+    "context-over-prompt": {
+      "title": "上下文工程优先于提示词工程",
+      "one_liner": "模型的产出质量受限于上下文质量——雕琢模型看到的东西，比雕琢指令文本更重要。"
+    },
+    "embed-guidance-in-tool-output": {
+      "title": "把指引嵌进工具输出",
+      "one_liner": "与其把所有项目坑塞进模型会忘的巨型指令文件，不如把指引写进脚本与工具的输出——错误与成功消息——让提醒恰好出现在相关的那一刻。"
+    },
+    "hang-up-call-back": {
+      "title": "挂断，重拨",
+      "one_liner": "当智能体对话走偏，不要原地纠偏——重写历史并重新发起，让模型根本没见过那个坏想法。"
+    },
+    "just-in-time-retrieval": {
+      "title": "即时检索（Just-in-Time）优于预加载",
+      "one_liner": "不要把可能相关的全塞进上下文——在恰好需要的那一刻取回恰好需要的部分，用完即弃。"
+    },
+    "persist-environment-facts": {
+      "title": "持久化环境事实",
+      "one_liner": "关于环境的事实——目录结构、版本、凭据、拓扑——应放在智能体可以重读的文件里，而不是随重置消失的漂浮上下文中。"
+    },
+    "repository-shape-is-cognitive-architecture": {
+      "title": "仓库形状就是认知架构",
+      "one_liner": "仓库不只是代码存储——它是智能体工作流的工作记忆与上下文边界；太宽会污染上下文，太窄会让智能体挨饿，所以仓库形状是设计决策而非偶然。"
+    },
+    "scope-and-expire-memory": {
+      "title": "给记忆划定作用域并让它过期",
+      "one_liner": "单一全局记忆池会导致上下文污染、执念与僵化——智能体死抱着被否决的架构与过时假设；默认使用带作用域、会过期的记忆，因为遗忘是特性不是缺陷。"
+    },
+    "state-the-target": {
+      "title": "陈述目标，而不是禁令",
+      "one_liner": "告诉模型『不要做什么』恰恰会激活你想压制的概念——『列出行星但不要月亮』往往产出月亮；把指令写成对目标的正面描述，硬性禁令交给确定性检查。"
+    },
+    "subagents-as-context-sinks": {
+      "title": "用子智能体（Sub-agent）当上下文回收站",
+      "one_liner": "把细节密集的工作委派给子智能体，让主编排器的上下文保持干净——子智能体吸收复杂性，只返回摘要。"
+    },
+    "build-a-pattern-registry": {
+      "title": "建一个模式注册表（Pattern Registry）",
+      "one_liner": "团队会各自重复发现同样的循环、校验器与评审技巧——模式注册表把可复用的操作招式连同使用指引与禁忌记录下来，让实践无需统一技术栈即可传承；它是智能体实践的包管理器。"
+    },
+    "gene-transfer": {
+      "title": "基因迁移——移植行为，而不是代码",
+      "one_liner": "系统间可复用的单元很少是整个工具，而是一个性状（trait）——一段评审提示词、一个校验循环、一种上下文文件结构、一个 CLI 交互设计——把表现型从生物体中分离，移植有价值的部分。"
+    },
+    "contradiction-extraction": {
+      "title": "挖掘矛盾（Contradiction）",
+      "one_liner": "矛盾是高信号——它揭示组织在没更新工件的情况下改了主意，或从未调和过相互竞争的目标；跨转录稿、规格与决策记录跑一个检测器，把冲突摆上桌面讨论而不是自动修复。"
+    },
+    "mine-transcripts": {
+      "title": "把转录稿挖成结构化知识",
+      "one_liner": "会议转录、会话日志与群聊讨论是原材料不是产出——先记录，再变换成主题簇、实体图、矛盾清单、行动仓库与经验手册；只录不变换得到的是存储不是知识。"
+    },
+    "self-modifying-context-needs-review": {
+      "title": "自我修改的上下文需要评审",
+      "one_liner": "让智能体编辑自己的指令文件既强大又危险——能改掉坏习惯，也可能固化错误教训、讨好用户或无人审计地漂移；要求反思性修改引用证据并通过评审，才能成为正式版本。"
+    },
+    "code-execution-tools": {
+      "title": "一次代码执行胜过上百个工具定义",
+      "one_liner": "单个代码执行工具——bash、Python、REPL——往往能替代几十个专用工具，并省去注册庞大工具集的上下文成本（模型每次调用都要推理它们）。"
+    },
+    "critic-applications": {
+      "title": "批评者应用（Critic Application）",
+      "one_liner": "构建一个确定性工具——二进制、解析器、校验器或 CLI——在智能体眼中它就是法律：无法讨价还价、只能满足；它把复杂意图压缩成可校验的约束，并补足模型的短板。"
+    },
+    "tools-for-agents": {
+      "title": "为智能体设计工具，而不是为人",
+      "one_liner": "智能体工具应面向机器解析的结构化——无歧义的输出、每次响应都携带完整信息、去掉只对人类有意义的界面线索。"
+    },
+    "agents-optimize-tools": {
+      "title": "让智能体评估并优化你的工具",
+      "one_liner": "用智能体测试你的工具集——让它执行真实任务，观察它在哪选错或失败，把这些观察反馈回工具描述与接口，然后再上线。"
+    },
+    "namespace-tools": {
+      "title": "给工具划命名空间（Namespace），写无歧义描述",
+      "one_liner": "把工具组织在清晰的命名空间下，描述里写明何时调用它、何时该调用相似的那个——工具选择歧义是智能体错误的首要来源。"
+    },
+    "search-over-list": {
+      "title": "给搜索/过滤，别给『全量列表』",
+      "one_liner": "给智能体搜索或过滤接口，而不是返回全量列表的工具——先拿全表再肉眼扫描，是把上下文烧在大多会被丢弃的数据上。"
+    },
+    "delegation-token-economics": {
+      "title": "委派就是词元（Token）经济学",
+      "one_liner": "每一次委派决策都是一笔词元投资——生成与简报子智能体花费的词元，必须由『把工作移出编排器上下文预算』换来的价值所正当化。"
+    },
+    "invest-the-expensive-model-in-the-harness": {
+      "title": "把贵模型投资在护架（Harness）上",
+      "one_liner": "把最强、最贵的模型花在改进护架本身——然后让便宜的模型跑更好的护架——因为更好的编排是二阶杠杆，能让弱模型更有用。"
+    },
+    "match-model-to-stage": {
+      "title": "按阶段匹配模型",
+      "one_liner": "工作流的不同阶段应匹配不同能力档位的模型——贵模型路由到复杂推理阶段，便宜模型到机械执行阶段，别弄反。"
+    },
+    "role-based-routing": {
+      "title": "按预配角色（Role）引用模型",
+      "one_liner": "在代码里引用抽象的能力角色而非具体模型名——让外部配置把角色映射到模型，路由决策才能在模型更替后不改代码地存活。"
+    },
+    "autonomy-when-justified": {
+      "title": "只在论证充分时增加自主性（Autonomy）",
+      "one_liner": "给智能体的每一分自主性都要用相称的监督来支付——只有当成本收益算得清且为正时才加。"
+    },
+    "three-primitives": {
+      "title": "从三个原语（Primitive）开始构建",
+      "one_liner": "每个智能体系统都由三个原语构成——LLM 调用、工具调用、循环。在伸手够更高层抽象之前，先彻底理解这三个原语。"
+    },
+    "production-feedback-loop": {
+      "title": "把生产闭环回到修复",
+      "one_liner": "收尾不止于部署——把支持消息、事故、指标与用户反馈接入分诊循环：提议修复、验证、在开关后面发布、观察信号是否消失；这是智能体版的丰田生产方式。"
+    },
+    "composable-patterns": {
+      "title": "可组合的编排模式",
+      "one_liner": "用一小组命名且可复用的原语——顺序、条件、扇出（fan-out）、循环——构建编排，而不是为每个工作流写一次性控制流。"
+    },
+    "single-threaded-default": {
+      "title": "默认单线程线性智能体",
+      "one_liner": "一次顺序做一件事，除非有具体理由扇出——并行是优化项，不是起点。"
+    },
+    "clean-slate-delegation": {
+      "title": "默认干净起点（Clean-Slate）委派",
+      "one_liner": "派生子智能体时从空上下文开始，只提供任务所需——共享历史不是免费的上下文，而是混淆的遗传源。"
+    },
+    "workflows-vs-agents": {
+      "title": "区分工作流（Workflow）与智能体（Agent）",
+      "one_liner": "工作流是已知分叉的固定步骤序列；智能体动态决定下一步做什么。混淆两者会造出更难测试、监控与信任的系统。"
+    },
+    "guardrails-and-escalation": {
+      "title": "分层护轨（Guardrail）与人工升级",
+      "one_liner": "内置多层护轨——输入校验、输出检查、动作限额与显式升级路径——让错误在被复合之前拦住，让人在被损害之前请进来。"
+    },
+    "recon-before-action": {
+      "title": "行动之前先侦察（Recon）",
+      "one_liner": "在执行任何触碰外部状态的动作之前，先跑一遍只读侦察——弄清已有什么、约束是什么、这个动作真正会影响什么。"
+    },
+    "match-topology-to-the-work": {
+      "title": "让拓扑（Topology）匹配工作",
+      "one_liner": "按失败代价、意图清晰度、工作量与可重复性，在『单次提示→目标循环→技能→图→层级→工作室』之间刻意选择你的智能体拓扑。"
+    },
+    "parallel-attempts-at-one-task": {
+      "title": "对同一任务的并行尝试",
+      "one_liner": "模型是非确定性的，一次尝试只是一次掷骰——对困难或质量敏感的任务，从一个检查点并行跑多个实现，然后选最好的或拼接各自最强的部分。"
+    },
+    "deterministic-rails": {
+      "title": "给模型判断装上确定性护栏",
+      "one_liner": "最强的智能体工作流让确定性步骤与模型介导步骤交替——模型把意图翻译成可校验状态，脚本、测试与校验器兜住漂移；两层都不必完美。"
+    },
+    "parallel-independent-tracks": {
+      "title": "并行运行独立的智能体",
+      "one_liner": "当两个以上任务没有顺序依赖、也不共享可变状态时，用并行智能体而非串行——唯一重要的成本是墙上时钟。"
+    },
+    "shape-work-as-an-attractor": {
+      "title": "把工作流塑造成吸引子（Attractor）",
+      "one_liner": "把工作流设计成：正确结果就是它的稳定平衡态——从大范围起点收敛而来、在模型漂移后仍会回归——并以该收敛判定成败，而不是某步自称完成。"
+    },
+    "share-full-context": {
+      "title": "共享完整上下文——每个动作都承载决策",
+      "one_liner": "委派给子智能体或派生并行工人时，带上它做出好决策所需的一切——目标、约束、已有发现与已做出的决定。"
+    },
+    "architect-then-builder": {
+      "title": "两阶段构建：先架构师（Architect）后施工队（Builder）",
+      "one_liner": "先跑一个架构师智能体产出完整规格，再跑施工智能体实现——绝不在一轮里混淆设计与实现两种角色。"
+    },
+    "self-ablating-harness": {
+      "title": "随模型进步给护架做减法（Ablate）",
+      "one_liner": "定期让更强的模型检视你的工作流，删掉不再需要的步骤、缩短提示、合并节点——模型能力变得比工作流习惯快，昨天的脚手架就是今天的税。"
+    },
+    "bite-sized-tasks": {
+      "title": "一口大小（Bite-sized）的任务",
+      "one_liner": "把工作拆到每个单元都能独立完成、提交、评审的粒度。"
+    },
+    "brownfield-is-the-real-test": {
+      "title": "棕地（Brownfield）才是真正的考验",
+      "one_liner": "绿地原型容易庆祝；棕地系统才检验工作流能否应对遗留约束、隐藏依赖与生产风险——成熟的打法是先刻画既有行为、写回归测试，绝不盲目重写。"
+    },
+    "decompose-on-timeout": {
+      "title": "超时就分解（Decompose）重试",
+      "one_liner": "当任务超时，答案几乎从不是把时限调大——而是把任务拆小。"
+    },
+    "document-intent": {
+      "title": "记录意图（Intent），而不只是方法",
+      "one_liner": "代码描述怎么做；注释与规格必须描述为什么——那些代码无法编码的理由。"
+    },
+    "finishing-is-the-bottleneck": {
+      "title": "瓶颈在收尾（Finishing），不在起跑",
+      "one_liner": "模型让起步变得容易——说得过去的 80% 很快出现——但说得过去不等于完成，最后 20% 吃掉大部分注意力与风险；真正的指标是收敛：可靠抵达『已验收、已上线、被观察』。"
+    },
+    "gate-the-phases": {
+      "title": "显式设置阶段闸门（Gate）",
+      "one_liner": "在设计与构建之间、构建与发布之间宣告硬切换——模糊的阶段产出无法评审也无法回滚的工作。"
+    },
+    "clear-stop-condition": {
+      "title": "带着明确停止条件（Stop Condition）交接",
+      "one_liner": "没有停止条件的智能体会自己找一个——而那不会是你想要的那个。"
+    },
+    "implement-to-learn": {
+      "title": "用实现来学习（Implement to Learn）",
+      "one_liner": "理解一个问题最快的办法，是把它的解决方案做一个小型抛弃版出来。"
+    },
+    "keep-specs-in-sync": {
+      "title": "让规格（Spec）与实现同步",
+      "one_liner": "与实现脱节的规格比没有规格更糟——它会主动误导每一个读到它的智能体。"
+    },
+    "prove-on-small-sample": {
+      "title": "先在 2 个上验证，再上 20 个",
+      "one_liner": "在扩展到全量数据之前，先让整条流水线在两个样本上端到端跑通。"
+    },
+    "rebuild-often": {
+      "title": "经常重建（Rebuild）",
+      "one_liner": "定期从零重建能抓住被增量修改渐渐『正常化』的累积漂移。"
+    },
+    "work-backward-from-the-shipping-dock": {
+      "title": "从发货码头倒推工作",
+      "one_liner": "从工作变真的地方倒推——生产、审批、运营者采用、用户理解——问『什么证据能说服我它就绪了』；让证明体系塑造工作流，而不是问『模型能不能做出来』。"
+    },
+    "adversarial-parallel-review": {
+      "title": "对抗式并行评审（Adversarial Parallel Review）",
+      "one_liner": "跑多个低共享上下文、不同模型或角色的评审者，奖励重大发现而非数量，再由元评审者排序——因为实现者与它的 bug 共享同样的盲区。"
+    },
+    "design-the-loop": {
+      "title": "设计智能体循环（Loop）是核心技能",
+      "one_liner": "智能体系统的质量几乎完全由其循环设计决定——感知、决策、行动，以及进入下一轮之前如何验证。"
+    },
+    "eval-driven-development": {
+      "title": "评估（Eval）驱动开发",
+      "one_liner": "先建评估再建功能——你无法改进不能度量的东西，也无法信任没有定义度量的改进。"
+    },
+    "standing-eval-capability": {
+      "title": "评估是常备能力，不是一次性闸门",
+      "one_liner": "只在上线时跑一次、此后再不跑的评估套件不是评估套件——它是一份度量着某个已不存在系统的历史文档。"
+    },
+    "evidence-before-assertions": {
+      "title": "证据（Evidence）先于断言",
+      "one_liner": "关于系统状态的说法不是知识——是假设。先跑校验命令、读输出，再对『是否生效』下断言。"
+    },
+    "self-verification": {
+      "title": "给智能体验证自身工作的能力",
+      "one_liner": "能自己发现错误的智能体，比只会产出的智能体可靠几个数量级——先内置自我验证再上线。"
+    },
+    "three-file-rule": {
+      "title": "增量验证：三文件规则（3-File Rule）",
+      "one_liner": "在处理全量批次前，先在三个代表性文件上验证流水线——在 3 个上抓 bug 比在 3000 个上抓便宜得多。"
+    },
+    "test-what-not-how": {
+      "title": "测试产品做什么，而不是怎么做",
+      "one_liner": "描述外部可观察行为的测试能活过重构；描述内部实现的测试是随每次变更增长的维护税。"
+    },
+    "tests-first-on-api-change": {
+      "title": "API 变更时，先改测试",
+      "one_liner": "API 变了先更新测试再改实现——测试就是规格，先改它逼你在动手前定义这次变更意味着什么。"
+    },
+    "video-driven-development": {
+      "title": "视频驱动开发（Video-Driven Development）",
+      "one_liner": "要求智能体交付真实用户场景的前后对比视频——视频比文字断言立了更高的门槛，逼它真正跑产品表面而不是只跑代码；规则是：展示，不要宣称。"
+    },
+    "demand-independent-proof": {
+      "title": "要独立证据（Proof），不要状态汇报",
+      "one_liner": "智能体自称成功只是一个假设——在你持有不再来自该智能体自身的证据之前，把它当假设对待。"
+    },
+    "recipe-not-conversation": {
+      "title": "把多步工作编码成菜谱（Recipe）",
+      "one_liner": "对话是『发生过什么』的一次轨迹；菜谱是可重放、可检视、可版本化、可恢复的规格。"
+    },
+    "fail-loud-over-fallbacks": {
+      "title": "大声失败优于静默兜底（Fallback）",
+      "one_liner": "掩盖失败的兜底既不教系统任何东西，成本又和它掩盖的失败一样高——宁可响亮地停，不要悄悄地替换。"
+    },
+    "fix-the-root-cause": {
+      "title": "修根因（Root Cause），要诊断",
+      "one_liner": "智能体倾向于只补看得见的症状——对反复出现、生产级或架构级问题，要求先产出解释根因的诊断工件，再接受任何修复。"
+    },
+    "auditable-artifacts": {
+      "title": "让每个阶段产出可审计工件（Artifact）",
+      "one_liner": "没有工件的阶段无法审计——无法审计的阶段只能被盲目信任。"
+    },
+    "mark-skipped-steps": {
+      "title": "把未执行的步骤就地标出",
+      "one_liner": "没有被显式标记的跳过步骤与已完成的步骤无法区分——把缺口摆出来，否则它会被当成已被填上。"
+    },
+    "separate-merge-from-exposure": {
+      "title": "把合并（Merge）与暴露（Exposure）分开",
+      "one_liner": "特性开关（feature flag）是控制智能体产出最重要的手段之一，它把『合并代码』与『暴露给用户』解耦——高风险变更默认灰度、显式放量标准、自动回滚，合并不再意味着所有人受影响。"
+    },
+    "proposer-authority-separation": {
+      "title": "把提议方与批准方分开",
+      "one_liner": "提议动作的实体是该提议最差的批准者——把批准路由到一个对其通过与否没有利益的角色。"
+    },
+    "auditor-agent": {
+      "title": "用第二个智能体当审计员（Auditor）",
+      "one_liner": "做了工作的智能体是验证这份工作的最差人选——让另一个与原始断言无利害关系的智能体坐进审计席。"
+    },
+    "awareness-layer": {
+      "title": "建一个盯着你工作的感知层（Awareness Layer）",
+      "one_liner": "一个独立进程或智能体实时监视主力智能体的动作，能在漂移、失败与异常行为复合之前抓住它们——它是工作智能体无法为自己充当的那个守望者。"
+    },
+    "emit-events": {
+      "title": "重要的事就发事件（Event）",
+      "one_liner": "如果一个决策、状态变更或结果对理解『发生了什么』有意义，它就该产出结构化事件——不是一行日志、一句注释，也不是『希望当时有人在看』。"
+    },
+    "real-environment-execution": {
+      "title": "在真实环境跑真实负载",
+      "one_liner": "在模拟或沙箱环境里跑负载的智能体只会发现模拟的问题——想要真实答案，就在真实的地方跑真实的东西。"
+    },
+    "supervise-many-agents": {
+      "title": "用一个界面监督多个智能体",
+      "one_liner": "智能体一多，瓶颈变成人的看见能力——建监督面：在跑/卡住/完成/昂贵/等待中的仪表盘、状态播报、注意力防火墙、评审队列、成本监视，以及唤醒旧会话问责的能力。"
+    },
+    "agent-struggle-is-a-signal": {
+      "title": "智能体的挣扎是信号（Signal）",
+      "one_liner": "当智能体开始在代码库里打转——漏掉重复调用点、改到一半上下文耗尽、对失败的测试找借口——把它读作可维护性正在衰减的早期预警，去重构，而不是跟它缠斗。"
+    },
+    "session-archaeology": {
+      "title": "把会话历史当第一手证据",
+      "one_liner": "当之前的运行出了问题——或出了彩——会话转录（transcript）就是第一手证据；读它是诊断的第一个动作，不是其他办法失败后的退路。"
+    },
+    "attention-is-the-scarce-resource": {
+      "title": "注意力（Attention）才是稀缺资源",
+      "one_liner": "当智能体产出的工作、选项与结果超过人类能检视的量，瓶颈不再是机器吞吐而是人的注意力——把注意力当作被预算、被管理的资源，不是无限输入。"
+    },
+    "coaches-and-players": {
+      "title": "教练（Coach）与球员（Player）",
+      "one_liner": "杠杆不再只来自资深的人亲自做资深的事——而是把资深判断注入大量智能体驱动的工作流；教练框定问题与掌舵，球员日常驱动智能体。"
+    },
+    "design-for-emotional-ownership": {
+      "title": "为情感归属（Ownership）而设计",
+      "one_liner": "技术上能跑的系统仍可能没人用——全自动无头流水线让人疏离，对产出没有归属感的人不会信任它；给自主性设计人的界面：可见的进展、证明工件、属于人的作者时刻。"
+    },
+    "earn-the-interruption": {
+      "title": "挣得这次打断（Interruption）",
+      "one_liner": "人的注意力稀缺，智能体不该因为撞上常规检查点就打断——只在人的判断此刻是瓶颈时打断；把人插在特定边界上（高风险发布、意图不明、高成本循环、合规例外、反复不收敛）。"
+    },
+    "governance-is-infrastructure": {
+      "title": "治理（Governance）是基础设施，不是文档",
+      "one_liner": "在智能体组织里，治理不能是漂在工作流之外的政策文档——它得嵌进工具、提示词、校验器、日志与审批边界；共同底座是 LLM 代理/网关：记录用量、追踪成本、执行策略并提供可观测性。"
+    },
+    "leverage-over-efficiency": {
+      "title": "杠杆（Leverage）优于效率（Efficiency）",
+      "one_liner": "把 AI 框成效率，问的是『同样的事用更少的人』；框成杠杆，问的是『同样的人如何更大规模地构建、探索与运营』——杠杆才是高阶实践者实际在用的框架。"
+    },
+    "match-agent-metaphor-to-layer": {
+      "title": "让智能体隐喻（Metaphor）匹配所在层",
+      "one_liner": "把每个智能体都当人会造成混乱；都当无状态工具又丢掉有用的连续性——按层选择叙事：一次性进程、独立批评者、经理式编排器、长期助手，或受策略约束的组织行动者。"
+    },
+    "nontechnical-owners-with-guardrails": {
+      "title": "非技术负责人，配上护轨",
+      "one_liner": "智能体工具让意图清晰、有领域知识的人能交付过去永远造不出的软件——但非技术构建者的『拥有』只有在脚手架、评审循环、验收证据、回滚与教练的环绕下才成立。"
+    },
+    "the-new-literacy-is-operating": {
+      "title": "新素养是『操作（Operating）』，不是提示词",
+      "one_liner": "当机器写下大部分实现，关键技能从敲代码转向操舵、分解、检视、验证与治理智能体工作流——为操作训练，而不是为提示词技巧。"
+    },
+    "decision-theater": {
+      "title": "决策剧场（Decision Theater）",
+      "one_liner": "做一个小型交互工件——模型、模拟器、表格或情景浏览器——让干系人改假设而不是辩论抽象；如果他们不同意结论，就必须指出拒绝的是哪条假设。"
+    },
+    "dont-automate-the-workaround": {
+      "title": "别把权宜之计（Workaround）自动化",
+      "one_liner": "在遗留与官僚场景里，正式流程往往本身就是另一个坏流程的权宜之计——用智能体把它自动化等于把功能障碍高速固化；先问这个流程还应不应该存在，再谈加速。"
+    },
+    "good-pile-bad-pile": {
+      "title": "好堆与坏堆（Good Pile, Bad Pile）",
+      "one_liner": "在干系人只会说『看情况』的领域，别再要抽象规则，开始用领域自己的语言收集带标签的示例——好、坏、可用但别扭、合规、有风险——示例就是智能体可学的意图训练数据。"
+    },
+    "interview-to-a-spec": {
+      "title": "先访谈出规格（Spec），再实现",
+      "one_liner": "在意图面前放一个怀疑的访谈者——先问为什么再问怎么做、复述它的理解、在能干净复述目标前拒绝动手、产出一份人类可否决的精炼规格——把混乱意图变成可执行规格。"
+    },
+    "people-edit-better-than-they-author": {
+      "title": "人更擅长编辑（Edit），而不是从零写（Author）",
+      "one_liner": "多数干系人写不出干净的需求，但给他一个具体工件他能立刻说出哪里不对——用『给人一个可反应的东西』引出意图，一次性工件是提取意图最快的途径。"
+    },
+    "requirements-are-disguised-solutions": {
+      "title": "需求（Requirement）是伪装的解决方案",
+      "one_liner": "干系人要的是加一个字段、一个按钮、一份报表——但智能体会开开心心把这个被陈述的解法实现掉，哪怕它是坏流程的权宜之计；意图层必须追问这个请求到底想达成什么。"
+    },
+    "shadow-then-transform": {
+      "title": "先跟随观察（Shadow），再变换转录",
+      "one_liner": "隐性知识——变通手法、局部惯例、异常路径、机构记忆——活在人们实际工作的方式里；坐到用户身边录下来；智能体工具不会取代观察，它加速的是观察之后的事。"
+    },
+    "simulated-review-squad": {
+      "title": "模拟评审团（Simulated Review Squad）",
+      "one_liner": "在作品到达真实用户之前，先过一遍由模拟视角组成的陪审团——专家与新手用户、合规、客服、高管发起人、怀疑的工程师、无障碍、安全——基于真实转录与工单构建，又早又便宜地翻出反对意见。"
+    }
+  }
+}
