@@ -1,0 +1,15 @@
+flowchart TD
+    A["写智能体指令（Write the instruction）"] --> B{"过程式还是声明式？（Procedure or outcome?）"}
+    B -- "逐步脚本：先X再Y再Z" --> C["按旧模型能力写的路线"]
+    C --> D["强模型被束缚 · 模型升级即腐烂"]
+    B -- "声明契约：结果 + 边界 + 验证" --> E["智能体自行规划路线"]
+    E --> F["契约可检验（Checkable, auditable）"]
+    F --> G{"流程本身就是需求？（Procedure is the req?）"}
+    G -- "是（合规/财务）" --> H["编码为确定性护栏（Rails）"]
+    G -- "否" --> I["保持声明式（Stay declarative）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,I core;
+    class B,C,D,G gate;
+    class A,H out;

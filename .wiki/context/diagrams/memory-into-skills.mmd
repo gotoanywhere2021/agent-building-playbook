@@ -1,0 +1,15 @@
+flowchart TD
+    A["会话记忆不断累积（Memory accumulates）"] --> B{"反复出现的行为？（Recurring behavior?）"}
+    B -- "是" --> C["蒸馏为技能：有名有版 · 触发加载"]
+    C --> D{"评估过关 + 评审？（Eval-gated?）"}
+    D -- "过" --> E["晋升为默认行为（Promoted skill）"]
+    D -- "不过" --> F["回炉：改技能或改评估（Rework）"]
+    E --> G["原始记忆降级为可过期（Expire the rest）"]
+    B -- "否 / 领域剧变" --> H["留在有范围、会过期的记忆里"]
+    H -. "再次出现时" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,G core;
+    class B,D,H gate;
+    class A,F out;

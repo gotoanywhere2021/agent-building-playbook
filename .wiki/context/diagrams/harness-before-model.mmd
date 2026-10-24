@@ -1,0 +1,13 @@
+flowchart TD
+    A["智能体表现不佳（Agent underperforms）"] --> B{"第一怀疑谁？（Blame whom first?）"}
+    B -- "先查装置（Audit the harness）" --> C["上下文组装 · 工具契约 · 检索 · 打分"]
+    C --> D["修好即复利：下一代模型也受益"]
+    D --> E["确有余力再谈换模型"]
+    B -- "先换模型 / 重写提示词" --> F["成本高、易回归、根因仍在"]
+    F -. "失败依旧" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B,F gate;
+    class A,E out;

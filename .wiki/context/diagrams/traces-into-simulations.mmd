@@ -1,0 +1,17 @@
+flowchart TD
+    A["生产轨迹积累（Traces accumulate）"] --> B["回放为回归场景（Replay as regression）"]
+    A --> C["扰动为对抗变体（Mutate adversarially）"]
+    A --> D["仿真生产形环境（Simulate the env）"]
+    B --> E["候选方案先在仿真里打分"]
+    C --> E
+    D --> E
+    E --> F{"分数过闸？（Gate passed?）"}
+    F -- "过" --> G["小流量真实验证（Reality decides）"]
+    F -- "不过" --> H["回炉优化（Iterate）"]
+    G -. "分布偏移仍要真环境把关" .-> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F,H gate;
+    class A,G out;

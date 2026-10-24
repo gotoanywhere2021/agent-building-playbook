@@ -7,10 +7,14 @@ digraph wheel {
   root -> "Mindset";
   "meta-principles" [fillcolor="#a66dce"];
   "Mindset" -> "meta-principles";
+  "agents-are-distributed-systems" [label="Agents Are Distributed Systems", fillcolor="#dabeed", fontsize=9];
+  "meta-principles" -> "agents-are-distributed-systems";
   "code-is-cheap-maintenance-isnt" [label="Code Is Cheap, Maintenance Isn't", fillcolor="#dabeed", fontsize=9];
   "meta-principles" -> "code-is-cheap-maintenance-isnt";
   "context-is-finite" [label="Context Is a Finite Resource", fillcolor="#dabeed", fontsize=9];
   "meta-principles" -> "context-is-finite";
+  "declare-outcomes-not-procedures" [label="Declare Outcomes, Not Procedures", fillcolor="#dabeed", fontsize=9];
+  "meta-principles" -> "declare-outcomes-not-procedures";
   "fail-loud-harnesses" [label="Fail-Loud Harnesses", fillcolor="#dabeed", fontsize=9];
   "meta-principles" -> "fail-loud-harnesses";
   "reliability-before-features" [label="Fix Reliability Before Features", fillcolor="#dabeed", fontsize=9];
@@ -67,6 +71,8 @@ digraph wheel {
   "context-engineering" -> "scope-and-expire-memory";
   "skills-load-on-trigger" [label="Skills Load on Trigger, Not Always-On", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "skills-load-on-trigger";
+  "lexical-first-retrieval" [label="Start Lexical, Add Semantic Only When Proven", fillcolor="#bedaed", fontsize=9];
+  "context-engineering" -> "lexical-first-retrieval";
   "state-the-target" [label="State the Target, Not the Prohibition", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "state-the-target";
   "subagents-as-context-sinks" [label="Use Sub-Agents as Context Sinks", fillcolor="#bedaed", fontsize=9];
@@ -75,6 +81,8 @@ digraph wheel {
   "Context" -> "knowledge";
   "build-a-pattern-registry" [label="Build a Pattern Registry", fillcolor="#bedaed", fontsize=9];
   "knowledge" -> "build-a-pattern-registry";
+  "memory-into-skills" [label="Distill Memory Into Skills", fillcolor="#bedaed", fontsize=9];
+  "knowledge" -> "memory-into-skills";
   "gene-transfer" [label="Gene Transfer — Port the Behavior, Not the Code", fillcolor="#bedaed", fontsize=9];
   "knowledge" -> "gene-transfer";
   "contradiction-extraction" [label="Mine for Contradictions", fillcolor="#bedaed", fontsize=9];
@@ -93,6 +101,8 @@ digraph wheel {
   "tool-design" -> "critic-applications";
   "tools-for-agents" [label="Design Tools for Agents, Not Humans", fillcolor="#beedd2", fontsize=9];
   "tool-design" -> "tools-for-agents";
+  "structured-surface-over-screen" [label="Drive the Structured Surface, Not the Screen", fillcolor="#beedd2", fontsize=9];
+  "tool-design" -> "structured-surface-over-screen";
   "agents-optimize-tools" [label="Let Agents Evaluate and Optimize Your Tools", fillcolor="#beedd2", fontsize=9];
   "tool-design" -> "agents-optimize-tools";
   "namespace-tools" [label="Namespace Tools, Write Unambiguous Descriptions", fillcolor="#beedd2", fontsize=9];
@@ -179,6 +189,8 @@ digraph wheel {
   "Trust" -> "verification";
   "adversarial-parallel-review" [label="Adversarial Parallel Review", fillcolor="#edbec4", fontsize=9];
   "verification" -> "adversarial-parallel-review";
+  "calibrate-the-judge" [label="Calibrate the Judge Before Trusting the Score", fillcolor="#edbec4", fontsize=9];
+  "verification" -> "calibrate-the-judge";
   "design-the-loop" [label="Designing the Agentic Loop Is the Core Skill", fillcolor="#edbec4", fontsize=9];
   "verification" -> "design-the-loop";
   "eval-driven-development" [label="Eval-Driven Development", fillcolor="#edbec4", fontsize=9];
@@ -189,6 +201,8 @@ digraph wheel {
   "verification" -> "evidence-before-assertions";
   "self-verification" [label="Give Agents the Ability to Verify Their Own Work", fillcolor="#edbec4", fontsize=9];
   "verification" -> "self-verification";
+  "hill-climb-dont-rewrite" [label="Hill-Climb the Harness, Don't Rewrite It", fillcolor="#edbec4", fontsize=9];
+  "verification" -> "hill-climb-dont-rewrite";
   "three-file-rule" [label="Incremental Validation: The 3-File Rule", fillcolor="#edbec4", fontsize=9];
   "verification" -> "three-file-rule";
   "make-runs-replayable" [label="Make Runs Replayable", fillcolor="#edbec4", fontsize=9];
@@ -199,10 +213,14 @@ digraph wheel {
   "verification" -> "tests-first-on-api-change";
   "train-against-simulated-counterparts" [label="Train Against Simulated Counterparts", fillcolor="#edbec4", fontsize=9];
   "verification" -> "train-against-simulated-counterparts";
+  "traces-into-simulations" [label="Turn Production Traces Into Simulations", fillcolor="#edbec4", fontsize=9];
+  "verification" -> "traces-into-simulations";
   "video-driven-development" [label="Video-Driven Development", fillcolor="#edbec4", fontsize=9];
   "verification" -> "video-driven-development";
   "reliability" [fillcolor="#ce6d7a"];
   "Trust" -> "reliability";
+  "harness-before-model" [label="Blame the Harness Before the Model", fillcolor="#edbec4", fontsize=9];
+  "reliability" -> "harness-before-model";
   "demand-independent-proof" [label="Demand Independent Proof, Not a Status Report", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "demand-independent-proof";
   "recipe-not-conversation" [label="Encode Multi-Step Work as a Recipe", fillcolor="#edbec4", fontsize=9];
@@ -239,6 +257,12 @@ digraph wheel {
   "observability" -> "agent-struggle-is-a-signal";
   "session-archaeology" [label="Use Session History as Primary Evidence", fillcolor="#edbec4", fontsize=9];
   "observability" -> "session-archaeology";
+  "security" [fillcolor="#ce6d7a"];
+  "Trust" -> "security";
+  "zero-standing-credentials" [label="Agents Hold Zero Standing Credentials", fillcolor="#edbec4", fontsize=9];
+  "security" -> "zero-standing-credentials";
+  "sandbox-by-default" [label="Give the Agent a Sandbox, Not Your Machine", fillcolor="#edbec4", fontsize=9];
+  "security" -> "sandbox-by-default";
   "People" [fillcolor="#b133a7", fontcolor=white];
   root -> "People";
   "human-factors" [fillcolor="#ce6dc6"];
@@ -261,6 +285,8 @@ digraph wheel {
   "human-factors" -> "nontechnical-owners-with-guardrails";
   "the-new-literacy-is-operating" [label="The New Literacy Is Operating, Not Prompting", fillcolor="#edbee9", fontsize=9];
   "human-factors" -> "the-new-literacy-is-operating";
+  "human-async-api" [label="Treat the Human as an Async API", fillcolor="#edbee9", fontsize=9];
+  "human-factors" -> "human-async-api";
   "intent" [fillcolor="#ce6dc6"];
   "People" -> "intent";
   "decision-theater" [label="Decision Theater", fillcolor="#edbee9", fontsize=9];

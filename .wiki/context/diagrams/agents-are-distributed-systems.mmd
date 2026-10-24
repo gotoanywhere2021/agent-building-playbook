@@ -1,0 +1,15 @@
+flowchart TD
+    A["多步智能体改外部状态（Agent mutates state）"] --> B{"当分布式系统设计？（Design as dist-sys?）"}
+    B -- "是" --> C["幂等键 · 请求 ID · 超时预算"]
+    C --> D["每步持久化 → 可恢复（Resumable）"]
+    D --> E["熔断 · 限流 · 补偿操作"]
+    E --> F["记忆 = 带权威源的缓存（Cache with authority）"]
+    B -- "指望模型不犯错" --> G["超时后重试 = 重复扣款"]
+    G --> H["第 9 步死掉 → 全部重来"]
+    H -. "按分布式纪律重构" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B,G,H gate;
+    class A out;

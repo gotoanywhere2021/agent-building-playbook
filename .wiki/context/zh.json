@@ -39,7 +39,8 @@
     "reliability": "可靠性",
     "observability": "可观测性",
     "human-factors": "人因",
-    "intent": "意图"
+    "intent": "意图",
+    "security": "安全"
   },
   "patterns": {
     "code-is-cheap-maintenance-isnt": {
@@ -517,6 +518,54 @@
     "safety-guarantees-dont-transfer": {
       "title": "安全保证不随分布迁移（Safety Guarantees Don't Transfer）",
       "one_liner": "训练环境里满足的约束不等于部署环境里的约束——分布偏移会无声作废安全保证；要在偏移下重新验证安全，并保留运行时屏蔽（shield）作为最后一道防线。"
+    },
+    "sandbox-by-default": {
+      "title": "给智能体一个沙箱，而不是你的机器",
+      "one_liner": "让自主运行的智能体默认跑在可丢弃的隔离环境里——能直接触达你机器、网络或数据的智能体迟早闯祸，真正的问题只是爆炸半径有多大。"
+    },
+    "zero-standing-credentials": {
+      "title": "智能体零常驻凭证",
+      "one_liner": "不要把持久密钥交给智能体——每一次敏感动作都由代理层签发短时效、窄范围、可审计的授权，被劫持或被误导的智能体暴露的只是几分钟的范围，而不是整个系统。"
+    },
+    "harness-before-model": {
+      "title": "先怀疑装置，再怀疑模型",
+      "one_liner": "智能体表现不佳时，先审计周边装置——上下文组装、工具契约、检索与打分——再考虑换模型或重写提示词；装置通常有更大的提升空间，且回归风险更小。"
+    },
+    "lexical-first-retrieval": {
+      "title": "先上词法检索，语义检索留给证据",
+      "one_liner": "智能体检索以 grep/BM25 为基线——便宜、确定、可调试——只有当评估证明存在词法无法弥合的召回缺口时，才引入向量与重排。"
+    },
+    "memory-into-skills": {
+      "title": "把记忆蒸馏成技能",
+      "one_liner": "只会记住的记忆是不断膨胀的负债——定期把反复出现的成功经验与修复方案，从记忆蒸馏成有名有版、经评估把关的技能，然后让原始记忆过期。"
+    },
+    "calibrate-the-judge": {
+      "title": "先校准评审，再相信分数",
+      "one_liner": "LLM 评审员继承被评模型的种种偏见——用已知好坏样例锚定它，确定性检查优先，并持续监控评审本身是否漂移。"
+    },
+    "hill-climb-dont-rewrite": {
+      "title": "爬山式迭代，别推倒重来",
+      "one_liner": "用固定评估套件上的大量小幅、有度量的改动来改进智能体——只接受涨分的变更，把每一次失败都挖成新的评估用例——而不是凭直觉推倒重写。"
+    },
+    "traces-into-simulations": {
+      "title": "把生产轨迹变成模拟环境",
+      "one_liner": "录下的智能体轨迹是评估资产——回放成回归场景、扰动成对抗变体、仿真出生产形环境，让候选方案在触碰生产之前先被安全地打分。"
+    },
+    "agents-are-distributed-systems": {
+      "title": "智能体就是分布式系统",
+      "one_liner": "多步智能体就是分布式系统——部分失败、响应丢失、重试与漂移是常态——用经典纪律应对：幂等、超时、最小权限、检查点与可观测性，而不是指望智能体魔法。"
+    },
+    "structured-surface-over-screen": {
+      "title": "驱动结构化界面，而不是屏幕",
+      "one_liner": "在智能体逐像素点击 UI 之前，先往下一层找——DOM/HTML、API、MCP、CLI——结构化界面确定且可验证，屏幕点击则天然含糊且随改版漂移。"
+    },
+    "declare-outcomes-not-procedures": {
+      "title": "声明结果，而不是步骤",
+      "one_liner": "告诉智能体什么结果必须成立，而不是该走哪几步——声明式契约让够强的模型自己规划路线，而为昨天模型写的过程脚本只会束缚今天的模型，并随模型进步而腐烂。"
+    },
+    "human-async-api": {
+      "title": "把人类当作异步 API",
+      "one_liner": "阻塞等人的长流程天生会停摆——把人类建模成异步接口：持久化请求、信号与等待条件，工作流继续跑，答复作为事件到达。"
     }
   }
 }

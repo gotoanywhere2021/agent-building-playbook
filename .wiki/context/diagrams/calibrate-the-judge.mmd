@@ -1,0 +1,15 @@
+flowchart TD
+    A["用 LLM 给输出打分（LLM-as-judge）"] --> B{"校准过吗？（Calibrated?）"}
+    B -- "否" --> C["自偏 · 谄媚 · 偏长 · 标准漂移"]
+    C --> D["分数好看 ≠ 输出正确（Confident liar）"]
+    B -- "是" --> E["细则固定 · 校准集可分 · 一致性跟踪"]
+    E --> F{"确定性检查够用吗？（Deterministic first?）"}
+    F -- "够" --> G["用断言，不打分（Assert, don't grade）"]
+    F -- "不够" --> H["LLM 评审只填机械检查够不到的空隙"]
+    D -. "建校准集回炉" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,H core;
+    class B,C,D,F gate;
+    class A,G out;

@@ -1,0 +1,15 @@
+flowchart TD
+    A["想改进智能体（Improve the agent）"] --> B{"怎么改？（How?）"}
+    B -- "爬山：一次一处增量" --> C["跑评估套件 → 分数涨？"]
+    C -- "涨" --> D["保留变更（Keep the delta）"]
+    C -- "不涨" --> E["回滚（Revert）"]
+    D --> F["失败挖成新评估用例（Mine failures）"]
+    F --> G["套件在弱点处生长（Suite grows）"]
+    B -- "凭感觉推倒重写" --> H["静默回归 · 无法归因"]
+    H -. "重建评估对照" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class B,H gate;
+    class A,E out;
