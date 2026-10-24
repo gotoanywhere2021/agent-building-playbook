@@ -1,0 +1,16 @@
+flowchart TD
+    A["任务到来（Task arrives）"] --> B{"问题已吃透？（Well understood?）"}
+    B -- "吃透了" --> C["直接写规格（Write the spec directly）"]
+    B -- "陌生或含混" --> D["先造丢弃版（Build a throwaway）"]
+    D --> E["真问题浮出（Real questions surface）"]
+    E --> F["代码可弃，认知留下（Discard code, keep the learning）"]
+    F --> G["更准的规格（Sharper spec）"]
+    G --> H["正式实现（The real build）"]
+    D -. "造多个变体原型，而非一个（Several variants）" .-> I["利益相关者比较与反应（Stakeholders react）"]
+    I -. "反应转成用户故事与验收标准" .-> G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B gate;
+    class A,C,G,H,I out;

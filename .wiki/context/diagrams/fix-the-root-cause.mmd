@@ -1,0 +1,16 @@
+flowchart TD
+    A["缺陷出现（Defect）"] --> B["代理修补可见症状（Patch the symptom）"]
+    B --> C{"可以就此收手吗？（Acceptable?）"}
+    C -- "一次性·低风险" --> D["直接修复即可（Direct fix fine）"]
+    C -- "复发·生产·架构级" --> E["要求诊断工件（Require a diagnosis artifact）"]
+    E --> F["写明根因与机理（Root cause and mechanism）"]
+    F --> G["识别同因波及面（Blast radius）"]
+    G --> H["针对根因修复（Fix the cause）"]
+    H --> I["沉淀为可复用证据（Reusable knowledge）"]
+    I -. "同因再现：回到诊断" .-> F
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H core;
+    class C gate;
+    class A,B,D,I out;

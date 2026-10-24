@@ -1,0 +1,14 @@
+flowchart TD
+    A["要传达一套成体系的方法（A methodology to convey）"] --> B{"存在公认术语吗？（Canonical term exists?）"}
+    B -- "有" --> C["直接点名（Name it）：TDD伦敦学派、arc42、六边形架构"]
+    C --> D["激活训练里既有的知识簇（Activates the trained prior）"]
+    D --> E{"激活的行为符合预期？（As intended?）"}
+    E -- "符合" --> F["更稳、更省 token、可复现（Stable, precise, cheap）"]
+    E -- "你的含义与标准义不同" --> G["先定义你的变体再用（Define your variant first）"]
+    B -- "无术语，或术语含混" --> H["放弃锚定：完整描述或示例演示（Describe or demonstrate）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B,E gate;
+    class A,F,G,H out;

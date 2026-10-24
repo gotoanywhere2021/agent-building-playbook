@@ -1,0 +1,17 @@
+flowchart TD
+    A["原语一：LLM 调用（LLM call）"] --> D["组合出工作流：调用加调用的序列（Workflow: calls in sequence）"]
+    B["原语二：工具调用（Tool call）"] --> D
+    C["原语三：循环（Loop）"] --> E["组合出智能体：循环中由模型选工具（Agent: model picks tools in a loop）"]
+    A --> E
+    B --> E
+    C --> E
+    D --> F{"哪一原语出了问题？（Which primitive misbehaves?）"}
+    E --> F
+    F --> G["剥掉抽象层逐个检查：哪次调用产出错误、哪个循环条件失效（Strip to primitives and inspect）"]
+    G -. "带着结论回到原语层调整" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G core;
+    class F gate;
+    class A,B,C out;

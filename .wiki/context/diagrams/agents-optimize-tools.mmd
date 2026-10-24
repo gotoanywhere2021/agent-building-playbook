@@ -1,0 +1,14 @@
+flowchart TD
+    A["工具集 + 真实任务清单（Tool set + realistic tasks）"] --> B["让代理实跑并留痕观察（Agent attempts real tasks）"]
+    B --> C{"工具选择都对吗？（Correct selections?）"}
+    C -- "误选、犹豫或不一致" --> D["每次误选都是缺陷报告（Bug report）：名称或描述区分度不足"]
+    D --> E["修订工具描述与接口（Revise descriptions）"]
+    E --> F["重跑评估（Rerun the eval）"]
+    F -. "回归重测整套工具" .-> B
+    C -- "全部正确" --> G["部署上线（Deploy）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F core;
+    class C gate;
+    class A,G out;

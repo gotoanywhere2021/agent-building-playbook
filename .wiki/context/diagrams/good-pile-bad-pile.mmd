@@ -1,0 +1,17 @@
+flowchart TD
+    A["问规则，答曰『看情况』（It depends）"] --> B{"规则写得出来吗？（Stateable rule?）"}
+    B -- "写不出，但判得准" --> C["停止索要规则（Stop demanding rules）"]
+    C --> D["收集真实案例（Collect real cases）"]
+    D --> E["用领域自己的语言打标（Label in domain language）：好·坏·别扭·合规·冒险"]
+    E --> F{"专家判断一致吗？（Consistent?）"}
+    F -- "不一致" --> G["先解决分歧（Resolve disagreement）"]
+    G -. "分歧解决后重新收集" .-> D
+    F -- "一致" --> H["标注案例成堆（Labeled piles）"]
+    H --> I["意图训练数据（Intent training data）"]
+    I --> J["喂给规格·评审·验收·测试（Specs·reviewers·validators·tests）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E core;
+    class F,G gate;
+    class A,B,H,I,J out;

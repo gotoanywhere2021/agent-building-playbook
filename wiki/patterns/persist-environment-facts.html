@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,27 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">持久化环境事实</span></nav>
-<h1>持久化环境事实</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Persist Environment Facts</p><p class="lede">关于环境的事实——目录结构、版本、凭据、拓扑——应放在智能体可以重读的文件里，而不是随重置消失的漂浮上下文中。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>持久化环境事实</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Persist Environment Facts</p><p class="lede">关于环境的事实——目录结构、版本、凭据、拓扑——应放在智能体可以重读的文件里，而不是随重置消失的漂浮上下文中。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;新会话启动：上下文一片空白（Fresh session, blank context）&quot;] --&gt; B{&quot;环境事实已落盘？（Facts persisted?）&quot;}
+    B -- &quot;否&quot; --&gt; C[&quot;重新探索环境（Re-discover）&quot;]
+    C --&gt; D[&quot;重复付 token 与延迟，重犯同样的错误假设（Same wrong assumptions）&quot;]
+    B -- &quot;是&quot; --&gt; E[&quot;开局先读事实文件（Read facts first）&quot;]
+    E --&gt; F[&quot;WORKSPACE.md：目录布局与约定（Layout, conventions）&quot;]
+    E --&gt; G[&quot;env.yaml：工具版本与拓扑状态（Versions, topology）&quot;]
+    E --&gt; H[&quot;凭据与端点文件（Secrets, endpoints）&quot;]
+    F --&gt; I[&quot;带着准确环境模型开工（Grounded start）&quot;]
+    G --&gt; I
+    H --&gt; I
+    I --&gt; J{&quot;环境发生变化？（Environment changed?）&quot;}
+    J -- &quot;是：新机器 / 新配置&quot; --&gt; K[&quot;第一件事：更新事实文件（Update facts first）&quot;]
+    J -- &quot;否&quot; --&gt; L[&quot;事实持续可信（Facts stay true）&quot;]
+    K -. &quot;供下一个会话读取&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H,I,K,L core;
+    class B,C,D,J gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>每一次 agent 运行都从一个一无所知的上下文窗口开始。上一个会话发现的事实——仓库结构、已安装的工具版本、API 端点、集群拓扑（topology）、哪些端口开放、配置放在哪里——每次都必须重新发现或重新陈述，除非它们已被写下来。持久化环境事实（persisting environment facts）就是把这类发现工作捕获进结构化文件的做法，任何会话都可以把它作为自己的第一个动作来读取：一份描述目录布局与约定的 <code>WORKSPACE.md</code>，一份捕获工具版本与集群状态的 <code>env.yaml</code>，一份带有端点地址的 <code>.env</code> 或密钥文件。这些文件是 agent 对其所处世界的记忆。没有它们，每个会话都在重新发现上个会话已知的东西，为跨运行稳定的信息支付 token 与延迟。有了它们，agent 从一个有根据、准确的环境模型起步，而不是一块白板。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>搭建一个 agent 将跨多个会话工作的新项目时——把环境事实文件作为项目初始化的一部分写好，而不是事后补。</li><li>当 agent 发现了关于环境的非显而易见之事（不寻常的目录布局、被钉住的版本、已部署服务的怪癖）——在上下文重置之前立即写下来。</li><li>调试一个不断对环境做出同样错误假设的 agent——修复手段是持久化的文档，而不是更好的提示词。</li><li>把项目移交给新 agent 或新操作者时——环境事实文件就是入职文档。</li><li>环境发生变化（新机器、新配置、新拓扑）时——把更新持久化事实作为变更后的第一步。</li></ul>
@@ -406,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

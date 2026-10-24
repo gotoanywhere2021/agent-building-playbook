@@ -1,0 +1,16 @@
+flowchart TD
+    A["AI 生成代码近乎零成本（Generation near-free）"] --> B{"要纳入代码库长期持有？（Own it long-term?）"}
+    B -- "是" --> C["义务随之而来：安全补丁、依赖升级、值班、入职负担（Ongoing obligations）"]
+    C --> D{"谁来养？养多久？（Who maintains, and how long?）"}
+    D -- "答不上来" --> E["拒绝纳入或删除（Reject or delete）"]
+    D -- "回答清楚" --> F["创建与维护同步配人配流程（Staff maintenance with creation）"]
+    B -- "规范外的『顺手加上』" --> E
+    E --> G["义务不再累积（Obligations not accrued）"]
+    F --> G
+    H["例外：到期即弃的一次性代码、按 schema 自动再生成（Throwaway or regenerated）"] -. "不产生养码义务" .-> G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F core;
+    class B,D gate;
+    class A,E,G,H out;

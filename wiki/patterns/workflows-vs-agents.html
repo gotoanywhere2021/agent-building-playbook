@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">区分工作流（Workflow）与智能体（Agent）</span></nav>
-<h1>区分工作流（Workflow）与智能体（Agent）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Distinguish Workflows From Agents</p><p class="lede">工作流是已知分叉的固定步骤序列；智能体动态决定下一步做什么。混淆两者会造出更难测试、监控与信任的系统。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>区分工作流（Workflow）与智能体（Agent）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Distinguish Workflows From Agents</p><p class="lede">工作流是已知分叉的固定步骤序列；智能体动态决定下一步做什么。混淆两者会造出更难测试、监控与信任的系统。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;新系统设计（New system）&quot;] --&gt; B{&quot;执行路径可预先写死吗？（Is the path known in advance?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;工作流：代码定路径，模型只填内容（Workflow: fixed path, model fills content）&quot;]
+    B -- &quot;否&quot; --&gt; E[&quot;智能体：模型按状态动态选下一步（Agent: model drives control flow）&quot;]
+    C --&gt; D[&quot;可预测、可单测、可审计（Predictable, testable, auditable）&quot;]
+    E --&gt; F[&quot;灵活但非确定，需跨多样输入做行为测试（Flexible, behavior-tested）&quot;]
+    C --&gt; G{&quot;分支复杂到要靠模型输出驱动？（Branching driven by model output?）&quot;}
+    G -- &quot;是&quot; --&gt; E
+    G -- &quot;否&quot; --&gt; H[&quot;按命名的架构写测试（Name it, test against it）&quot;]
+    F --&gt; H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B,G gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>工作流（workflow）与智能体（agent）位于控制谱系上的不同位置，选错抽象会产生真实代价。工作流是预先确定的控制流：步骤 A 运行，然后步骤 B，然后一个条件分支通向 C 或 D。路径事先已知；模型在每一步填充内容，但不选择路径。智能体是一个控制循环，模型在每一轮决定下一步做什么，基于当前状态从可用工具与动作中选择。这个区分在操作上很重要。工作流可预测、可测试、可审计——你可以对照一张固定的图追踪每次执行。智能体自适应且灵活——能处理设计者未预见的情形——但其控制流不确定，更难穷尽测试，更容易走上意外路径。大多数被称为智能体的实用系统实际上是工作流：模型填充文本、做分类或生成计划，但控制流由代码固定。正确命名这些不是语义偏好。如果团队以为自己建的是智能体、实际接的是工作流，他们会为得不到的灵活性做设计，并在系统无法偏离预定路径时感到意外。反之，如果他们以为是工作流、实际是模型在驱动控制流，他们会低估意外行为的暴露面。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计新系统时：预先决定你要的是预定控制流（工作流）还是动态工具选择（智能体）。为架构命名，写下来，并对照该模型进行测试。</li><li>当工作流因模型输出驱动的分支逻辑而日益复杂时——在增加更多条件分支之前，问一句是否应该改为构建一个带工具选择的智能体。</li><li>调试时：如果系统走上意外路径，检查控制流本应由代码还是由模型决定——两者的失败模式差异显著。</li><li>人员配置与测试时：工作流逻辑可以对照已知路径做单元测试；智能体循环需要对多样化提示词与输入做行为测试。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

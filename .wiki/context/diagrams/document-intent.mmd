@@ -1,0 +1,16 @@
+flowchart TD
+    A["代码＝完整的『怎么做』（Code records how）"] --> B{"『为什么』有记录吗？（Is the why written down?）"}
+    B -- "否" --> C["后来者反向猜测理由（Successors reverse-engineer）"]
+    C --> D["错误假设渗进改动（Corrupted by false assumptions）"]
+    B -- "是" --> E["写意图层：理由、约束、被否决的替代方案（Write the intent layer）"]
+    E --> F["意图工件集：简报、术语表、验收标准、决策日志（Intent artifact set）"]
+    F --> G{"放在代理够得着的地方？（Reachable where agents read?）"}
+    G -- "埋在聊天记录里" --> H["等于没写（As if never written）"]
+    G -- "仓库或知识库" --> I["后续代理按原意扩展（Extended without corruption）"]
+    D -. "回补意图文档" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,F core;
+    class B,G gate;
+    class A,D,H,I out;

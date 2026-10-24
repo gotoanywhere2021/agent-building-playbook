@@ -1,0 +1,16 @@
+flowchart TD
+    A["代理宣称『已完成』（Agent claims done）"] --> B{"证据来自谁？（Who produced the evidence?）"}
+    B -- "来自代理自述：只是信心不是证据" --> C["不接受（Not accepted）"]
+    B -- "来自外部源" --> D["查验证明物（Inspect the proof artifact）"]
+    C --> D
+    D --> E["测试、视觉 diff、录屏、日志、人工验收（Tests, diffs, video, logs, sign-off）"]
+    E --> F{"证明物持久且可查证？（Durable and inspectable?）"}
+    F -- "否" --> D
+    F -- "是" --> G["验收成立（Claim established）"]
+    G --> H["信任可复核，无需重新推导（Institutional memory kept）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E core;
+    class B,F gate;
+    class A,G,H out;

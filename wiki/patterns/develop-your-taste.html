@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-taste">品味（taste）</a><span class="sep">›</span><span class="here">刻意培养品味（Taste）</span></nav>
-<h1>刻意培养品味（Taste）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Develop Your Taste</p><p class="lede">品味——识别质量、察觉不对劲的能力——是一门必须刻意修炼的手艺，不会从堆砌产出中自然长出。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>刻意培养品味（Taste）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Develop Your Taste</p><p class="lede">品味——识别质量、察觉不对劲的能力——是一门必须刻意修炼的手艺，不会从堆砌产出中自然长出。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理批量产出选项（Agents generate in volume）&quot;] --&gt; B{&quot;『差不多』就收下？（Accept as good enough?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;自满收下：代理的夸奖会拉平品味（Complacency flattens taste）&quot;]
+    B -- &quot;否：追问好在哪&quot; --&gt; D[&quot;刻意校准：看好例、研坏例、说出为什么（Calibrate on exemplars and failures）&quot;]
+    C -. &quot;重建评价习惯&quot; .-&gt; D
+    D --&gt; E[&quot;对『仅仅合格』保持不满（Dissatisfied with adequate）&quot;]
+    E --&gt; F{&quot;觉得不对却说不出？（Feels off, can&#x27;t say why?）&quot;}
+    F -- &quot;是&quot; --&gt; G[&quot;放慢，把它命名：品味正在成形（Name it; taste forming）&quot;]
+    G --&gt; D
+    F -- &quot;能判断了&quot; --&gt; H[&quot;编辑成为稀缺职能：会选的人更值钱（Editing is the scarce function）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G core;
+    class B,F gate;
+    class A,C,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>品味（taste）是辨认『好』与『够好』之间、『正确』与『对』之间的差别的能力。它不同于技能（skill）：技能是执行的能力；品味是评估（eval）的能力。在传统软件工程中，品味在多年接触生产环境真实系统的过程中养成——看见什么会坏、什么老化得难看、什么保持可维护、什么不能。在 AI 辅助开发中，周期更快，但反馈更嘈杂。产出量急剧增加；评估产出的纪律必须同比例增加，否则品味萎缩。培养品味需要有意识地同时接触好例子与坏例子、练习解释为什么某个东西更好，以及养成对『仅仅合格』的产出保持不满的习惯。它还要求对自己诚实：品味不是偏好，也不是习惯，而是经过校准的判断（calibrated judgment）。一个总是告诉你它产出的东西很好的智能体，不是在培养你的品味——是在把它抹平。在智能体（agentic）环境中给品味命名的一个精确说法是加速之下的稳定判断（consistent judgment under acceleration）：当智能体一次生成许多选项时，能做出好选择的人变得更值钱，而这种判断横跨许多维度——产品品味、架构判断、安全偏执（security paranoia）、领域直觉、组织敏感度、叫停坏路径的意愿、看出某个东西接近正确但尚未完成的眼睛，以及按赌注大小选择恰当流程强度的能力。当生成变得廉价，编辑成为稀缺功能：人的角色转向甄选（curation）与挑选，在系统层面行使编辑判断——决定什么进入产品、拒绝看似合理实则错误的工作、在大量生成工件（artifact）之间保持连贯，以及确保产出服务战略而非局部最优。去找那些范例，研究那些失败，构建那个在你还说不出确切理由之前就告诉你『哪里不对』的内部模型。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>评审自己智能体运行的产出时：不要只验证它们正确——问它们好不好，并为这个差别建立词汇。</li><li>设计系统时：不只问一个设计能不能行，还要问它是不是对的设计，并练习解释为什么。</li><li>评估工具、模式与方法时：把每一次比较当作打磨内部模型的机会，而不只是做一次选择。</li><li>某个东西感觉不对但说不出为什么时：那种不对的感觉正是品味的早期形态——放慢，说出在困扰你的是什么，精炼判断。</li><li>阅读他人的代码、文字或设计时：把与优秀作品的每一次相遇当作校准机会。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

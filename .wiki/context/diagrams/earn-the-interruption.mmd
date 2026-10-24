@@ -1,0 +1,16 @@
+flowchart TD
+    A["代理执行中（Agent at work）"] --> B{"人类判断成为瓶颈？（Human judgment now the bottleneck?）"}
+    B -- "否：例行节点不打扰" --> C["继续自主推进（Keep running）"]
+    C --> B
+    B -- "是" --> D{"属于指定的高代价边缘？（One of the earned edges?）"}
+    D -- "高风险部署、意图不明、循环不收敛、合规例外" --> E["按中断策略发起打扰（Interrupt per policy）"]
+    D -- "否：代理本该自己定" --> C
+    E --> F["评审队列按风险与置信度排序（Risk-ranked review queue）"]
+    F --> G["每次打扰都值得读（Every interrupt worth reading）"]
+    G -. "若退化为处处打扰：人学会盖章式忽略，回校策略" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,F core;
+    class B,D gate;
+    class A,G out;

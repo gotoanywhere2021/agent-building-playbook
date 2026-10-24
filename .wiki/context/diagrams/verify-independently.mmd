@@ -1,0 +1,15 @@
+flowchart TD
+    A["智能体报告『已完成』（Agent reports done）"] --> B{"有独立可查的产物吗？（Independent artifact exists?）"}
+    B -- "无：只有自述" --> C["该步骤视同未执行（Unobservable equals unrun）"]
+    C --> D["回到执行，并留下可检产物（Re-run and leave an artifact）"]
+    D -. "产物：文件、日志、下游状态、测试结果" .-> B
+    B -- "有" --> E{"核验者独立于报告者？（Verifier independent of claimer?）"}
+    E -- "否：同一智能体自查不可信" --> F["换独立来源：日志、测试、下游或人（Logs, tests, downstream, or human）"]
+    F --> E
+    E -- "是" --> G["完成被独立证实（Verified done）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F core;
+    class B,E gate;
+    class A,G out;

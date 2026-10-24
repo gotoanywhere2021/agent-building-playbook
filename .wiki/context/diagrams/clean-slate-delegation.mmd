@@ -1,0 +1,14 @@
+flowchart TD
+    A["编排者派生子代理（Orchestrator spawns a subagent）"] --> B["默认空白上下文（Default: clean slate）"]
+    B --> C["显式构造简报（Construct the briefing）：任务、约束、可视为已定的结论"]
+    C --> D{"它真需要完整历史吗？（Does it truly need history?）"}
+    D -- "需要：历史本身就是分析对象（如总结对话）" --> E["例外：带全量上下文（History is the subject）"]
+    D -- "不需要" --> F["只传蒸馏简报，不倒历史（Distill, don't dump）"]
+    F --> G["子代理干净起步，一次做对（Focused, first-try-right）"]
+    A -. "偷懒全量转储" .-> H["继承混乱（Inherited confusion）：无关、矛盾、已被推翻的信息全跟上"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D gate;
+    class A,E,G,H out;

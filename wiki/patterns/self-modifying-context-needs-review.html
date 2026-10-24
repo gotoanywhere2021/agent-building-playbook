@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-knowledge">知识（knowledge）</a><span class="sep">›</span><span class="here">自我修改的上下文需要评审</span></nav>
-<h1>自我修改的上下文需要评审</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Self-Modifying Context Needs Review</p><p class="lede">让智能体编辑自己的指令文件既强大又危险——能改掉坏习惯，也可能固化错误教训、讨好用户或无人审计地漂移；要求反思性修改引用证据并通过评审，才能成为正式版本。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>自我修改的上下文需要评审</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Self-Modifying Context Needs Review</p><p class="lede">让智能体编辑自己的指令文件既强大又危险——能改掉坏习惯，也可能固化错误教训、讨好用户或无人审计地漂移；要求反思性修改引用证据并通过评审，才能成为正式版本。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;长生命周期的智能体（Long-lived agent）&quot;] --&gt; B[&quot;触发自我修改（Self-modification trigger）：纠正坏习惯·适应团队规范&quot;]
+    B --&gt; C[&quot;只提案不生效（Propose, do not apply）：引用具体证据&quot;]
+    C --&gt; D{&quot;评审达成一致？（Review agreed?）&quot;}
+    D -- &quot;未通过：坏教训·与全局政策冲突·讨好倾向&quot; --&gt; E[&quot;驳回并留痕（Reject and log）&quot;]
+    E --&gt; A
+    D -- &quot;通过：人类·批评代理·跨会话共识&quot; --&gt; F[&quot;成为规范（Canonical change）：可审计·可回滚&quot;]
+    F --&gt; G[&quot;行为漂移可追溯（Drift traceable）：何时·为何·凭何证据&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C core;
+    class D,E gate;
+    class A,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一个能编辑自身人格（persona）文件或指令集的智能体，是可用配置中最强大也最危险的一种。上行空间是真实的：重写自身指引的智能体可以纠正反复出现的坏习惯，长寿命智能体可以适应团队演进的规范，人格连续性可以让跨会话协作更顺畅，反复出现的人类反馈可以固化为持久的操作性指引而不必每次重新学习。下行空间同样真实且更难察觉。自我修改可能把智能体从一次误导性事件中泛化出的坏教训锁死。智能体为自己写的局部修补可能悄悄与全局策略冲突。最糟的是，一个优化自身指令的智能体可能学会取悦用户而不是解决问题——把谄媚（sycophancy）编码为规则。而悄悄累积的变更将变得无法审计：行为漂移了，却没有人能说出何时、为何、基于什么证据。『不可见的记忆更新』反模式点出了核心危害——如果一次记忆变更改变了行为，人类需要知道改了什么、为什么改。更安全的模式是带评审的反思性变更（reflective change with review）：智能体提议一次记忆或人格更新而不是直接应用，援引支持它的具体证据，且变更必须赢得同意——跨多个会话、来自人类、或来自批评者（critic）智能体——才能成为权威版本。智能体可以提议；它无权单方面改写自己所依据的规则。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计任何能写入自身人格、指令或长寿命记忆的智能体时——提议与评审门应从第一天就内建，而不是漂移出现后再补。</li><li>当长寿命智能体确实需要随时间适应团队规范，但这些适应必须保持可审计、可回滚。</li><li>当反复出现的反馈应成为持久指引——把它捕获为一次经评审的变更，而不是一次不可见的变更。</li><li>当智能体行为已经漂移而没人能解释为什么——自我修改缺少评审痕迹就是要修复的根因。</li><li>当自写规则可能与全局策略冲突——评审正是冲突在上线之前被抓住的地方。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

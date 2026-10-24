@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,26 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">并行运行独立的智能体</span></nav>
-<h1>并行运行独立的智能体</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Run Independent Agents in Parallel</p><p class="lede">当两个以上任务没有顺序依赖、也不共享可变状态时，用并行智能体而非串行——唯一重要的成本是墙上时钟。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>并行运行独立的智能体</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Run Independent Agents in Parallel</p><p class="lede">当两个以上任务没有顺序依赖、也不共享可变状态时，用并行智能体而非串行——唯一重要的成本是墙上时钟。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;编排者的一组任务（Task set from orchestrator）&quot;] --&gt; B{&quot;派发前独立性三查（Independence check）&quot;}
+    B -- &quot;B 需要 A 的输出&quot; --&gt; C[&quot;必须串行（Sequential）&quot;]
+    B -- &quot;写同一共享资源&quot; --&gt; C
+    B -- &quot;无依赖 / 无共享写 / 汇总顺序无关&quot; --&gt; D[&quot;同时派发全部任务（Dispatch all at once）&quot;]
+    D --&gt; E[&quot;Agent 轨道一（Track A）&quot;]
+    D --&gt; F[&quot;Agent 轨道二（Track B）&quot;]
+    D --&gt; G[&quot;Agent 轨道三（Track C）&quot;]
+    E --&gt; H[&quot;等待全部结果（Wait for all）&quot;]
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I[&quot;聚合结果（Aggregate）&quot;]
+    I --&gt; J[&quot;墙钟时间线性缩短（Linear wall-clock speedup）&quot;]
+    H -. &quot;任一轨道撞见共享状态：回退串行&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,I,J core;
+    class B,C gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>独立任务——没有顺序依赖、没有共享可变状态的任务——才是并行执行的真正适用场景。当协调者（orchestrator）手头有一组任务，每个都需要独立的上下文窗口、且互不依赖彼此的输出时，顺序运行是纯浪费：协调者等每个任务完成才开始下一个，而算力闲置。正确的模式是把所有独立任务同时派发，然后等待全部结果再继续。这不是过早优化；对任何非平凡的独立任务集，墙钟加速与任务数呈线性关系。关键纪律是派发之前验证独立性。两个任务独立，当且仅当：任务 B 不需要任务 A 的任何输出；任务 A 与任务 B 不写同一个共享资源；它们的结果以何种顺序整合无关紧要。以上任何一条不成立，任务就不独立，必须顺序执行。并行编排最常见的失败模式是断言了不存在的独立性——因为任务看起来彼此分开就宣告它们并行，然后跑到一半才发现它们共享一个文件、一行数据库记录或一个上下文假设。独立性必须在派发前验证，不能假设。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>协调者要在同一输入上运行三个或以上分析任务（例如对同一文件做三种不同类型的代码评审）——全部可以同时启动。</li><li>协调者在决策前需要从多个独立来源收集信息——并行派发所有查询，然后聚合。</li><li>在不共享状态的多个模块上运行测试——并行派发测试 agent，等待全部结果。</li><li>当单任务延迟由模型响应时间或外部 I/O 主导——并行性回收了大部分墙钟成本。</li></ul>
@@ -406,5 +433,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

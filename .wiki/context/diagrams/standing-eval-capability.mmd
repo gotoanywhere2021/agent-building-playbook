@@ -1,0 +1,17 @@
+flowchart TD
+    A["评估套件随系统入库（Suite in version control）"] --> B["CI 常跑、可随时触发（Runs in CI, cheap on demand）"]
+    B --> C["结果落盘、跨次可比（Results stored and compared）"]
+    C --> D["每次变更：先跑基线，改后再跑（Baseline, change, re-run）"]
+    D --> E{"指标退化？（Regressed?）"}
+    E -- "退化：可归因" --> F["补用例复现并修复（Reproduce and fix）"]
+    F -. "修复后重跑对比" .-> D
+    E -- "未退化" --> G["维持常备能力，随每次变更重跑（Standing capability）"]
+    G --> H{"消融：装置仍贡献增益？（Does the harness still earn its keep?）"}
+    H -- "否：新模型已覆盖" --> I["裁剪被淘汰的编排（Prune scaffolding）"]
+    H -- "是" --> J["保留仍拉动指标的编排（Keep what moves the numbers）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class A,B,C,D,F core;
+    class E,H gate;
+    class G,I,J out;

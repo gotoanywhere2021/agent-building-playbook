@@ -1,0 +1,16 @@
+flowchart TD
+    A["问题到手（Problem in hand）"] --> B["先试最不智能体的一步：单次精心构造的 LLM 调用（Single well-crafted call）"]
+    B --> C{"单次调用即达标？（Sufficient?）"}
+    C -- "达标" --> D["停在这里：成本、延迟、故障面最小（Stop at the simplest thing）"]
+    C -- "不达标" --> E{"能说清简单方案缺什么吗？（Evidence of the gap?）"}
+    E -- "说不清" --> B
+    E -- "说得清" --> F["一次只加一档：加工具、定序工作流、智能体循环（One increment at a time）"]
+    F --> G{"现在够了吗？（Enough now?）"}
+    G -- "够" --> H["可靠且可解释的多步系统（Reliable, explainable steps）"]
+    G -- "还不够" --> F
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class C,E,G gate;
+    class A,D,H out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-taste">品味（taste）</a><span class="sep">›</span><span class="here">先造五个，扔掉四个</span></nav>
-<h1>先造五个，扔掉四个</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build Five to Throw Away</p><p class="lede">还没弄清需求时，并行构建多个变体——比较它们会揭示你真正在乎什么。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>先造五个，扔掉四个</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build Five to Throw Away</p><p class="lede">还没弄清需求时，并行构建多个变体——比较它们会揭示你真正在乎什么。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;说不清『好』长什么样（Can&#x27;t yet articulate good）&quot;] --&gt; B[&quot;选变体生成法（Seed the variants）：指定立场 / 让模型自选 / 同题抽样&quot;]
+    B --&gt; C[&quot;并行造五版（Build five in parallel）&quot;]
+    C --&gt; D[&quot;并排比较（Compare side by side）&quot;]
+    D --&gt; E{&quot;分歧与共识看清了吗？（Preferences revealed?）&quot;}
+    E -- &quot;还没&quot; --&gt; F[&quot;补变体或换探索维度（More variants / new dimension）&quot;]
+    F -. &quot;再来一轮&quot; .-&gt; C
+    E -- &quot;看清了&quot; --&gt; G[&quot;萃取规格与偏好（Extract the spec &amp; preferences）&quot;]
+    G --&gt; H[&quot;归宿随意：全弃 / 一版转正 / 采石拼装（All die, one graduates, or quarry）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,G core;
+    class E gate;
+    class A,F,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体构建就是瀑布，但是飞快的瀑布——一旦一次完整的设计-构建循环的成本从一个季度降到一下午，在理解需求之前就一头撞进某个设计，便成了理性行为。Brooks 告诉我们要『计划扔掉一个』；当智能体并行运行时，扔五个与扔一个耗费同样的墙钟时间。</p>
 <p>造五个的意义不在冗余——在比较。一次探路构建（spike）教会你关于问题的事；五个并排的变体教会你关于你自己偏好的事。在看到变体们在何处一致、在何处分歧之前，你不知道一个设计的哪些性质是本质的、哪些是偶发的；而常常直到你同时看到『有它』与『没它』的两个版本，你才说得出自己在乎什么。</p>
 <p>生成变体有三种方式。你可以提示（hint）想探索的维度，给每次构建一个刻意的立场——MVP 优先、性能优先、UX 优先。你可以让模型自己挑选多样的路数。或者，你可以给每个变体一模一样的提示词，玩老虎机，让采样方差替你探索。</p>
@@ -412,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

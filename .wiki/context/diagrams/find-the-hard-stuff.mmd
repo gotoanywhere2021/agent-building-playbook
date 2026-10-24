@@ -1,0 +1,14 @@
+flowchart TD
+    A["接到问题（Problem in hand）"] --> B{"从哪儿下手？（Where is the real work?）"}
+    B -- "滑向顺滑可控处" --> C["易做区（Tractable parts）：产出漂亮，不触要害"]
+    B -- "刻意探不舒服的地方" --> D["主动探测（Probe deliberately）：怎样会失败？依赖能否成立？"]
+    D --> E["找到真难点（Real difficulty）：隐藏约束·坏依赖·破模型的边界"]
+    E --> F["先验证难点可解（Verify solvable first）"]
+    F --> G["再动手实现（Then implement）"]
+    C -. "早期进展太顺＝警示信号" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B,C gate;
+    class A,G out;

@@ -1,0 +1,16 @@
+flowchart TD
+    A["变更合入主干（Change merged）"] --> B["功能开关隔离（Feature flag）：合并不等于曝光"]
+    B --> C["分级曝光拨盘（Staged exposure）：内部→犬粮→金丝雀→灰度→客户自选"]
+    C --> D{"该阶段信号守住了吗？（Signals healthy?）"}
+    D -- "错误率或延迟越阈" --> E["自动回滚曝光（Automated rollback）"]
+    E --> F["修复后重新起量（Re-stage after fix）"]
+    F --> C
+    D -- "稳固：推进下一队列（准绳由人定）" --> G{"已覆盖全部用户？（Everyone?）"}
+    G -- "否" --> C
+    G -- "是" --> H["安全完成发布（Safe release）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D,E,G gate;
+    class A,H out;

@@ -88,13 +88,25 @@ cat > "$WORK/zh-bodies/alpha-pattern.md" <<'EOF'
 阿尔法正文（中文版）。参见 `patterns/beta-pattern.md`。
 EOF
 
+mkdir -p "$WORK/diagrams"
+cat > "$WORK/diagrams/alpha-pattern.mmd" <<'EOF'
+flowchart TD
+    A["输入（Input）"] --> B{"判断？（Check?）"}
+    B -- "是" --> C["输出（Output）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class A,C out;
+    class B gate;
+EOF
+
 WIKI="$WORK/wiki"
 mkdir -p "$WIKI"
 
 # ── 1. happy path: renders the full zh site ────────────────────────────────
 
 bash "$PUBLISH" "$PATTERNS" "$WIKI" "$WORK/taxonomy.yaml" "$WORK/zh.json" \
-    "$WORK/zh-bodies" >/dev/null 2>"$WORK/log.txt" || { cat "$WORK/log.txt" >&2; fail "publish.sh exited non-zero"; }
+    "$WORK/zh-bodies" "$WORK/diagrams" >/dev/null 2>"$WORK/log.txt" || { cat "$WORK/log.txt" >&2; fail "publish.sh exited non-zero"; }
 
 [[ -f "$WIKI/index.html" ]]       || fail "index.html not rendered"
 [[ -f "$WIKI/explore.html" ]]     || fail "explore.html not rendered"
@@ -142,6 +154,15 @@ assert_contains "$WIKI/patterns/alpha-pattern.html" 'id="what-it-is-2"' "en head
 if grep -qF '英文原文（Original English）' "$WIKI/patterns/beta-pattern.html"; then
     fail "beta has no zh body but shows the original toggle"
 fi
+
+# Diagram layer: mermaid card + vendored loader only where a diagram exists.
+assert_contains "$WIKI/patterns/alpha-pattern.html" '模式图解（Diagram）' "diagram card"
+assert_contains "$WIKI/patterns/alpha-pattern.html" 'class="mermaid"' "mermaid source"
+assert_contains "$WIKI/patterns/alpha-pattern.html" 'assets/mermaid.min.js' "vendored mermaid"
+if grep -qF 'mermaid.min.js' "$WIKI/patterns/beta-pattern.html"; then
+    fail "beta has no diagram but loads mermaid"
+fi
+[[ -f "$WIKI/assets/mermaid.min.js" ]] || fail "vendored mermaid.min.js missing"
 
 # No wheel/sunburst remnants in the human view.
 if grep -qiE 'sunburst|wheel-cta|explore the wheel' "$WIKI"/*.html; then

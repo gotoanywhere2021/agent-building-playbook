@@ -1,0 +1,16 @@
+flowchart TD
+    A["跨会话持久化（Persistence across sessions）"] --> B{"记忆如何组织？（One global pool or scoped?）"}
+    B -- "全局大池（One giant memory）" --> C["上下文劣化（Decay）：中毒·偏执·停滞·令牌浪费·虚假连续性"]
+    C -. "重构为分区" .-> D
+    B -- "按范围分区" --> D["范围化记忆（Scoped memory）：按项目·角色·任务分池"]
+    D --> E{"这条记忆仍相关吗？（Still relevant?）"}
+    E -- "过期或失效" --> F["标记过期·归档或删除（Expire and archive）：遗忘是特性"]
+    E -- "仍相关" --> G["保留在其所属范围（Keep in scope）"]
+    F --> H["决策史可查但不进每次提示（History queryable, not in every prompt）"]
+    G --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,G core;
+    class B,C,E gate;
+    class A,F,H out;

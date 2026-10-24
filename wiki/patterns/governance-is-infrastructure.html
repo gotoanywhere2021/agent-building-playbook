@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,24 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">治理（Governance）是基础设施，不是文档</span></nav>
-<h1>治理（Governance）是基础设施，不是文档</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Governance Is Infrastructure, Not a Document</p><p class="lede">在智能体组织里，治理不能是漂在工作流之外的政策文档——它得嵌进工具、提示词、校验器、日志与审批边界；共同底座是 LLM 代理/网关：记录用量、追踪成本、执行策略并提供可观测性。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>治理（Governance）是基础设施，不是文档</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Governance Is Infrastructure, Not a Document</p><p class="lede">在智能体组织里，治理不能是漂在工作流之外的政策文档——它得嵌进工具、提示词、校验器、日志与审批边界；共同底座是 LLM 代理/网关：记录用量、追踪成本、执行策略并提供可观测性。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;治理写成文档（Policy document）&quot;] --&gt; B{&quot;何时约束行动？（When does it bind?）&quot;}
+    B -- &quot;事后复查&quot; --&gt; C[&quot;违规已成事故（Violation already an incident）&quot;]
+    B -- &quot;行动当下&quot; --&gt; D[&quot;治理嵌入基础设施（Embedded infrastructure）&quot;]
+    D --&gt; E[&quot;LLM 网关（Gateway）：日志·成本·路由·观测&quot;]
+    D --&gt; F[&quot;工作流执行器（Runner）：工件留痕·审批边&quot;]
+    D --&gt; G[&quot;模式库（Pattern library）：安全操作成默认&quot;]
+    E --&gt; H[&quot;策略在行动时刻生效（Enforced at the moment of action）&quot;]
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I[&quot;平时隐形，关键时承重（Invisible when working, load-bearing when it matters）&quot;]
+    C -. &quot;反模式提醒：文档不是约束&quot; .-&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B,C gate;
+    class A,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>写成工作流之外的政策文档的治理，管不住智能体（agent）的任何行为；等到人类去读政策时，智能体早已行动完毕。在智能体化的组织里，治理必须是基础设施（infrastructure）——嵌入智能体调用的工具、框定它们的提示词、检查其输出的验证器、记录发生了什么的日志，以及为其高风险转换把关的审批边（approval edge）——使政策在行动的当下被执行，而不是事后才被复查。这套基础设施承载的关注面宽泛而具体：token 预算、审计日志、模型与供应商路由、数据访问范围、生产权限、供应链风险、知识产权与许可、合规约束、安全策略、人工审批阈值、回滚权限、用户隐私，以及生成物的来源（provenance）。反模式是把治理当成事后审查——只在最后检查，那时违规已是事故——因为不嵌入工作流的政策不是约束，只是愿望。少数几个基础设施模式让嵌入式治理变得可行。共同的底座是一个所有调用都会经过的 LLM 代理或网关（gateway）：它记录用量、跟踪成本、执行路由与访问策略，并为整个机群提供可观测性——这是一个让治理真正落地而非流于建议的咽喉点（chokepoint）。记录工件与审批的工作流执行器（workflow runner）让每个有后果的动作都有可审计的轨迹和一条可执行的审批边。而一个把安全操作手法标准化的模式库，把治理从禁令变成一组人们伸手可得的可复用默认项。这样设计的治理，运转良好时不可见，关键时刻承重。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当智能体执行有后果的动作——花费 token、触碰生产、访问数据、生成可交付的工作——而政策需要在行动当下生效，而非事后评审时。</li><li>当你需要一个执行咽喉点——所有调用都经过的 LLM 代理或网关——统一记录用量、跟踪成本、路由模型并应用访问策略时。</li><li>当审计、合规、知识产权或隐私要求为智能体做了什么、谁批准了它提供来源与审计轨迹时——记录工件与审批的工作流执行器提供了这一点。</li><li>当高风险转换需要一条带回滚权限的真实审批边，而不是『会有人去检查』的书面期望时。</li><li>当组织不断重新发现同一批安全操作手法时——用模式库把它们标准化为默认项，而不是让每个团队重新学习规则。</li></ul>
@@ -406,5 +431,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

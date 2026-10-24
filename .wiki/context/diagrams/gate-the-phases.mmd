@@ -1,0 +1,16 @@
+flowchart TD
+    A["任务输入（Task）"] --> B["设计阶段（Design）"]
+    B --> C{"关口：设计成立？（Go or kill?）"}
+    C -- "否：回炉" --> B
+    C -- "是" --> D["实现阶段（Build）"]
+    D --> E{"关口：验证通过？（Verified?）"}
+    E -- "否：回修" --> D
+    E -- "是" --> F["交付（Ship）"]
+    A -. "跳过关口：一气呵成" .-> G["阶段糊化（Phases blur）"]
+    G --> H["难以评审·无法回滚（Unreviewable, unrollbackable）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D core;
+    class C,E,G,H gate;
+    class A,F out;

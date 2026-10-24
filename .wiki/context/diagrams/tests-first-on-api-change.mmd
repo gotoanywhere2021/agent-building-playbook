@@ -1,0 +1,15 @@
+flowchart TD
+    A["API 变更需求（API change required）"] --> B["先改测试以表达新契约（Update tests to the new contract first）"]
+    B --> C["套件先红：规格先于实现失败（Red suite is the executable spec）"]
+    C --> D["失败暴露将被破坏的调用方（Failures surface broken callers）"]
+    D --> E["再改实现直至转绿（Implement until green）"]
+    E --> F{"全部通过？（All green?）"}
+    F -- "否：继续对规格实现" --> E
+    F -- "是" --> G["可评审边界：先规格提交，后实现提交（Spec commit, then impl commit）"]
+    C -. "反例：先改实现再凑测试" .-> H["测试漂移：测试只描述已建成之物（Test drift）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F gate;
+    class A,G,H out;

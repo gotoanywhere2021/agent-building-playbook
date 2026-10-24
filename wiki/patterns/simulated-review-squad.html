@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">模拟评审团（Simulated Review Squad）</span></nav>
-<h1>模拟评审团（Simulated Review Squad）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Simulated Review Squad</p><p class="lede">在作品到达真实用户之前，先过一遍由模拟视角组成的陪审团——专家与新手用户、合规、客服、高管发起人、怀疑的工程师、无障碍、安全——基于真实转录与工单构建，又早又便宜地翻出反对意见。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>模拟评审团（Simulated Review Squad）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Simulated Review Squad</p><p class="lede">在作品到达真实用户之前，先过一遍由模拟视角组成的陪审团——专家与新手用户、合规、客服、高管发起人、怀疑的工程师、无障碍、安全——基于真实转录与工单构建，又早又便宜地翻出反对意见。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;工件即将面世（Artifact before real users）&quot;] --&gt; B[&quot;组建模拟评审团（Assemble the squad）：专家与新手用户·合规·客服·怀疑派工程师·无障碍·安全&quot;]
+    B --&gt; C[&quot;用真实材料定角色（Ground personas in real material）：转录·工单·销售电话·影子记录&quot;]
+    C --&gt; D[&quot;各视角并行读工件（Parallel simulated review）：各以自身关切提问&quot;]
+    D --&gt; E{&quot;产生异议了吗？（Objections?）&quot;}
+    E -- &quot;有：新手被绊·合规暴露·潜在工单&quot; --&gt; F[&quot;趁便宜先修（Fix while cheap）&quot;]
+    F --&gt; D
+    E -- &quot;无&quot; --&gt; G[&quot;模拟是滤镜不是放行闸（Filter, not release gate）&quot;]
+    G --&gt; H[&quot;需真人权威时升级（Escalate to real authority）；上线后继续收真实反馈&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>模拟评审小队（simulated review squad）是一个由不同视角组成的评审团——专家用户、新手用户、合规评审、客服运营、高管发起人（executive sponsor）、持怀疑态度的工程师、无障碍评审、安全评审，以及工作所要求的任何领域特定人格（persona）——在工件抵达真实人类之前对它进行审查。目标明确地不是假装这些模拟是它们所替代人类的完美替身；而是比真实评审循环更早、也便宜得多地产出那些人类会提出的异议，让显而易见的问题在工件到达真实用户之前就被抓住。每个人格从自己的关注点阅读工件：新手在专家从未注意的东西上绊倒，合规评审标记制造敞口的步骤，客服运营预测它会产生的工单，怀疑的工程师质疑没人明说的假设。弱版本凭想象发明这些人格；强版本用真实材料构建它们——对话记录、支持工单、销售电话、旁听会话与领域文档——让模拟反应扎根于真实受众的真实行为。这不同于技术性的代码审计：审计者对照规范检查工件，而评审小队上演多利益相关方反应，揭示没有任何规范编码的人类异议。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>工作即将到达真实用户，而与每个相关方进行完整评审循环会很慢或很贵。</li><li>工件触及许多利益相关方（合规、客服、无障碍、安全），你希望在上线之前而非之后让他们的异议浮出水面。</li><li>你有真实材料——记录、工单、电话——让人格扎根于实际行为而非想象。</li><li>在工作的这个阶段，早而便宜的异议比晚而权威的更有价值。</li><li>你想在花费真实评审者的注意力之前，抓住显而易见的跨视角失败。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

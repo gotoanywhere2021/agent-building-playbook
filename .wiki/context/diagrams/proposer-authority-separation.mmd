@@ -1,0 +1,16 @@
+flowchart TD
+    A["Agent 提出行动（Proposal）：计划 / 代码 / 命令"] --> B{"行动不可逆或有风险？（Irreversible or risky?）"}
+    B -- "可逆且低风险" --> C["提案人直接执行（Execute directly）"]
+    B -- "是" --> D{"谁有权批准？（Who holds authority?）"}
+    D -- "仍是提案人自己" --> E["自我审批：偏见的橡皮图章（Rubber stamp）"]
+    D -- "独立方：第二 Agent / 校验器 / 人 / 门控阶段" --> F["权威评估提案（Authority assesses）"]
+    F --> G{"安全？正确？符合意图？（Safe, correct, aligned?）"}
+    G -- "否：权威必须能说不" --> H["驳回，提案人修改（Reject and rework）"]
+    G -- "是" --> I["批准执行 + 分离审计记录（Approve with audit trail）"]
+    H -. "修改后的新提案重新送审" .-> F
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F,H,I core;
+    class B,D,E,G gate;
+    class A out;

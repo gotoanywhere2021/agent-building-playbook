@@ -1,0 +1,15 @@
+flowchart TD
+    A["能力需求（Capability Idea）"] --> B["先定义评估（Define the eval）"]
+    B --> C["构建评估装置（Eval harness）"]
+    C --> D["实现能力（Implement）"]
+    D --> E{"评估通过？（Pass?）"}
+    E -- "未通过：回到实现" --> D
+    E -- "通过" --> F["上线（Ship）"]
+    F --> G["评估常备（Standing capability）：随每次变更重跑"]
+    G -. "回归发现退化" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E gate;
+    class A,F,G out;

@@ -1,0 +1,15 @@
+flowchart TD
+    A["编排者只留全局判断（Orchestrator keeps the plan）"] --> B{"下一任务细节重而产物清晰？（Heavy detail, clear outcome?）"}
+    B -- "是" --> C["派一个全新子智能体（Fresh sub-agent, empty window）"]
+    C --> D["子智能体吸收全部过程细节（Absorbs calls, retries, verbose output）"]
+    D --> E["只回传结果：摘要、路径或判定（Returns summary, path or verdict）"]
+    E --> F["编排者上下文只增结果不增过程（Summary, not transcript）"]
+    F --> A
+    B -- "否：需亲历中间过程" --> G["留在编排者上下文内处理（Handle in-context）"]
+    G -. "窗口将满：先压缩或再分流" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B gate;
+    class A,G out;

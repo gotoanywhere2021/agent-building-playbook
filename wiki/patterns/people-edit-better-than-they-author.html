@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">人更擅长编辑（Edit），而不是从零写（Author）</span></nav>
-<h1>人更擅长编辑（Edit），而不是从零写（Author）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">People Edit Better Than They Author</p><p class="lede">多数干系人写不出干净的需求，但给他一个具体工件他能立刻说出哪里不对——用『给人一个可反应的东西』引出意图，一次性工件是提取意图最快的途径。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>人更擅长编辑（Edit），而不是从零写（Author）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">People Edit Better Than They Author</p><p class="lede">多数干系人写不出干净的需求，但给他一个具体工件他能立刻说出哪里不对——用『给人一个可反应的东西』引出意图，一次性工件是提取意图最快的途径。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;意图瓶颈（Intent bottleneck）：说不清要建什么&quot;] --&gt; B{&quot;如何提取需求？（Elicitation）&quot;}
+    B -- &quot;空白页硬写需求&quot; --&gt; C[&quot;含糊或错误的需求（Vague, wrong spec）&quot;]
+    B -- &quot;制造可反应的实物（Artifact to react to）&quot; --&gt; D[&quot;Agent 几分钟产出一次性原型（Throwaway artifact）&quot;]
+    C -. &quot;改用实物提取意图&quot; .-&gt; D
+    D --&gt; E[&quot;利益相关者直接批注：『不是实际流程』『缺审批环节』（React and correct）&quot;]
+    E --&gt; F[&quot;修正沉淀为真实意图（Corrections become intent）&quot;]
+    F --&gt; G{&quot;只听到最响的利益方？（Loudest voice?）&quot;}
+    G -- &quot;是：过拟合单一视角&quot; --&gt; H[&quot;刻意覆盖各方需求与约束（Cover all stakeholders）&quot;]
+    G -- &quot;否&quot; --&gt; I[&quot;可信的需求基线（Grounded intent）&quot;]
+    H -. &quot;再做一轮实物&quot; .-&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,H,I core;
+    class B,C,G gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>agent 组织中的限制性资源不再是构建能力——而是说清构建什么、为谁构建、在哪些约束下、凭什么证据的能力。模型能力已经跑赢了组织表达目标的能力，而这个意图瓶颈不会因为要求人们更努力地写需求就消失，因为人在编辑上稳定地好于创作（author）。一个客户、高管、运营者或监管者，无法从白纸起草一份干净的规范，却能在看到具体产物的一瞬间说出『办公室实际不是这么运作的』『缺了审批环节』『这会造成合规问题』或者『这才是我指的东西』。廉价软件改变了使这一切成为可能的经济结构：在旧世界，原型足够昂贵，团队试图在构建之前榨取意图；而当 agent 能在几分钟内产出一件可丢弃的产物时，产物本身就成了榨取意图最快的工具。纪律在于：不再要求人类撰写完美的需求，转而为他们制造具体的东西——mockup、场景、模型、草稿——供其修正。两种失败模式潜伏于此：要求用户像产品经理一样写作（他们不是，白纸只会产出含糊或错误的需求——改为给他们可供反应的产物），以及过拟合到嗓门最大的利益相关者，因为 agent 速度会放大任何提供最具体指令的人，所以意图采集必须刻意保留『谁的需求在被服务、谁的约束算数』的记录，而不是只编码那个碰巧说得最多的人。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>利益相关者难以说出自己要什么，但看到错误答案时能立刻识别——故意做错一点东西，换取修正。</li><li>需求收集会议在抽象层面反复打转、无法收敛——用一件可以被标注的产物替换讨论。</li><li>你在一个自己并不深入理解的领域采集意图，需要专家做出反应而不是给他们上课。</li><li>生成一份可丢弃草稿的成本，已经低于再开一次澄清会议的成本。</li><li>多个利益相关者意见相左，你需要让分歧对着具体的东西呈现，而不是停留在抽象里。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

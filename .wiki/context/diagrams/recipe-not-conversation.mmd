@@ -1,0 +1,15 @@
+flowchart TD
+    A["多步工作（Multi-step work）"] --> B{"会重复执行吗？（Run more than once?）"}
+    B -- "一次性探索（One-off）" --> C["临时对话（Ad-hoc chat）：不可重放·不可审计"]
+    B -- "会重复" --> D["编码为配方（Encode as recipe）：命名步骤＋输入输出＋依赖"]
+    D --> E["带检查点执行（Checkpointed execution）"]
+    E --> F{"中断或失败？（Interrupted?）"}
+    F -- "从最近检查点恢复（Resume）" --> E
+    F -- "全部完成" --> G["可重放·可审计·可版本化（Replayable and auditable）"]
+    G --> H["换代理换日子，结果一致（Same result by any agent）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B,C,F gate;
+    class A,G,H out;

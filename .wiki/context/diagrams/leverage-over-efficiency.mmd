@@ -1,0 +1,17 @@
+flowchart TD
+    A["战略提问（Strategy）：Agent 到底为了什么"] --> B{"框架选择（Frame choice）"}
+    B -- "效率（Efficiency）：同样的事用更少的人" --> C["任务级替代与成本削减（Task replacement）"]
+    B -- "杠杆（Leverage）：同样的人做更大的事" --> D["构建新运营面（New operating surfaces）"]
+    C -. "边际收益见顶后切换框架" .-> B
+    D --> E["Agent 管理 Agent、为 Agent 造工具、夜间流水线（Agents for agents, tools, pipelines）"]
+    E --> F["规模化产出：人力尺度下不可能的新工作（Previously impossible work）"]
+    F --> G{"底层判断与品味是否配得上放大？（Is the steering sound?）"}
+    G -- "否" --> H["先校准判断，再放大（Calibrate first）"]
+    G -- "是" --> I["人的角色更重要：每个判断的爆炸半径变大（Judgment matters more）"]
+    H -. "校准后重新放大" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,I core;
+    class B,G gate;
+    class A,C,H out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,27 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">给工具划命名空间（Namespace），写无歧义描述</span></nav>
-<h1>给工具划命名空间（Namespace），写无歧义描述</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Namespace Tools, Write Unambiguous Descriptions</p><p class="lede">把工具组织在清晰的命名空间下，描述里写明何时调用它、何时该调用相似的那个——工具选择歧义是智能体错误的首要来源。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>给工具划命名空间（Namespace），写无歧义描述</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Namespace Tools, Write Unambiguous Descriptions</p><p class="lede">把工具组织在清晰的命名空间下，描述里写明何时调用它、何时该调用相似的那个——工具选择歧义是智能体错误的首要来源。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;工具集（Tool set）&quot;] --&gt; B{&quot;工具多且名称易混？（Ambiguity risk?）&quot;}
+    B -- &quot;两三个且用途分明&quot; --&gt; C[&quot;无需命名空间（Skip namespacing）&quot;]
+    B -- &quot;五个以上或名称含糊&quot; --&gt; D[&quot;统一命名空间前缀（Namespace prefix）：file_read / file_write&quot;]
+    D --&gt; E[&quot;描述写成契约（Description as contract）&quot;]
+    E --&gt; F[&quot;何时调用本工具（When to call）&quot;]
+    E --&gt; G[&quot;何时不该调用，改用哪个邻近工具（When NOT, point to alternative）&quot;]
+    E --&gt; H[&quot;输出长什么样（Output shape）&quot;]
+    F --&gt; I[&quot;模型按名分类、按描述消歧（Reliable selection）&quot;]
+    G --&gt; I
+    H --&gt; I
+    I --&gt; J{&quot;仍出现选错工具的调用？（Wrong calls persist?）&quot;}
+    J -- &quot;是&quot; --&gt; K[&quot;以模型视角重读描述，补排除语（Rewrite as the model）&quot;]
+    J -- &quot;否&quot; --&gt; L[&quot;可靠的工具选择（Reliable tool use）&quot;]
+    K -. &quot;回到描述打磨&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,I,L core;
+    class B,J,K gate;
+    class A,C out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当 agent 可以使用很多工具时，工具选择就成了一项推理任务：模型必须读取每个工具的名称和描述，判断哪一个适用于当前情形。含糊的名称与含糊的描述让这种推理不可靠。一个叫 <code>read</code> 的工具和另一个叫 <code>fetch</code> 的工具会产生不一致的选择行为，因为模型必须从上下文推断哪个用于文件、哪个用于 URL。一个被描述为『获取关于某资源的信息』的工具几乎能匹配任何检索操作，被选中的时机不可预测。命名空间（namespacing）与精确描述从源头消除这种歧义。命名空间把相关工具归到共同前缀之下——<code>file_read</code>、<code>file_write</code>、<code>file_list</code>，而不是 <code>read</code>、<code>write</code>、<code>list</code>——让模型在阅读描述之前就能把命名空间当作第一道分类器。精确描述更进一步：它们点名这个工具处理的具体情形，明确指出它不适用于哪些相邻工具，并描述输出长什么样。一份好的工具描述读起来像一份契约：『当你需要按路径读取本地文件的内容时调用此工具。不要用它获取远程 URL——那请用 <code>http_get</code>。以字符串形式返回文件内容。』这种程度的明确性不是过度工程；它是模型在多样化工具集中可靠选择所需的最低规格。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>向一个已有名称或用途重叠工具的集合添加新工具时——加上清晰的命名空间前缀，并写一份把它与最相似现有工具区分开的描述。</li><li>当 agent 在某情形下调用了错误的工具——把自己代入模型去读描述，问问它是否毫不含糊地指向这个工具、并指向远离相邻工具的方向。</li><li>构建超过五六个工具的集合时——在这个规模上，命名空间前缀带来回报：它在模型阅读具体描述之前就提供一个层级分类结构。</li><li>当某工具的名字在不同上下文中可能意味着不同的事（<code>search</code>、<code>get</code>、<code>update</code>、<code>delete</code>）——用命名空间重命名它，或在描述中加入明确的排除语言。</li></ul>
@@ -406,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

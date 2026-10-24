@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">用实现来学习（Implement to Learn）</span></nav>
-<h1>用实现来学习（Implement to Learn）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Implement to Learn</p><p class="lede">理解一个问题最快的办法，是把它的解决方案做一个小型抛弃版出来。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>用实现来学习（Implement to Learn）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Implement to Learn</p><p class="lede">理解一个问题最快的办法，是把它的解决方案做一个小型抛弃版出来。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;任务到来（Task arrives）&quot;] --&gt; B{&quot;问题已吃透？（Well understood?）&quot;}
+    B -- &quot;吃透了&quot; --&gt; C[&quot;直接写规格（Write the spec directly）&quot;]
+    B -- &quot;陌生或含混&quot; --&gt; D[&quot;先造丢弃版（Build a throwaway）&quot;]
+    D --&gt; E[&quot;真问题浮出（Real questions surface）&quot;]
+    E --&gt; F[&quot;代码可弃，认知留下（Discard code, keep the learning）&quot;]
+    F --&gt; G[&quot;更准的规格（Sharper spec）&quot;]
+    G --&gt; H[&quot;正式实现（The real build）&quot;]
+    D -. &quot;造多个变体原型，而非一个（Several variants）&quot; .-&gt; I[&quot;利益相关者比较与反应（Stakeholders react）&quot;]
+    I -. &quot;反应转成用户故事与验收标准&quot; .-&gt; G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B gate;
+    class A,C,G,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>把一个问题理解到能正确地为其写规格说明的程度，几乎总是需要先构建点什么。当任务是新的或理解不足时，在动代码之前写完整规格说明颠倒了学习顺序——你在对一个尚未具体化的东西做抽象推理。实现一个小型的、有意即抛的版本，会逼出真正的问题：哪些输入是含糊的，哪些输出难以定义，哪些假设错了。即抛实现不是交付物；它是一种研究工具，为真正的交付物产出一份更好的规格说明。</p>
 <p>廉价软件把这一点扩展到构建者自身的理解之外：原型也是<strong>引出意图的探针</strong>——面向那些写不出干净需求、却能对具体东西做出敏锐反应的干系人。做法是构建*多个*原型，而不是一个，把它们摆在用户或领域专家面前，捕捉他们的反应、反对意见和他们伸手去用的变通做法（workaround）——再把这一信号转成用户故事和验收标准。这在干系人对每个问题都答『看情况』的领域尤其有力：规则可能无法陈述，但依赖结构可以从专家对具体例子的反应中学到。只生成一个原型，会让所有人锚定在它上面；生成一组备选，则会引来揭示人们真正想要什么的比较性判断。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +431,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

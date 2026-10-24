@@ -1,0 +1,16 @@
+flowchart TD
+    A["代理请求进入（Request arrives）"] --> B["输入护栏（Input）：请求是否在预期参数内"]
+    B --> C["行动护栏（Action）：工具·资源·范围受限"]
+    C --> D["代理执行（Agent acts）"]
+    D --> E["输出护栏（Output）：格式·有效·安全·完整"]
+    E --> F{"各层都接住了？（All layers hold?）"}
+    F -- "是" --> G["交付下游（Pass downstream）"]
+    F -- "有层被绕过" --> H["错误复合（Errors compound）"]
+    F -- "代理无法自决" --> I["人工升级（Human escalation）：按风险与必要性路由"]
+    I -- "裁决后继续" --> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F,H,I gate;
+    class A,G out;

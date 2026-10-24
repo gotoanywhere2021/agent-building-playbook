@@ -1,0 +1,16 @@
+flowchart TD
+    A["新系统设计（New system）"] --> B{"执行路径可预先写死吗？（Is the path known in advance?）"}
+    B -- "是" --> C["工作流：代码定路径，模型只填内容（Workflow: fixed path, model fills content）"]
+    B -- "否" --> E["智能体：模型按状态动态选下一步（Agent: model drives control flow）"]
+    C --> D["可预测、可单测、可审计（Predictable, testable, auditable）"]
+    E --> F["灵活但非确定，需跨多样输入做行为测试（Flexible, behavior-tested）"]
+    C --> G{"分支复杂到要靠模型输出驱动？（Branching driven by model output?）"}
+    G -- "是" --> E
+    G -- "否" --> H["按命名的架构写测试（Name it, test against it）"]
+    F --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B,G gate;
+    class A,H out;

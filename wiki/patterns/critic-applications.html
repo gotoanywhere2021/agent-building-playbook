@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">批评者应用（Critic Application）</span></nav>
-<h1>批评者应用（Critic Application）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Critic Applications</p><p class="lede">构建一个确定性工具——二进制、解析器、校验器或 CLI——在智能体眼中它就是法律：无法讨价还价、只能满足；它把复杂意图压缩成可校验的约束，并补足模型的短板。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>批评者应用（Critic Application）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Critic Applications</p><p class="lede">构建一个确定性工具——二进制、解析器、校验器或 CLI——在智能体眼中它就是法律：无法讨价还价、只能满足；它把复杂意图压缩成可校验的约束，并补足模型的短板。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;复杂意图难靠模型记牢（Intent too complex to recall）&quot;] --&gt; B[&quot;把意图压进确定性工具（Encode intent as a validator）&quot;]
+    B --&gt; C[&quot;评审工具只暴露策略允许的操作，其余拒绝（Unyielding affordance）&quot;]
+    C --&gt; D[&quot;代理产出物（Agent output）&quot;]
+    D --&gt; E{&quot;评审工具裁决（Critic verdict）&quot;}
+    E -- &quot;失败：不可争辩&quot; --&gt; F[&quot;代理修改直到真的满足（Grind until it passes）&quot;]
+    F --&gt; D
+    E -- &quot;通过&quot; --&gt; G[&quot;从『说服我你做完了』变成『让评审说通过』（Make the critic say yes）&quot;]
+    G --&gt; H[&quot;完成可被独立证实（Verified completion）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>评审器应用（critic application）是一个外部工具——二进制、解析器、校验器（validator）或 CLI——专门构建来在智能体的视角扮演法律。它的定义性属性是不可协商：模型可以与提示词争辩、重新解释一条指令，或者说服自己相信已满足某项政策，但它无法与一个返回通过或不通过的程序争辩。它必须真正满足这个程序。这使得评审器应用成为把复杂意图压缩成可检查的操作面（affordance）的最有力工具。与其让模型把一份冗长繁复的 PDF 处理政策记在脑中并始终如一地执行，不如构建一个 PDF 工具，只暴露政策所需的操作面、拒绝其他一切。与其让模型在无人辅助下用肉眼检查 UI——一个公认的弱点——不如给它目标检测、截图对比、无障碍（accessibility）检查或浏览器自动化，让它们报告真值（ground truth）。评审器应用的价值在于做模型不擅长可靠完成的事：解析领域专属工件、校验政策约束、暴露模型本只能去猜的隐藏状态、对比前后输出、生成测试装置（fixture）、检查不变量（invariant）、按评分标准（rubric）为输出打分，总之用确定性机制补偿模型的某个具体弱点。关键在于，评审器应用不是给人用的产品，无须精致、易于发现或好看——它只需要对智能体有用、可靠到足以充当校验器。投资的方向是建造那个正确的、不妥协的表面（surface），然后让智能体在它上面反复打磨直到通过。智能体的职责从『说服我你做完了』变成『让评审器说通过』——后者要伪造难得多。如果说确定性轨道（deterministic rails）关乎工作流中哪些步骤由模型驱动、哪些接受检查，那么评审器应用就是那个检查本身——被有意当作一等工件建造的、不妥协的表面。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当意图复杂到让模型记住并可靠执行本身就是薄弱点时——把政策编码进模型必须满足的工具，而不是要求它回忆。</li><li>当模型有已知的盲区（视觉检查、精确解析、数值容差、格式校验）时——构建一个在模型不可靠之处提供真值的确定性检查。</li><li>当你需要智能体无法靠嘴皮绕过的验证时——程序的通过/失败远比自我评估难被幻觉（hallucinate）出来。</li><li>当同类正确性检查在许多任务中反复出现时——可复用的校验器把构建成本摊到未来每一次运行上。</li><li>当你需要暴露隐藏状态（数据库内容、渲染输出、运行时行为），否则智能体只能靠推断时——报告真实状态的工具消除猜测。</li><li>当把一条反复出现的评审意见转化为永久护栏（guardrail）时——把教训变成智能体下次必须通过的检查，而不是一张它可能读到的便条。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

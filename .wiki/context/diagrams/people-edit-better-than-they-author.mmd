@@ -1,0 +1,17 @@
+flowchart TD
+    A["意图瓶颈（Intent bottleneck）：说不清要建什么"] --> B{"如何提取需求？（Elicitation）"}
+    B -- "空白页硬写需求" --> C["含糊或错误的需求（Vague, wrong spec）"]
+    B -- "制造可反应的实物（Artifact to react to）" --> D["Agent 几分钟产出一次性原型（Throwaway artifact）"]
+    C -. "改用实物提取意图" .-> D
+    D --> E["利益相关者直接批注：『不是实际流程』『缺审批环节』（React and correct）"]
+    E --> F["修正沉淀为真实意图（Corrections become intent）"]
+    F --> G{"只听到最响的利益方？（Loudest voice?）"}
+    G -- "是：过拟合单一视角" --> H["刻意覆盖各方需求与约束（Cover all stakeholders）"]
+    G -- "否" --> I["可信的需求基线（Grounded intent）"]
+    H -. "再做一轮实物" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,H,I core;
+    class B,C,G gate;
+    class A out;

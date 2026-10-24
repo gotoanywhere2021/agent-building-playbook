@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">为智能体设计工具，而不是为人</span></nav>
-<h1>为智能体设计工具，而不是为人</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Design Tools for Agents, Not Humans</p><p class="lede">智能体工具应面向机器解析的结构化——无歧义的输出、每次响应都携带完整信息、去掉只对人类有意义的界面线索。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>为智能体设计工具，而不是为人</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Design Tools for Agents, Not Humans</p><p class="lede">智能体工具应面向机器解析的结构化——无歧义的输出、每次响应都携带完整信息、去掉只对人类有意义的界面线索。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;设计工具契约（Design the tool contract）&quot;] --&gt; B{&quot;调用方是人还是模型？（Human or model caller?）&quot;}
+    B -- &quot;模型&quot; --&gt; C[&quot;清除人类便利：截断、分页、友好错误文案（Strip human affordances）&quot;]
+    C --&gt; D[&quot;单次调用返回完整数据（Complete data in one call）&quot;]
+    D --&gt; E[&quot;错误结构化：代码、原因、可恢复标志（Structured errors, not prose）&quot;]
+    E --&gt; F[&quot;成功响应附下一步所需元数据（Metadata to decide next step）&quot;]
+    F --&gt; G[&quot;模型把返回值当完整真相来行动（Treated as complete truth）&quot;]
+    B -- &quot;人机两用&quot; --&gt; H[&quot;加机器可读模式，保留人类默认（Machine-readable mode alongside）&quot;]
+    H --&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>为人类使用而构建的工具以可读性为先：它们分页、用『...』省略号截断长输出、按终端宽度排版、返回假定调用者能追问下一句的友好错误信息。当智能体使用同样的工具时，每一项人类便利特性（human affordance）都成了故障模式。截断的输出意味着智能体基于不完整的图景行动。分页意味着智能体必须知道去取下一页——而且可能意识不到自己没看到全貌。友好错误信息是含糊的字符串，必须解析才能提取真正的失败码。『为智能体设计工具，而不是为人』意味着在『机器需要什么』的层面重新思考契约（contract）：完整、结构化、确定性的输出。智能体工具应尽可能在单次调用中返回全部相关数据，除非数据确实过大。错误情形应以结构化字段表达——一个错误码、一个原因、一个可恢复标志——而不是散文。成功情形应包含智能体判断下一步所需的元数据，而不只是主载荷。调用者不是一个能扫一眼输出就领会上下文的人；它是一个上下文窗口固定、会把收到的任何东西当作完整真理的模型。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计将注册进智能体工具列表的工具时——每个设计决策都应假定调用者是模型，不是在终端里阅读输出的人。</li><li>把既有 CLI 工具或 API 改造为智能体可用时——找出所有人类便利特性（截断、分页、友好错误信息），替换为机器可读的等价物。</li><li>当智能体因基于部分或含糊的工具输出而做出错误决策时——根因通常是工具的输出契约，而非智能体的推理。</li><li>编写工具描述时：描述不是人类悬停在按钮上的提示（tooltip），它是模型用来决定何时以及如何调用该工具的唯一规范。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

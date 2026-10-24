@@ -1,0 +1,14 @@
+flowchart TD
+    A["长生命周期的智能体（Long-lived agent）"] --> B["触发自我修改（Self-modification trigger）：纠正坏习惯·适应团队规范"]
+    B --> C["只提案不生效（Propose, do not apply）：引用具体证据"]
+    C --> D{"评审达成一致？（Review agreed?）"}
+    D -- "未通过：坏教训·与全局政策冲突·讨好倾向" --> E["驳回并留痕（Reject and log）"]
+    E --> A
+    D -- "通过：人类·批评代理·跨会话共识" --> F["成为规范（Canonical change）：可审计·可回滚"]
+    F --> G["行为漂移可追溯（Drift traceable）：何时·为何·凭何证据"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C core;
+    class D,E gate;
+    class A,F,G out;

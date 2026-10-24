@@ -1,0 +1,15 @@
+flowchart TD
+    A["增量演进（Incremental changes）：补丁与环境累积隐性状态"] --> B["定时冷启动（Scheduled cold rebuild）：从规范定义从零重建"]
+    B --> C{"重建是否一次通过？（Clean cold pass?）"}
+    C -- "未通过：显式失败" --> D["暴露隐藏依赖（Hidden dependencies surface）"]
+    D --> E["修复规范定义（Patch the canonical definition）"]
+    E --> B
+    C -- "通过" --> F["确认无漂移（Drift caught or absent）"]
+    F --> G["回到增量工作（Resume incremental work）"]
+    G -. "漂移再次累积" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,D gate;
+    class A,F,G out;

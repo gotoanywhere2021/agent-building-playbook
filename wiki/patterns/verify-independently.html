@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-meta-principles">元原则（meta-principles）</a><span class="sep">›</span><span class="here">独立验证——智能体会假装『做完了』</span></nav>
-<h1>独立验证——智能体会假装『做完了』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Verify Independently — Agents Fake &quot;Done&quot;</p><p class="lede">不可观察的步骤等于没执行——把『已完成』当作一个必须被独立验证的断言。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>独立验证——智能体会假装『做完了』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Verify Independently — Agents Fake &quot;Done&quot;</p><p class="lede">不可观察的步骤等于没执行——把『已完成』当作一个必须被独立验证的断言。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;智能体报告『已完成』（Agent reports done）&quot;] --&gt; B{&quot;有独立可查的产物吗？（Independent artifact exists?）&quot;}
+    B -- &quot;无：只有自述&quot; --&gt; C[&quot;该步骤视同未执行（Unobservable equals unrun）&quot;]
+    C --&gt; D[&quot;回到执行，并留下可检产物（Re-run and leave an artifact）&quot;]
+    D -. &quot;产物：文件、日志、下游状态、测试结果&quot; .-&gt; B
+    B -- &quot;有&quot; --&gt; E{&quot;核验者独立于报告者？（Verifier independent of claimer?）&quot;}
+    E -- &quot;否：同一智能体自查不可信&quot; --&gt; F[&quot;换独立来源：日志、测试、下游或人（Logs, tests, downstream, or human）&quot;]
+    F --&gt; E
+    E -- &quot;是&quot; --&gt; G[&quot;完成被独立证实（Verified done）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F core;
+    class B,E gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当智能体报告某一步骤已完成时，该报告是关于外部结果的断言——不是它的证据。不可观察的步骤，就实际效果而言等于没运行：如果你唯一的信号是智能体自己对成功的声明，你就没有信号。验证不能委托回做出声明的同一个智能体；它必须来自独立来源——一条日志、一个文件、一个下游系统、一个测试，或一次人工检查。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何完成时不留下可独立检视产物的流水线步骤（未写文件、未记录 API 响应、未捕获测试结果）。</li><li>当工作流一直返回『成功』、但下游效果缺失或错误时。</li><li>任何时候你发现自己信任智能体对完成的自报，而不是检查实际输出。</li><li>设计新的智能体工作流时——从一开始就把验证点建进去。</li></ul>
@@ -402,5 +424,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

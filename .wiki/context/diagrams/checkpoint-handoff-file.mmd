@@ -1,0 +1,15 @@
+flowchart TD
+    A["长任务，上下文渐满（Context filling up）"] --> B["两种退化（Two decay modes）：早期框架权重过高 + 噪声淹没信号"]
+    B --> C{"硬扛还是重开？（Push on or restart?）"}
+    C -- "能在本会话收尾" --> E["直接完成（Finish in place）"]
+    C -- "窗口将满而任务未完" --> D["写交接文件（Write the handoff）：目标、已完成、进行中、试过并放弃及原因、下一步、工件位置"]
+    D --> F["重启干净会话，只带这一份文件（Restart clean, file only）"]
+    F --> G{"能冷启动续作吗？（Resume cold?）"}
+    G -- "缺关键状态" -. "补写后再切" .-> D
+    G -- "能" --> H["任务继续，历史不再拖累（Work resumes unburdened）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,F core;
+    class C,G gate;
+    class A,B,E,H out;

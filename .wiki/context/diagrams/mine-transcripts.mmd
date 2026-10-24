@@ -1,0 +1,21 @@
+flowchart TD
+    A["对话废气（Conversational exhaust）：会议转写 / 会话日志 / 群聊"] --> B["完整留存原始记录（Keep raw transcripts）"]
+    B --> C{"定了要回答的问题吗？（Question defined?）"}
+    C -- "否：盲目转化也是淤泥" --> D["先定义问题（Define the question）"]
+    C -- "是" --> E["转化管道（Transform pipeline）"]
+    D --> E
+    E --> F["主题聚类（Topic clusters）"]
+    E --> G["实体图谱（Entity graphs）"]
+    E --> H["矛盾清单与行动仓库（Contradictions, actions）"]
+    E --> I["Takebook 与人格素材（Takebooks, persona material）"]
+    F --> J["可查询、可检索、可评估的知识（Queryable knowledge）"]
+    G --> J
+    H --> J
+    I --> J
+    B -. "只存不转：转录囤积，产出存储而非知识" .-> K["无人在读的死存储（Dead storage）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F,G,H,I,J core;
+    class C,K gate;
+    class A out;

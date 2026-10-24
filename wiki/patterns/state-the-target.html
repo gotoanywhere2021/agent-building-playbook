@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">陈述目标，而不是禁令</span></nav>
-<h1>陈述目标，而不是禁令</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">State the Target, Not the Prohibition</p><p class="lede">告诉模型『不要做什么』恰恰会激活你想压制的概念——『列出行星但不要月亮』往往产出月亮；把指令写成对目标的正面描述，硬性禁令交给确定性检查。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>陈述目标，而不是禁令</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">State the Target, Not the Prohibition</p><p class="lede">告诉模型『不要做什么』恰恰会激活你想压制的概念——『列出行星但不要月亮』往往产出月亮；把指令写成对目标的正面描述，硬性禁令交给确定性检查。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;指令草稿（Draft instruction）&quot;] --&gt; B{&quot;草稿里含『不要、避免』类否定？（Contains negation?）&quot;}
+    B -- &quot;有：否定词反而激活了要压制的概念&quot; --&gt; C[&quot;改写为正向目标描述（State the positive target）&quot;]
+    B -- &quot;没有&quot; --&gt; D[&quot;只激活想要的形状（Only the desired concept active）&quot;]
+    C --&gt; D
+    D --&gt; E{&quot;约束是否不可协商？（Non-negotiable prohibition?）&quot;}
+    E -- &quot;是&quot; --&gt; F[&quot;用确定性检查兜底，而非加码否定（Deterministic gate, not louder NO）&quot;]
+    E -- &quot;否&quot; --&gt; G[&quot;输出即目标形状（Output matches the target）&quot;]
+    F --&gt; G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F core;
+    class B,E gate;
+    class A,D,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>否定式（negation）在 Transformer 中是一个弱信号。当你写下『不要提月球』时，模型对内容词『月球』高度关注，而对修饰它的否定只轻微关注——你本想压制的概念被激活，并与压制它的指令相互竞争，于是你经常恰好得到你想避免的东西。这一点已有充分记录：模型对『月球是行星』与『月球不是行星』的内部表征惊人地相似；而且这不只是文本现象——被要求『一个没有大象的房间』的视觉模型，往往以同一机制画出大象。补救办法是指向目标：把请求改写为你想要行为的正面描述，让不想要的概念根本不进入上下文。『不要使用全局变量』变成『使用局部变量和参数传递』；『不要深层嵌套路由』变成『使用扁平的路由结构』。这与『要具体』不同——给否定式指令增加具体性，通常意味着增加*更多*否定、过度约束解空间，反而激活更多你想避免的东西；而指向目标改变的是*你激活了哪些概念*，细节程度不变。当某条禁令确实不容妥协——被禁用的 API、被禁止的路径——不要用更响亮或重复的否定去对抗机制；用一个确定性的检查让输出失败，把提示词的篇幅花在描述目标上。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>每当你在指令里写下『不要』『永远不要』或『避免』时——试着把它改写为你想要的正面行为。</li><li>当模型反复产出你明令禁止的东西时——禁令多半激活了那个概念；把它翻转成目标。</li><li>当提示词里累积了一串『别做 X』条款时——每一条都在播种一个概念；用对期望形态的描述替换它们。</li><li>当同一种抑制需要在多次运行间都成立时——把正面目标编码一次，而不是重复升级的否定。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

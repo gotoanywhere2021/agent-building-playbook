@@ -1,0 +1,16 @@
+flowchart TD
+    A["要动一个真实用户依赖的旧系统（Brownfield, not a greenfield demo）"] --> B["先问承重问题：重写后什么必须仍为真？（What must remain true?）"]
+    B --> C["刻画现有行为（Characterize）：读代码、日志与事故史"]
+    C --> D["先写回归测试钉住行为（Regression tests before any rewrite）"]
+    D --> E["在测试保护下改实现（Rewrite under protection）"]
+    E --> F["新旧并行跑，diff 输出（Side by side, diff outputs）"]
+    F --> G{"行为一致？（Behavior preserved?）"}
+    G -- "有分歧" --> H["把分歧当数据修掉（Fix the divergence）"]
+    H -. "修完再并行比对" .-> F
+    G -- "一致" --> I["『还能用』是被检验过的主张（A checked claim, not a hope）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E,H core;
+    class G gate;
+    class A,F,I out;

@@ -1,0 +1,16 @@
+flowchart TD
+    A["上下文窗口＝注意力预算（Context is an attention budget）"] --> B{"这段 token 会改变输出吗？（Does it change the output?）"}
+    B -- "会" --> C["保留高信号内容（Keep high-signal content）"]
+    B -- "不会：样板、重复、陈旧历史" --> D["剔除噪声（Drop the noise）"]
+    C --> E["注意力集中到信号上（Attention concentrates on signal）"]
+    D --> E
+    E --> F{"长会话质量下滑？（Quality rotting over time?）"}
+    F -- "是：上下文膨胀" --> G["收缩、压缩、按相关性再挑选（Curate and compress）"]
+    G -. "重新注入最小高信号集合" .-> C
+    F -- "否" --> H["维持最小高信号集合（Smallest high-signal set）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,G core;
+    class B,F gate;
+    class A,H out;

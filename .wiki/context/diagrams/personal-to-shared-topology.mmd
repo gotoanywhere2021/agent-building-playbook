@@ -1,0 +1,23 @@
+flowchart TD
+    A["个人高效工作流（Personal workflows）：各自的提示与习惯"] --> B{"个人实践能否组合？（Does it compose?）"}
+    B -- "否：十二座孤岛" --> C["不可评审、不可传承、不可治理（Unreviewable islands）"]
+    C --> D["局部最优悄悄违背组织策略（Local optimum vs org strategy）"]
+    B -- "是：各自已证明有效" --> E["在其上构建共享拓扑（Shared topology）"]
+    E --> F["共享工件（Shared artifacts）：规格 / 计划 / 决策 / 日志"]
+    E --> G["共享评审规范（Review norms）"]
+    E --> H["共享可观测性（Observability）"]
+    E --> I["共享模式库（Pattern library）：含失败模式"]
+    F --> J["私人杠杆变成对齐的运营模型（Aligned operating model）"]
+    G --> J
+    H --> J
+    I --> J
+    J --> K{"是否官僚化、扼杀独创？（Over-standardized?）"}
+    K -- "是：对齐而非统一" --> L["回松标准，保留个体流派（Align, not uniform）"]
+    K -. "持续捕捉个人新手法入库" .-> I
+    L -. "回到个人探索" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H,I,J,L core;
+    class B,C,D,K gate;
+    class A out;

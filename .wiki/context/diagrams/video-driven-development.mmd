@@ -1,0 +1,14 @@
+flowchart TD
+    A["先定义用户场景（Define the scenario up front）"] --> B["录改前：驱动真实产品并记录（Record the before-video）"]
+    B --> C["实施变更（Implement the change）"]
+    C --> D["录改后：同一场景再跑一遍（Record the after-video）"]
+    D --> E["前后对照交给人或批评者检视（Human or critic reviews the evidence）"]
+    E --> F{"画面上场景确实走通？（Completes on screen?）"}
+    F -- "否：回去修" --> C
+    F -- "是" --> G["可复检的验收产物：展示而非声称（Show, not assert）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F gate;
+    class A,G out;

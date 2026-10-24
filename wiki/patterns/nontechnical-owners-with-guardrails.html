@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,27 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">非技术负责人，配上护轨</span></nav>
-<h1>非技术负责人，配上护轨</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Nontechnical Owners, With Guardrails</p><p class="lede">智能体工具让意图清晰、有领域知识的人能交付过去永远造不出的软件——但非技术构建者的『拥有』只有在脚手架、评审循环、验收证据、回滚与教练的环绕下才成立。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>非技术负责人，配上护轨</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Nontechnical Owners, With Guardrails</p><p class="lede">智能体工具让意图清晰、有领域知识的人能交付过去永远造不出的软件——但非技术构建者的『拥有』只有在脚手架、评审循环、验收证据、回滚与教练的环绕下才成立。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;领域专家（Domain expert）：最懂问题的人&quot;] --&gt; B[&quot;Agent 代写实现（Agent implements）&quot;]
+    B --&gt; C{&quot;放行线按什么划？（Who may ship?）&quot;}
+    C -- &quot;按头衔放行&quot; --&gt; D[&quot;误放：似是而非直接上线（Plausible-but-wrong ships）&quot;]
+    C -- &quot;按爆炸半径与可逆性（Blast radius, reversibility）&quot; --&gt; E[&quot;护栏体系（Guardrail system）&quot;]
+    E --&gt; F[&quot;脚手架与评审循环（Scaffolds + review loops）&quot;]
+    E --&gt; G[&quot;验收证据与回滚路径（Evidence + rollback）&quot;]
+    E --&gt; H[&quot;教练辅导与问责规范（Coaching + accountability）&quot;]
+    F --&gt; I[&quot;可安全拥有的产出（Safe ownership）&quot;]
+    G --&gt; I
+    H --&gt; I
+    I --&gt; J{&quot;上线后出事？（Incident?）&quot;}
+    J -- &quot;是：回滚并收紧护栏&quot; --&gt; K[&quot;回滚 + 补护栏（Roll back, tighten）&quot;]
+    J -- &quot;否&quot; --&gt; L[&quot;扩大可拥有范围（Expand ownership）&quot;]
+    K -. &quot;重新划线&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,F,G,H,I,K,L core;
+    class C,D,J gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>agent 软件降低了『理解问题』与『实现方案』之间的门槛，这意味着从未受过工程师训练的人——领域专家、运营人员、分析师、产品经理（PM）——现在可以交付过去必须有开发者参与的应用和内部工具。这具有战略意义：最理解问题的人可以直接驱动工作，而不是经由需求积压列表转译。但非技术者担纲（ownership）在无监督状态下并不成立。它只有在被供应了担纲者所缺判断力的结构包围时才成立：让工作走在轨道上的清晰脚手架（scaffold）、捕捉貌似合理实则错误输出的评审循环、约束波及半径（blast radius）的生产护栏、证明系统确实做到其宣称之事的验收证据、失效时的回滚路径、把安全动作编码进去的领域专属工具、来自有经验者的辅导（coaching），以及关于谁对什么负责的组织规范。目标不是假装人人一夜之间成了资深工程师，也不是把生产环境钥匙交给任何会写提示词的人。目标是让拥有清晰意图和真实领域知识的人承担更多工作，同时把他们嵌入一个足够强的验证与导师体系，使这种担纲是安全的。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当最理解问题的人不是工程师，而经由传统开发团队的转译开销才是真正的瓶颈。</li><li>当你希望领域专家构建并拥有内部工具，但工作以需要护栏的方式触及数据、用户或生产环境。</li><li>为非技术构建者设计入职流程时：在授予权限之前，把脚手架、评审循环、验收证据和一位指名教练与之配对。</li><li>决定非技术担纲者哪些可以无监督交付、哪些需要评审时，划线依据是波及半径与可逆性，而不是头衔。</li><li>当 agent 工具正扩散到工程之外时，在第一起事故之前就把回滚路径和问责规范建好，跑在前面。</li></ul>
@@ -406,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

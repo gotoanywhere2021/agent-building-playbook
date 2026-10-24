@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">把指引嵌进工具输出</span></nav>
-<h1>把指引嵌进工具输出</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Embed Guidance in Tool Output</p><p class="lede">与其把所有项目坑塞进模型会忘的巨型指令文件，不如把指引写进脚本与工具的输出——错误与成功消息——让提醒恰好出现在相关的那一刻。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="tool-design" href="../explore.html#dim-tool-design">工具设计（tool-design）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把指引嵌进工具输出</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Embed Guidance in Tool Output</p><p class="lede">与其把所有项目坑塞进模型会忘的巨型指令文件，不如把指引写进脚本与工具的输出——错误与成功消息——让提醒恰好出现在相关的那一刻。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="tool-design" href="../explore.html#dim-tool-design">工具设计（tool-design）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;项目陷阱（Gotcha）：反复出现的小坑&quot;] --&gt; B{&quot;只在特定场景才相关？（Situational?）&quot;}
+    B -- &quot;全局恒真&quot; --&gt; C[&quot;常备指令文件（Standing instructions）&quot;]
+    B -- &quot;仅在特定情境&quot; --&gt; D[&quot;把指引嵌进工具输出（Embed in tool output）&quot;]
+    C -. &quot;文件膨胀，单行失效（Prompt bloat）&quot; .-&gt; B
+    D --&gt; E[&quot;脚本检测触发情境（Script detects the situation）&quot;]
+    E --&gt; F[&quot;指引恰逢其时浮现（Guidance at the right moment）&quot;]
+    F --&gt; G[&quot;人与代理共用同一产物（Same artifact serves both）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B gate;
+    class A,C,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>每个项目都有一些反复出现的小坑（gotcha），而条件反射式的做法是把它们全部提前写进 CLAUDE.md 或系统提示词——但这条路会让指令文件臃肿，塞进去的越多，任何单独一行被可靠遵守的概率就越低。更好的传递机制是把指引推进环境本身：将其嵌入智能体（agent）已经在运行的脚本和工具的输出——错误消息、成功消息、CLI 响应——让提醒恰好在相关时刻、且只在该时刻浮现。这正是优秀软件一直以来为人类做的事：一条写得好的错误消息会把你引向修复方法，同样的设计对智能体同样有效。与其放一条常驻说明『部署前务必在生产环境先跑迁移』，不如让部署脚本检测到待执行的迁移并打印『检测到待执行的迁移。部署前请先运行 <code>./migrate.sh production</code>。』与其写一条『权限脚本仅限生产环境』的备注，不如让脚本检查自身环境并回答『此脚本只应在生产服务器上运行』。这样指引就变得无法忽视、自带作用域，且在被需要之前零成本——而且人和智能体用的是同一份工件，而不是一份双方都得记得去读的独立规则手册。它颠倒了通常的上下文经济学：与其把每个坑都放进提示词、每次运行都为它付费，不如只在触发该坑的情形真正出现时才付费。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当你又一次想往 CLAUDE.md 里加一个坑时——先问问：那个会被它绊倒的工具，能不能就在失败点上把话说出来。</li><li>当人和智能体不断撞上同一个晦涩错误时——在工具输出里修一次，双方都会被引导。</li><li>当某条指令只在特定情形下才重要（某个环境、某种状态、某条命令）时——让工具检测到该情形时再发出指引，而不是常驻生效。</li><li>当指令文件已经大到单行内容开始失去可靠性时——把情境性指引从文件里移出去，放进真正会触发它的输出里。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

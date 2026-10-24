@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">让智能体评估并优化你的工具</span></nav>
-<h1>让智能体评估并优化你的工具</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Let Agents Evaluate and Optimize Your Tools</p><p class="lede">用智能体测试你的工具集——让它执行真实任务，观察它在哪选错或失败，把这些观察反馈回工具描述与接口，然后再上线。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>让智能体评估并优化你的工具</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Let Agents Evaluate and Optimize Your Tools</p><p class="lede">用智能体测试你的工具集——让它执行真实任务，观察它在哪选错或失败，把这些观察反馈回工具描述与接口，然后再上线。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;工具集 + 真实任务清单（Tool set + realistic tasks）&quot;] --&gt; B[&quot;让代理实跑并留痕观察（Agent attempts real tasks）&quot;]
+    B --&gt; C{&quot;工具选择都对吗？（Correct selections?）&quot;}
+    C -- &quot;误选、犹豫或不一致&quot; --&gt; D[&quot;每次误选都是缺陷报告（Bug report）：名称或描述区分度不足&quot;]
+    D --&gt; E[&quot;修订工具描述与接口（Revise descriptions）&quot;]
+    E --&gt; F[&quot;重跑评估（Rerun the eval）&quot;]
+    F -. &quot;回归重测整套工具&quot; .-&gt; B
+    C -- &quot;全部正确&quot; --&gt; G[&quot;部署上线（Deploy）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F core;
+    class C gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>工具设计通常从设计者的视角出发：作者写下一段自认为清晰的描述，注册工具，然后视为完事。模型的视角不同——它没有关于设计者意图的背景，它在任务进行到一半时逐字阅读描述，并且只依据描述说了什么来做选择决策。『作者觉得清晰』与『模型能可靠地做出正确选择』之间的落差，正是大多数工具设计错误所在。让智能体来评估工具，是用实证而非目测来弥合这一落差。流程是：给一个智能体完整的工具集和一组贴近真实的任务；观察它选择了哪些工具、是否选对、在何处犹豫或选择不一致、错误的选择导致了什么错误。把每次错误选择当作一份 bug 报告：该工具的名称或描述不够具体，无法把它与智能体本应调用的那个工具区分开。修订描述以补上缺失的具体性，重跑评估，再迭代。这种做法把工具描述当作一份必须对照模型行为加以验证的规格说明（specification），而不是一份天生正确的文档产物。智能体就是神谕（oracle）：它若选错，描述就是错的。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>构建新的工具集、尚未部署到生产时——先用有代表性的任务跑一遍评估（eval），在智能体遇到真实负载之前观察其工具选择行为。</li><li>智能体因选错工具或误用工具而把任务做砸时——用一轮评估找出哪些描述有歧义，并依据观察到的失败模式修订它们。</li><li>向既有工具集新增一个工具时——新工具可能引发与既有工具的选择混淆；新增之后要测试整个集合，而不是只测孤立的新工具。</li><li>把工具迁移到新模型上时——选择行为因模型而异；要针对目标模型重新评估工具集，而不是假设以前有效的描述会继续有效。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -5,6 +5,10 @@
 # scratch
 *.tmp
 
+# Amplifier working dirs
+.amplifier/
+.superpowers/
+
 # Packaging output (regenerate via /wiki-publish)
 .wiki/dist/
 

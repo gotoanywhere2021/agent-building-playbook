@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">测试产品做什么，而不是怎么做</span></nav>
-<h1>测试产品做什么，而不是怎么做</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Test What the Product Does, Not How</p><p class="lede">描述外部可观察行为的测试能活过重构；描述内部实现的测试是随每次变更增长的维护税。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>测试产品做什么，而不是怎么做</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Test What the Product Does, Not How</p><p class="lede">描述外部可观察行为的测试能活过重构；描述内部实现的测试是随每次变更增长的维护税。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;要测的行为（Behavior under test）&quot;] --&gt; B[&quot;先定义外部可观察结果（Define the observable outcome）&quot;]
+    B --&gt; C[&quot;断言结果而非内部接线（Assert the what, not the how）&quot;]
+    C --&gt; D{&quot;断言的是产物还是调用序列？（Artifact or tool-call sequence?）&quot;}
+    D -- &quot;调用序列：实现一改就碎&quot; --&gt; E[&quot;重写为针对产物的测试（Rewrite as a what-test）&quot;]
+    E --&gt; C
+    D -- &quot;产物正确存在且可用&quot; --&gt; F[&quot;独立批评者挑战测试本身（Critic challenges the tests）&quot;]
+    F --&gt; G{&quot;测试与代码共享同一误解？（Shared blind spot?）&quot;}
+    G -- &quot;是&quot; --&gt; H[&quot;测试与代码一起修正（Revise both）&quot;]
+    H -. &quot;失败同时回流代码与测试&quot; .-&gt; C
+    G -- &quot;否&quot; --&gt; I[&quot;行为被锁定，重构安全（Refactor-safe suite）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,E,F core;
+    class D,G gate;
+    class A,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>检验系统*如何*达成结果的测试，与实现耦合——实现一变，测试就坏，哪怕行为依然正确。检验系统*做了什么*（从外部观察）的测试，与实现解耦——只有行为改变时它才会坏，而那正是它该坏的时候。这个区别并不微妙：『断言该函数以这些参数被调用』是 how 测试（how-test）；『断言调用这个 API 之后，数据库里存在这条记录』是 what 测试（what-test）。what 测试描述产品的可观察契约（contract）；how 测试描述产品当前的内部接线。智能体系统最容易在这条纪律上失守，因为智能体是不透明的——其内部推理不可检视——这诱使开发者去测试智能体调用了哪些工具，而不是它产出了什么结果。测试智能体调用了哪些工具是 how 测试；测试智能体本应产出的产物（artifact）是否存在、是否正确、是否可用，是 what 测试。前者在工具实现或选择逻辑变化时就会坏；后者只在智能体不再履行职责时才坏。</p>
 <p>当测试本身由智能体生成时，风险更尖锐。智能体为自己写的代码所写的测试，可能过拟合于它恰好看到的实现，或编码了与产生该代码时一模一样的误解——这种情况下，测试通过、代码错误、而测试为这个 bug 背书。更多的测试解决不了这个问题；它们只会放大共享的盲区。每种测试类型都带有自己版本的这类失败，一个收尾中的系统应把测试类型的选择当作权衡而非默认：单元测试可能过拟合实现细节；集成测试（integration test）往往脆弱；端到端测试（end-to-end test）慢且不稳定（flaky）；变异测试（mutation test）昂贵且嘈杂；性质测试（property test）的好坏取决于它断言的不变量；对抗测试（adversarial test）容易欠规定；视觉测试（visual test）需要良好的基线与容差。因此智能体的机会不只是写更多测试，而是把测试的生成、批判、执行与修订做成工作流图上的节点——由独立的批判者（critic）挑战测试，让套件真正针对真实行为运行，让失败反馈到代码与测试的双重修订中，而不是让单个智能体批改自己的作业。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +432,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

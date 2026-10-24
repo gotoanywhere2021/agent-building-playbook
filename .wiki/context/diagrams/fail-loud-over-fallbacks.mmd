@@ -1,0 +1,14 @@
+flowchart TD
+    A["流水线步骤失败（Step fails）"] --> B{"响亮失败还是静默兜底？（Fail loud or fall back?）"}
+    B -- "响亮失败" --> C["精确命名失败（Name it）：组件·步骤·原因"]
+    C --> D["停止推进，直到修复（Refuse to proceed）"]
+    D --> E["系统自我认知准确（Accurate self-knowledge）"]
+    B -- "静默兜底" --> F["替换默认值继续跑（Substitute and continue）"]
+    F --> G["下游建在替换答案上（Downstream on substituted answers）"]
+    G -. "错误难以溯源（Untraceable wrongness）" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B,F,G gate;
+    class A,E out;

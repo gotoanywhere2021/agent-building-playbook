@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">超时就分解（Decompose）重试</span></nav>
-<h1>超时就分解（Decompose）重试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Decompose and Retry on Timeout</p><p class="lede">当任务超时，答案几乎从不是把时限调大——而是把任务拆小。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>超时就分解（Decompose）重试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Decompose and Retry on Timeout</p><p class="lede">当任务超时，答案几乎从不是把时限调大——而是把任务拆小。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;任务反复超时（Repeated timeouts）&quot;] --&gt; B{&quot;调大超时？（Raise the timeout?）&quot;}
+    B -- &quot;不可取：延迟更高、失败更晚、掩盖分解问题&quot; --&gt; C[&quot;拆解任务（Decompose instead）&quot;]
+    B -- &quot;例外：任务真原子且不可拆&quot; --&gt; D[&quot;记录原因、接受例外、加监控（Document and monitor）&quot;]
+    C --&gt; E[&quot;切成原预算内可完成的小单元（Units within the original budget）&quot;]
+    E --&gt; F{&quot;可并行？（Parallelizable?）&quot;}
+    F -- &quot;可&quot; --&gt; G[&quot;并行编排（Orchestrate in parallel）&quot;]
+    F -- &quot;不可&quot; --&gt; H[&quot;顺序编排＋检查点（Sequential with checkpoints）&quot;]
+    G --&gt; I[&quot;在原预算内完成（Done within budget）&quot;]
+    H --&gt; I
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,G,H core;
+    class B,F gate;
+    class A,D,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>超时（timeout）是一个信号：任务相对于系统分配给它的时间预算太大了。靠调大超时来修复的本能几乎总是错的。更长的超时抬高每一次运行的延迟，让失败发现得更慢，并且只是掩盖底层的分解问题而不解决它。任务超时时，正确的响应是分解（decompose）它：把它拆成能在原时间预算内可靠完成的小单元，然后编排（orchestrate）这些单元，而不是把整体当作单个巨石（monolith）来跑。这同样适用于 LLM 调用、智能体运行、批处理作业、API 请求与数据库查询。分解还带来巨石运行下不可能有的并行性。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任务、智能体运行或 LLM 调用反复超时时——是任务太大，不是超时太短。</li><li>批处理作业持续偏慢时——分解成更小的批次，各自独立处理，再聚合结果。</li><li>智能体循环在任务中途超时时——把循环设计成每次迭代完成一个有意义、可设检查点（checkpoint）的单元，而不是任意大的一块。</li><li>单次 LLM 调用在复杂任务上产出低质量结果时——任务也许对单次调用而言太大；拆成一条由更小调用组成的流水线（pipeline）。</li><li>诊断超时时：在动任何配置之前，先问分解是否可行。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

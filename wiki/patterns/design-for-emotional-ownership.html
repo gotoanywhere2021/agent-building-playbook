@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">为情感归属（Ownership）而设计</span></nav>
-<h1>为情感归属（Ownership）而设计</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Design for Emotional Ownership</p><p class="lede">技术上能跑的系统仍可能没人用——全自动无头流水线让人疏离，对产出没有归属感的人不会信任它；给自主性设计人的界面：可见的进展、证明工件、属于人的作者时刻。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="taste" href="../explore.html#dim-taste">品味（taste）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>为情感归属（Ownership）而设计</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Design for Emotional Ownership</p><p class="lede">技术上能跑的系统仍可能没人用——全自动无头流水线让人疏离，对产出没有归属感的人不会信任它；给自主性设计人的界面：可见的进展、证明工件、属于人的作者时刻。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="taste" href="../explore.html#dim-taste">品味（taste）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;自动化整夜跑完、结果正确（Correct output, invisible process）&quot;] --&gt; B{&quot;人看得见过程吗？（Is the work legible?）&quot;}
+    B -- &quot;否：无头自动化&quot; --&gt; C[&quot;疏离、不信任、不愿署名（Alienated, won&#x27;t own it）&quot;]
+    B -- &quot;是&quot; --&gt; D[&quot;为自主性设计人的界面（Design the human interface）&quot;]
+    C --&gt; D
+    D --&gt; E[&quot;可见进展＋证明物＋关键处人工确认＋清晰交接（Progress, proofs, approvals, handoffs）&quot;]
+    E --&gt; F{&quot;人愿意署名并辩护吗？（Willing to sign off?）&quot;}
+    F -- &quot;否：仍是旁观者&quot; --&gt; E
+    F -- &quot;是&quot; --&gt; G[&quot;情感所有权建立（Emotional ownership）&quot;]
+    G --&gt; H[&quot;被信任、被维护、被持续使用（Trusted and kept in use）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B,F gate;
+    class A,C,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>采纳（adoption）并不纯粹理性，一个技术上能跑的系统仍可能失败，因为人们不信任它、不喜欢用它、或对它的产出毫无拥有感（ownership）。自动化有一种令人意外却反复出现的失败模式：它成功了，却照样被拒之门外——工作流跑了一整夜，产出一个看不到过程的好结果，而本应拥有这个结果的人感到与它断了联结：对它无感、疏离，不愿在一个自己没看着发生的东西上署名。没有人类界面的无界面（headless）自动化是反模式（anti-pattern）；如果人看不见、信不过、也塑造不了这项工作，那么无论输出多正确，采纳都会受损。补救之道是把情感拥有（emotional ownership）当作设计目标而非偶然，并有意构建自主性的人类界面。这意味着：更好的状态界面与可见的进展叙事，让工作在进行中清晰可读；证明工件（proof artifact），让完成的结果自带证据，而不是要求凭信任接受；把智能体人设（persona）安放在恰当的层次，让系统有可辨认的存在感而不冒充同事；给智能体社交渠道，以及庆祝性或趣味的操作面（affordance），让工作变成人们参与其中的事情；让自主工作在房间里持续可见的实体或氛围显示屏；把人工批准时刻放在真正要紧之处，让人们行使真实的判断而不是走过场式盖章（rubber-stamping）；以及保留作者身份与问责关系的清晰交接，让『这是谁的工作』始终不含糊。目标不是把一切都拟人化——对每个流程过度拟人会造成另一种混乱。目标是设计这个界面，让自主性另一端的人感觉自己是作者和拥有者，因为拥有者是唯一会信任、捍卫并持续使用这个系统的人。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个技术上正确的自动化正被悄悄冷落或不信任时——差距通常在拥有感与可见性，不在准确性。</li><li>一个长时间或隔夜运行的工作流在毫无可见过程的情况下产出结果，接收结果的人对本应属于自己的工作感到疏离。</li><li>你需要一个人为产出背书——签署、辩护、问责——而只有当他感觉自己是真正的作者时才会这么做。</li><li>采纳与正确性同样要紧时——内部工具与团队工作流的生死取决于人们想不想用。</li><li>智能体与人之间的交接正在模糊作者身份、导致没有人清晰拥有结果时。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

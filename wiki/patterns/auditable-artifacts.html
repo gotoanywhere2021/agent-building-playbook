@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">让每个阶段产出可审计工件（Artifact）</span></nav>
-<h1>让每个阶段产出可审计工件（Artifact）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Make Every Stage Produce an Auditable Artifact</p><p class="lede">没有工件的阶段无法审计——无法审计的阶段只能被盲目信任。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>让每个阶段产出可审计工件（Artifact）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Make Every Stage Produce an Auditable Artifact</p><p class="lede">没有工件的阶段无法审计——无法审计的阶段只能被盲目信任。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多步流水线（Multi-step pipeline）&quot;] --&gt; B[&quot;每阶段先声明产物（Declare the artifact per stage）&quot;]
+    B --&gt; C[&quot;阶段执行，工件落盘（Run, write the artifact）&quot;]
+    C --&gt; D{&quot;没有产物，或产物含糊？（Missing or vague artifact?）&quot;}
+    D -- &quot;是&quot; --&gt; E[&quot;审计缺口（Audit gap）：无法回放与验证，只能盲信&quot;]
+    D -- &quot;否&quot; --&gt; F[&quot;工件五项体检（The artifact bar）：装得进上下文、可冷启动续作、可版本对比、结构化、保留意图&quot;]
+    F --&gt; G[&quot;下游消费：独立检视、选择性回放、跨代理交接——也是最可靠的近期记忆（Inspect, replay, hand off）&quot;]
+    G -. &quot;追溯污染源头 / 从指定阶段重放&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D,E gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>多步流水线中的每个阶段都应产出一个可独立检查的输出工件（artifact）：写入磁盘的文件、结构化日志条目、数据库记录、队列里的一条消息，或被捕获进报告的测试结果。工件不是副作用——它是阶段把结果传达给系统其余部分、而不经由智能体自我汇报的机制。只产生内部状态、瞬态内存结果或什么都不产生的阶段会留下审计缺口：你无法重放它们、检查其输出，或在不重跑的前提下验证它们是否正确运行。工件是智能体流水线可观测性的地基。</p>
 <p>同一性质也让持久化工件成为近期记忆最可靠的形式——比任何玄妙之物可靠得多。一个智能体系统的实用记忆，就是它的规格说明、计划、冲刺文档、验收标准、测试结果、浏览器录像、截图、会话摘要、决策日志、复盘（postmortem）、日志、习得规则、工作流状态文件、领域词汇表和转录摘要。它们能充当记忆，恰恰因为它们是工件：可被检查、版本化、修剪、传给另一个智能体、由人类评审、并被评估。这使得它们不如模型内部的隐式记忆那般神奇，却远更可控——你能看见系统相信什么，并纠正它。不过，好的工件不是随便哪个文件。它要小到能装进后来的上下文窗口，显式到能让另一个智能体或人类从冷启动接续，版本化到足以支持回滚与比较，结构化到工具能机械化检查，又在语义上足够丰富以保存意图而不只是结果。不满足这些标准的工件——任何窗口都装不下的蔓生日志、没有日期无法 diff 的一团字节、含糊到无法据以接续的散文——是存储，不是记忆。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

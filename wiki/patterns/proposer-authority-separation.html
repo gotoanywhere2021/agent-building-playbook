@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">把提议方与批准方分开</span></nav>
-<h1>把提议方与批准方分开</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Separate the Proposer From the Authority</p><p class="lede">提议动作的实体是该提议最差的批准者——把批准路由到一个对其通过与否没有利益的角色。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把提议方与批准方分开</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Separate the Proposer From the Authority</p><p class="lede">提议动作的实体是该提议最差的批准者——把批准路由到一个对其通过与否没有利益的角色。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;Agent 提出行动（Proposal）：计划 / 代码 / 命令&quot;] --&gt; B{&quot;行动不可逆或有风险？（Irreversible or risky?）&quot;}
+    B -- &quot;可逆且低风险&quot; --&gt; C[&quot;提案人直接执行（Execute directly）&quot;]
+    B -- &quot;是&quot; --&gt; D{&quot;谁有权批准？（Who holds authority?）&quot;}
+    D -- &quot;仍是提案人自己&quot; --&gt; E[&quot;自我审批：偏见的橡皮图章（Rubber stamp）&quot;]
+    D -- &quot;独立方：第二 Agent / 校验器 / 人 / 门控阶段&quot; --&gt; F[&quot;权威评估提案（Authority assesses）&quot;]
+    F --&gt; G{&quot;安全？正确？符合意图？（Safe, correct, aligned?）&quot;}
+    G -- &quot;否：权威必须能说不&quot; --&gt; H[&quot;驳回，提案人修改（Reject and rework）&quot;]
+    G -- &quot;是&quot; --&gt; I[&quot;批准执行 + 分离审计记录（Approve with audit trail）&quot;]
+    H -. &quot;修改后的新提案重新送审&quot; .-&gt; F
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F,H,I core;
+    class B,D,E,G gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在 agent 系统中，提出行动的 agent——『这是计划』『这是代码』『这是要运行的命令』——在结构上偏向于获得批准。它已经朝提案方向完成了推理，其上下文锚定在提案上，任何自我评审都在生成提案的同一套假设下进行。把提案者（proposer）与权威（authority）分离，意味着拥有批准与执行权力的实体在提案中没有利益攸关：它可以是一个第二 agent、一个确定性校验器、一个人，或一个设闸的流水线阶段。权威的职责是评估提案是否安全、正确、与意图对齐——并且它必须能够说不。绕回提案者手中审批的提案不是提案；它们是加了若干步骤的执行。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何不可逆动作之前（文件删除、部署、外部 API 调用、消息发送）——提案者起草，权威批准。</li><li>当一个 agent 在同一回合内既设计又实现——拆分角色：一个 agent 设计，一个独立的 agent 在前者构建之前评审。</li><li>调试一条批准自己工作、持续产出错误输出的流水线时——缺失的分离就是结构性根因。</li><li>实现人在回路（human-in-the-loop）工作流时：人是权威，agent 是提案者。在编排设计中把这一点显式化。</li><li>当合规或问责要求适用时：成文的提案者-权威分离就是审计轨迹。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

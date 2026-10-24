@@ -1,0 +1,15 @@
+flowchart TD
+    A["指令草稿（Draft instruction）"] --> B{"草稿里含『不要、避免』类否定？（Contains negation?）"}
+    B -- "有：否定词反而激活了要压制的概念" --> C["改写为正向目标描述（State the positive target）"]
+    B -- "没有" --> D["只激活想要的形状（Only the desired concept active）"]
+    C --> D
+    D --> E{"约束是否不可协商？（Non-negotiable prohibition?）"}
+    E -- "是" --> F["用确定性检查兜底，而非加码否定（Deterministic gate, not louder NO）"]
+    E -- "否" --> G["输出即目标形状（Output matches the target）"]
+    F --> G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F core;
+    class B,E gate;
+    class A,D,G out;

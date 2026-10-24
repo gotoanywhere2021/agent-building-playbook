@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-knowledge">知识（knowledge）</a><span class="sep">›</span><span class="here">基因迁移——移植行为，而不是代码</span></nav>
-<h1>基因迁移——移植行为，而不是代码</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Gene Transfer — Port the Behavior, Not the Code</p><p class="lede">系统间可复用的单元很少是整个工具，而是一个性状（trait）——一段评审提示词、一个校验循环、一种上下文文件结构、一个 CLI 交互设计——把表现型从生物体中分离，移植有价值的部分。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="tool-design" href="../explore.html#dim-tool-design">工具设计（tool-design）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>基因迁移——移植行为，而不是代码</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Gene Transfer — Port the Behavior, Not the Code</p><p class="lede">系统间可复用的单元很少是整个工具，而是一个性状（trait）——一段评审提示词、一个校验循环、一种上下文文件结构、一个 CLI 交互设计——把表现型从生物体中分离，移植有价值的部分。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="tool-design" href="../explore.html#dim-tool-design">工具设计（tool-design）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;一个系统里好用的实践（A practice that works）&quot;] --&gt; B{&quot;可复用的单元是什么？（What is the unit?）&quot;}
+    B -- &quot;整个工具照搬&quot; --&gt; C[&quot;拖走全部实现（Wholesale copy）&quot;]
+    B -- &quot;价值在性状本身&quot; --&gt; D[&quot;分离表型与机体（Phenotype vs organism）&quot;]
+    D --&gt; E[&quot;提取性状（Extract trait）：提示·校验循环·文件结构·CLI 交互&quot;]
+    E --&gt; F[&quot;移植进新系统（Transfer into target）&quot;]
+    F --&gt; G[&quot;系统级：语义移植（Semantic porting）——跨栈重造行为而非抄代码&quot;]
+    G --&gt; H{&quot;越界风险？（License·fidelity·security?）&quot;}
+    H -- &quot;有&quot; --&gt; I[&quot;纳入治理：审查·验证·法律确认（Governed transfer）&quot;]
+    H -- &quot;干净&quot; --&gt; J[&quot;性状在新系统安家（Trait lands）&quot;]
+    I --&gt; J
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B,H gate;
+    class A,C,G,I,J out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当一项实践在某个系统中运转良好时，直觉是整个复制承载它的那个工具。这通常是错误的单位。有价值的东西很少是完整的工具——它是一个可以像基因在生物体之间转移那样被提取、被移入另一个系统的单一特质（trait）。可复用的单位可能是一段评审提示词、一个验证循环、一个规划序列、一种上下文文件结构、一种 CLI 可供性（affordance）、一个测试生成模式、一个转录处理步骤、一个模型路由策略、一个策略检查，或一个人设（persona）设计。基因转移（gene transfer）就是把表型（phenotype）与生物体（organism）分离的纪律：辨别哪个行为真正有价值、哪个实现只是恰好产出了它，然后只把前者带走。这同样适用于代码、提示词、技能、工作流、验证器和组织实践。在系统尺度上，同一个想法变成语义移植（semantic porting）：如果一个库、系统或工作流承载了有用的行为，智能体（agent）可以在另一种语言、另一套技术栈或另一个策略环境里重建该行为，而不复制原始代码——一种保存『系统做什么』而非『它具体怎么做』的行为记忆（behavioral memory）。语义移植在净室（clean-room）和内部合规场景中物有所值——它降低依赖风险——也适用于现代化改造——在架构被替换的同时保留行为。但移植行为而非代码带有法律、安全和语义保真风险——重建的行为可能悄然偏离、泄漏或违反许可证——所以它需要治理（governance），而不只是一个聪明的提示词。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当某个模式在一个团队或系统中有效，你想在别处获得其价值，而不想连整个源头工具一起拖走时。</li><li>当真正可复用的单位是一个特质——一段提示词、一个循环、一种文件结构、一个可供性——而非一个可部署工件时。</li><li>现代化改造遗留系统时：在行为层面保留它做什么，同时替换它怎么做。</li><li>当净室或内部合规约束禁止复制源码、但允许按『它做什么』的规格重建行为时。</li><li>构建模式注册表（pattern registry）时——基因转移正是注册表条目真正在团队之间流动的机制。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

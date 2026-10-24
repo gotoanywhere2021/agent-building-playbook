@@ -1,0 +1,14 @@
+flowchart TD
+    A["轻量标识符在手（Paths·URLs·stored queries）"] --> B{"当前步骤需要什么？（Needed now?）"}
+    B -- "只取这一步所需" --> C["即时检索（Retrieve just that）"]
+    C --> D["用后即弃（Discard after use）"]
+    D -. "进入下一步，按需再取" .-> B
+    E["预载一切可能相关（Pre-load everything）"] --> F["注意力被稀释·预算被挤占（Diluted attention）"]
+    F -. "改为按需检索" .-> B
+    G["检索器不等于记忆（A retriever is not memory）"] --> H["补齐选择·衰减·纠错·评估（Selection·decay·correction·evaluation）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B gate;
+    class A,E,F,G,H out;

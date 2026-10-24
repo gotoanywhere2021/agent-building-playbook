@@ -1,0 +1,16 @@
+flowchart TD
+    A["代理执行任务（Agent at work）"] --> B["挣扎的典型症状（Struggle tells）：漏改重复调用点、上下文耗尽、测试仍红却报完成、自相矛盾"]
+    B --> C{"是代码的问题，还是模型的局限？（Code smell or model limit?）"}
+    C -- "确认是代码信号" --> D["读作可维护性退化的早期警报（Early warning of decay）"]
+    D --> E["让代理复盘：点名可维护性问题，产出重构计划（Name problems, plan the refactor）"]
+    E --> F["人审计划并纠偏（Human reviews and steers）"]
+    F --> G["执行重构（Refactor）：代理自行清理，或用专业工具做结构化重构"]
+    G --> H["可维护性回升（Health restored）"]
+    H -. "观察代理是否恢复一次过" .-> A
+    C -- "实为模型局限或任务本身难" --> I["不动代码：换提示或换工具（Don't refactor working code）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class C gate;
+    class A,B,H,I out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">一口大小（Bite-sized）的任务</span></nav>
-<h1>一口大小（Bite-sized）的任务</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Bite-Sized Tasks</p><p class="lede">把工作拆到每个单元都能独立完成、提交、评审的粒度。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>一口大小（Bite-sized）的任务</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Bite-Sized Tasks</p><p class="lede">把工作拆到每个单元都能独立完成、提交、评审的粒度。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;一大块工作（One big blob）&quot;] --&gt; B{&quot;两句话能说清这个任务吗？（Two sentences or less?）&quot;}
+    B -- &quot;说不清&quot; --&gt; C[&quot;继续拆分（Split further）&quot;]
+    C -. &quot;重新过检&quot; .-&gt; B
+    B -- &quot;说得清&quot; --&gt; D[&quot;三十分钟级任务（30-minute unit）：单一行为、单一决定&quot;]
+    D --&gt; E[&quot;完成即提交（Complete &amp; commit）&quot;]
+    E --&gt; F[&quot;五分钟读完全部 diff（Five-minute review）&quot;]
+    F --&gt; G{&quot;一眼可信吗？（Trust at a glance?）&quot;}
+    G -- &quot;diff 大到没法读&quot; -. &quot;退回再拆&quot; .-&gt; C
+    G -- &quot;通过&quot; --&gt; H[&quot;干净交接；回滚只涉一个行为（Clean handoff, one-behavior rollback）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B,G gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>大到无法审阅的任务，就大到无法信任。当一个工作单元在一次提交里跨越多个文件、多个行为、多个决策，其中每个决策对审阅都不可见——审阅者只能要么整体接受、要么彻底审计，而智能体或作者必须把所有东西同时抓在工作记忆里。小口任务（bite-sized tasks）是足够小的工作单元：一个人五分钟内能通读整个变更，并能从提交信息验证意图。在智能体工作流中，小口任务直接对应智能体能力：给它一个五小时的任务，它会耗尽上下文、产生幻觉，或产出一大块没人审阅的巨石（monolith）；给它一个专注的三十分钟任务，它会完成它、提交它、干净地交接。这个约束谈的不是工作量——它谈的是可审阅性与可恢复性。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>规划时：如果一个任务无法用两句话描述，它就太大了——分解它。</li><li>智能体产出了大而无审阅的 diff 时：下一个任务应当是审阅已产出的东西，而不是下一个特性。</li><li>任务开始前需要理解来自三个以上不同位置的上下文时：上下文负载过大；拆分任务。</li><li>进度以天而非小时计的时候：粒度错了；拆细。</li><li>一次回退需要撤销多个独立行为的时候：工作单元太大了。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

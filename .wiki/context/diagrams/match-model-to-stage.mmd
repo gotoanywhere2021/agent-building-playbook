@@ -1,0 +1,19 @@
+flowchart TD
+    A["多阶段流水线（Multi-stage pipeline）"] --> B["逐阶段评估认知负荷（Assess per-stage demand）"]
+    B --> C{"该阶段的最低充分档位？（Minimum sufficient tier）"}
+    C -- "高风险推理：需求综合 / 架构决策" --> D["最强模型（Most capable tier）"]
+    C -- "机械任务：解析 / 分类 / 格式化" --> E["最便宜的合格模型（Cheapest sufficient）"]
+    C -- "评审角色" --> F["与实现者不同的模型家族（Different family）"]
+    D --> G["最小充分模型原则（Minimum sufficient model）"]
+    E --> G
+    F --> G
+    G --> H{"审计成本与质量（Audit cost and quality）"}
+    H -- "机械档出错：其实更敏感" --> I["回调该阶段档位（Raise tier）"]
+    H -- "合格" --> J["同等质量、更低成本（Same quality, lower cost）"]
+    I -. "重新校准分档" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F,G,J core;
+    class C,H,I gate;
+    class A out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-meta-principles">元原则（meta-principles）</a><span class="sep">›</span><span class="here">重新设计工作，而不是填充人形空位</span></nav>
-<h1>重新设计工作，而不是填充人形空位</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Redesign the Work, Don&#x27;t Fill Human-Shaped Slots</p><p class="lede">把每个人类角色换成等价的智能体只会保留旧的低效；用『AI 生成代码占比』衡量成熟度也量错了东西——应围绕模型与工具的新能力重新设计工作本身。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>重新设计工作，而不是填充人形空位</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Redesign the Work, Don&#x27;t Fill Human-Shaped Slots</p><p class="lede">把每个人类角色换成等价的智能体只会保留旧的低效；用『AI 生成代码占比』衡量成熟度也量错了东西——应围绕模型与工具的新能力重新设计工作本身。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;引入智能体（Adopt agents）&quot;] --&gt; B{&quot;填入旧岗位槽位？（Drop agents into human-shaped slots?）&quot;}
+    B -- &quot;是：照搬旧流程&quot; --&gt; C[&quot;旧形态被保留：串行交接与协调开销照旧（Old inefficiencies preserved）&quot;]
+    C --&gt; D{&quot;用『生成代码占比』度量成熟度？（Measure by percent generated?）&quot;}
+    D -- &quot;是&quot; --&gt; E[&quot;度量了错误目标（Wrong target）：署名率上升，结果未必变好&quot;]
+    D -- &quot;否：回到结果&quot; --&gt; G[&quot;以结果为纲（Outcome first）&quot;]
+    B -- &quot;否：从零重设计&quot; --&gt; F[&quot;围绕模型与工具能力重设计工作（Redesign work around capabilities）&quot;]
+    F --&gt; G[&quot;更好·更安全·更有价值的工作（Better, safer, more valuable）&quot;]
+    E -. &quot;重新聚焦结果&quot; .-&gt; G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class F core;
+    class B,C,D,E gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>采用智能体时一个诱人却错误的做法，是拿现有的组织架构与工作流，往每个人形槽位里塞一个智能体：智能体『开发者』、智能体『评审者』、智能体『PM』，各自大致做那个人原本做的事。这是对旧工作形态的盲目照搬（cargo-culting），它保留了那种形态所编码的低效——交接、串行阶段、因为人力昂贵且只能串行才存在的协调开销。机会不是用 token 给旧工作流配备人员；而是围绕模型与工具现在真正能做的事重新设计工作，其形态往往与它所取代的人类流程毫无相似之处。一个相关错误是用模型生成的代码百分比来衡量 AI 成熟度，仿佛目标就是最大化机器写作占比。这个指标完全跟踪错了东西。重要的问题不是谁敲下了代码；而是这个组织是否交付更好、更安全、更有价值的工作。一个组织可以用智能体生成九成的代码却交付更差的结果，也可以生成少得多却显著更好。围绕结果来设计，让人类与机器的分工从结果中自然得出——而不是出于填满槽位或达成某个生成百分比的欲望。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>把智能体引入既有流程时：先问如果围绕当前模型与工具能力从零设计，这份工作会是什么样，然后再把智能体映射到现有角色上。</li><li>当工作流仍保留只在人力昂贵且缓慢的年代才存在的串行人际交接时，把它们视为应当重新设计掉、而非原样自动化的候选。</li><li>当管理层开始引用『代码生成百分比』作为成熟度指标时，把对话引向结果质量、安全性与已交付价值。</li><li>当某个智能体正被塞进去做某人原本做的完全一样的事时，停下来问：这个任务是否还应以这种形态存在。</li><li>衡量智能体化举措时，把成功定义为更好、更安全、更有价值的工作——而不是写作占比。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+flowchart TD
+    A["目标（Goal）"] --> B["架构师阶段（Architect）：产出完整规格书——模块边界、数据模型、接口契约、任务排序"]
+    B --> C{"规格完成且经评审？（Spec complete & reviewed?）"}
+    C -- "未就绪：继续设计" --> B
+    C -- "就绪" --> D["构建者阶段（Builder）：严格按规格实现，不擅自重设计"]
+    D --> E{"实现中发现规格缺口？（Spec gap found?）"}
+    E -- "有" --> F["作为发现上报，不悄悄用实现选择解决（Surface, don't improvise）"]
+    F -. "缺口回到架构阶段修订" .-> B
+    E -- "无" --> G["交付并对照规格评审（Deliver, review against spec）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,F core;
+    class C,E gate;
+    class A,G out;

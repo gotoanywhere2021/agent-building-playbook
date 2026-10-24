@@ -1,0 +1,16 @@
+flowchart TD
+    A["实现者产出的工件（Artifact to review）"] --> B["多位独立评审并行（Parallel reviewers）：不同模型或角色，几乎不共享上下文"]
+    B --> C["按『重要发现』计分（Score on significant findings，不按数量）"]
+    C --> D["元评审人汇总排序（Meta-reviewer）：对比、去噪、选出真正要紧的发现"]
+    D --> E{"有改变结果的要害发现？（Outcome-changing finding?）"}
+    E -- "无" --> H["可信结论（Ranked, defensible verdict）"]
+    E -- "有" --> F["路由回实现者修复（Fix routed back）"]
+    F --> G{"换新评审者复审通过？（Fresh re-review pass?）"}
+    G -- "未通过" -. "再换一批新眼睛重评" .-> B
+    G -- "通过" --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E,G gate;
+    class A,H out;

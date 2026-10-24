@@ -1,0 +1,16 @@
+flowchart TD
+    A["语料池：纪要、规格、决策（Transcripts, specs, decisions）"] --> B["矛盾探测器扫描（Contradiction detector runs）"]
+    B --> C{"发现不相容断言？（Incompatible assertions?）"}
+    C -- "否" --> D["换下一批语料（Next corpus）"]
+    D -. "回到语料池" .-> A
+    C -- "是" --> E["列出矛盾：改口未同步、术语双义、计划违背价值观（Name the conflicts）"]
+    E --> F{"有人愿意接手裁决？（A forum to triage?）"}
+    F -- "有" --> G["交人讨论裁定：绝不自动改写（Humans decide, never auto-fix）"]
+    F -- "无" --> H["搁置：无人处理的清单只是未读堆积（Shelve）"]
+    G --> I["意图重新对齐（Reconciled intent）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,G core;
+    class C,F gate;
+    class A,D,H,I out;

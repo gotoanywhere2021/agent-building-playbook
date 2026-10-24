@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-knowledge">知识（knowledge）</a><span class="sep">›</span><span class="here">建一个模式注册表（Pattern Registry）</span></nav>
-<h1>建一个模式注册表（Pattern Registry）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build a Pattern Registry</p><p class="lede">团队会各自重复发现同样的循环、校验器与评审技巧——模式注册表把可复用的操作招式连同使用指引与禁忌记录下来，让实践无需统一技术栈即可传承；它是智能体实践的包管理器。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>建一个模式注册表（Pattern Registry）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build a Pattern Registry</p><p class="lede">团队会各自重复发现同样的循环、校验器与评审技巧——模式注册表把可复用的操作招式连同使用指引与禁忌记录下来，让实践无需统一技术栈即可传承；它是智能体实践的包管理器。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;各队各自重造轮子（Teams reinvent the same wheels）&quot;] --&gt; B[&quot;沉淀条目（Capture the entry）：问题、用法、反指征、评估法、出处与维护人&quot;]
+    B --&gt; C{&quot;条目可信吗？（Trustworthy entry?）&quot;}
+    C -- &quot;只讲『何时用』，不讲『何时别用』&quot; --&gt; D[&quot;拒收：货拜物目录（Cargo-cult catalog）&quot;]
+    C -- &quot;含反指征与评估法&quot; --&gt; E[&quot;注册表就位（Registry）：版本化、署名、可检索&quot;]
+    E --&gt; F[&quot;取用与改造，而非强制同栈（Pull &amp; adapt, not uniformity）&quot;]
+    F --&gt; G[&quot;用好再回馈：新条目与修正（Contribute back）&quot;]
+    G -. &quot;有人供养才不腐烂（Unowned = rot）&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,F core;
+    class C gate;
+    class A,D,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在一个组织里，各团队不断重复发明同样的轮子：同样的智能体循环、同样的校验器、同样的审阅技巧、同样的上下文布局、同样的智能体形状的工具——各自独立发现、各自付出代价、从不共享。模式注册表（pattern registry）是制度层面的回应。它捕获可复用的操作招式——智能体实践的『基因』——而不要求每个团队采用同一个有机体、同一个框架或同一套技术栈。要点是实践的转移，不是统一性的强制。一条有用的注册表条目远不止名字加描述：它记录模式名称、解决的问题、何时使用、何时不使用、它要求的工件、示例提示词或工作流节点、已知失败模式、判断它是否奏效的评估方法、实现参考、出处（provenance），以及为它背书的维护者或支持者。禁忌（contraindication）不是可有可无的客套——它们正是让注册表可信的东西。重型工作流图对许多任务是错的；普适记忆可能毒化上下文；人工审批门可能摧毁自主性；俏皮的智能体人设可能取悦一种文化、疏远另一种。一份只列『何时使用』、从不列『何时避免』的注册表，会沦为货拜物目录（cargo-cult catalog）。做得好，模式注册表会成为智能体实践的包管理器（package manager）：一个共享的、有版本的、可归因的操作招式索引，团队可以从中拉取、改编、再贡献回去。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>组织内多个团队在独立解决同样的智能体构建问题、而解决方案从不传播时。</li><li>某个在一支团队里行之有效的实践应当扩散，但你不想强迫每支团队采用创始团队的框架或技术栈时。</li><li>你不断从转录挖掘中重新发现模式候选、需要一个结构化的归置之处时。</li><li>新团队或新智能体上手、他们会受益于组织积累的操作招式而不是从零开始时。</li><li>某个模式被误用的代价高到其禁忌必须随模式一起传播时——注册表条目正是『何时不使用』的居所。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

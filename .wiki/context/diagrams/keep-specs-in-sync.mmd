@@ -1,0 +1,16 @@
+flowchart TD
+    A["规格（Spec）：系统『应当做什么』的事实源"] --> B["按规格实现（Implement）"]
+    B --> C{"实现暴露规格有误或不可行？（Spec drift?）"}
+    C -- "是：先更新规格，再写修复" --> D["更新规格（Update spec）"]
+    D --> B
+    C -- "否" --> E["交付：代码与规格同一提交（Ship together）"]
+    E --> F{"意图刷新点（Intent refresh）：原型评审 / 用户测试 / 生产反馈之后？"}
+    F -- "意图已移动" --> D
+    F -- "意图未变" --> G["规格保持为活文档（Living spec）"]
+    G -. "交给下个会话前：先校验规格与代码一致" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E core;
+    class C,F gate;
+    class A,G out;

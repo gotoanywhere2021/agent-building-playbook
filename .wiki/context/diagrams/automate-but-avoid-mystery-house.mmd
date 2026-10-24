@@ -1,0 +1,16 @@
+flowchart TD
+    A["想自动化的流程（Process candidate）"] --> B["先手写完整逻辑：输入、变换、输出、失败模式（Write the logic out first）"]
+    B --> C{"十分钟能向旁人讲明白吗？（Explainable in 10 minutes?）"}
+    C -- "不能" --> D["先不自动化：补足理解（Understanding first）"]
+    D -. "理解齐了再来" .-> B
+    C -- "能" --> E["放心自动化：可靠、快、可检视（Automate confidently）"]
+    E --> F["自动化诱惑扩展：新情况塞进没人看懂的系统（Extension invites opacity）"]
+    F --> G{"仍能讲清它为何有效吗？（Still explainable?）"}
+    G -- "讲不清" --> H["神秘屋警报（Mystery house）：无人知其所以然，别再往上盖"]
+    G -- "仍能讲清" -. "继续安全扩展" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,G gate;
+    class A,D,F,H out;

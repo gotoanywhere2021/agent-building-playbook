@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">重要的事就发事件（Event）</span></nav>
-<h1>重要的事就发事件（Event）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">If It&#x27;s Important, Emit an Event</p><p class="lede">如果一个决策、状态变更或结果对理解『发生了什么』有意义，它就该产出结构化事件——不是一行日志、一句注释，也不是『希望当时有人在看』。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>重要的事就发事件（Event）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">If It&#x27;s Important, Emit an Event</p><p class="lede">如果一个决策、状态变更或结果对理解『发生了什么』有意义，它就该产出结构化事件——不是一行日志、一句注释，也不是『希望当时有人在看』。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理执行（Agent runs）&quot;] --&gt; B{&quot;值得记录的时刻？（Moment that matters?）&quot;}
+    B -- &quot;状态转换·决策·外部调用&quot; --&gt; C[&quot;发出结构化事件（Emit structured event）&quot;]
+    B -- &quot;无关琐事：不记录&quot; --&gt; A
+    C --&gt; D[&quot;类型化记录（Typed record）：输入·输出·动机&quot;]
+    D --&gt; E[&quot;事件流（Event stream）&quot;]
+    E --&gt; F[&quot;消费者（Consumers）：仪表盘·分析·下游代理&quot;]
+    F --&gt; G[&quot;事后重建执行叙事（Reconstruct the run）&quot;]
+    G -. &quot;发现无事件覆盖的盲区&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B gate;
+    class A,E,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一个做着重要工作却不留任何记录的系统就是黑箱。事后从输出反推——试图从现存的东西推断发生过什么——是考古（archaeology），不是可观测性（observability）。在关键时刻发出结构化事件（structured event），就是让系统讲述自身执行的实践：工具调用完成时，发出一条带输入和输出的完成事件；走了某个决策分支时，发出一条带决策依据的决策事件；发生重试时，发出一条带失败原因的重试事件。这些事件不是日志行——它们是带类型的结构化记录，携带足以在事后重建系统推理的信息。关键差别在意图：日志行是写给开发者的便条；事件是系统的一等输出，其设计目的就是被其他系统、智能体、仪表盘和分析管道消费。会发出事件的智能体（agent）是可观测的；只会往 stdout 打印的智能体只能靠猜。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在每一次重要的状态转换处：会话开始、会话结束、任务分配、任务完成、交接、失败、重试。每个对理解本次运行有意义的转换都应产生一条记录。</li><li>当做出影响后续行为的决策时：走了哪个分支、选了哪个工具、选了哪个模型。没有记录的决策是不可见的。</li><li>当发起外部调用时：工具调用、API 调用、数据库写入。记录输入、输出、延迟和结果。外部调用是价值最高的事件，因为它们是系统与世界交互的接触点。</li><li>当构建任何将无人值守运行的管道（pipeline）时：没有事件流的无人值守系统一旦失败便无法诊断。对自主运行而言，事件发出不是可选项。</li><li>当设计多智能体系统中智能体之间的交接时：一个智能体执行所产生的事件，就是下一个智能体的工作记忆，也是编排器（orchestrator）的审计线索。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

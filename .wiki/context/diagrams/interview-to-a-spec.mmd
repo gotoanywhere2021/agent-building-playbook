@@ -1,0 +1,16 @@
+flowchart TD
+    A["一行冲动需求（One-line impulse）"] --> B["怀疑论访谈者（Skeptical interviewer）"]
+    B --> C["先问为什么，再问怎么做（Why before how）"]
+    C --> D["复述理解，暴露误读（Reflect understanding back）"]
+    D --> E{"能干净复述目标？（Clean restatement?）"}
+    E -- "不能：继续追问未知与矛盾" --> C
+    E -- "能" --> F["精简规格（Concise spec）：验收·场景·约束·开放问题"]
+    F --> G{"人类审阅：批准还是拒绝？（Approve or reject?）"}
+    G -- "拒绝：带意见回炉" --> B
+    G -- "批准" --> H["进入实现（Implement）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,G gate;
+    class A,F,H out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">随模型进步给护架做减法（Ablate）</span></nav>
-<h1>随模型进步给护架做减法（Ablate）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Ablate the Harness as Models Improve</p><p class="lede">定期让更强的模型检视你的工作流，删掉不再需要的步骤、缩短提示、合并节点——模型能力变得比工作流习惯快，昨天的脚手架就是今天的税。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="cost-routing" href="../explore.html#dim-cost-routing">成本路由（cost-routing）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>随模型进步给护架做减法（Ablate）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Ablate the Harness as Models Improve</p><p class="lede">定期让更强的模型检视你的工作流，删掉不再需要的步骤、缩短提示、合并节点——模型能力变得比工作流习惯快，昨天的脚手架就是今天的税。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="cost-routing" href="../explore.html#dim-cost-routing">成本路由（cost-routing）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;带脚手架的工作流（Scaffolded workflow）：补偿性步骤·冗长提示·审批门&quot;] --&gt; B[&quot;定期让更强模型体检（Stronger model inspects on cadence）&quot;]
+    B --&gt; C[&quot;列出不再值回成本的候选（Candidates）：删节点·缩提示·并步骤·降级模型&quot;]
+    C --&gt; D[&quot;把消融当实验执行（Run ablation as an experiment）&quot;]
+    D --&gt; E{&quot;对比未消融基线：质量如何？（Quality vs baseline?）&quot;}
+    E -- &quot;质量保持（Holds）&quot; --&gt; F[&quot;确认是税负，保持删除（Keep it deleted）&quot;]
+    E -- &quot;质量下降（Drops）&quot; --&gt; G[&quot;实证重新正当化，恢复该步骤（Restore the step）&quot;]
+    F --&gt; H[&quot;更精简的工作流（Leaner harness）&quot;]
+    H -. &quot;模型再升级或周期到期&quot; .-&gt; B
+    G --&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,G gate;
+    class A,F,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>工作流中的每一个脚手架步骤都是为了补偿某个模型当时还做不可靠的事情而添加的：防止已知错误的冗长提示词、捕捉某类错误的额外评审节点、守护脆弱步骤的审批门、把任务保持在模型能力范围内的分解。但模型能力的变化快于工作流习惯，补偿活过了它们为之而建的缺陷，昨日的承重脚手架无声地变成今天的税——额外的 token、额外的延迟、额外的维护面，以及工作流额外可以漂移的地方。自消融测试装置（self-ablating harness）是这样一种纪律：定期请一个更强的模型检视工作流，识别不再物有所值的部分——可删除的步骤、可缩短的提示词、可合并的节点。然后你把消融当作实验来运行——删掉节点、缩短提示词、换成更便宜的模型、撤掉审批门——并把输出质量与未消融版本对比。质量保持，脚手架就是税，删了就保持删除；质量下降，你刚刚以实证方式重新正当化了那个步骤。图是一个要被修剪的活系统，不是一座要被供奉的神龛。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>按节奏进行，而不只是出问题时——像排期依赖升级那样排期消融。</li><li>模型升级之后立刻进行：新模型很可能不再需要旧模型所需的脚手架。</li><li>当工作流在多次增量修改中累积了节点与提示词文本——总和几乎肯定带着死重。</li><li>当单次运行的成本或延迟悄然上升而质量没有相应增益——消融，找出不再自付其费的步骤。</li><li>当提示词长成一堵防御性指令的墙——其中许多子句在防范当前模型已不再犯的错误。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

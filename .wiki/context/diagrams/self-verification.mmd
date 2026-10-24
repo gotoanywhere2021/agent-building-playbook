@@ -1,0 +1,15 @@
+flowchart TD
+    A["执行动作（Perform action）：写文件·调接口·生成结构化输出"] --> B["显式验证步骤（Explicit verify step）：介于『做了』与『报告完成』之间"]
+    B --> C{"有独立信息源吗？（Independent ground truth?）"}
+    C -- "没有：同模型换个问法只是重复" --> D["不演验证，如实标注局限（No verification theater）"]
+    C -- "读回产物·跑测试·对照基准" --> E["运行独立检查（Run the independent check）"]
+    E --> F{"验证通过？（Pass?）"}
+    F -- "未通过：错误被当场捕获" --> G["修复后重做（Fix and redo）"]
+    G --> A
+    F -- "通过" --> H["此时才报告完成（Report success）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,D,F gate;
+    class A,G,H out;

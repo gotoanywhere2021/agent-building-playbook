@@ -1,0 +1,14 @@
+flowchart TD
+    A["整批待跑（Full batch ready）"] --> B["先选三个代表性输入（Pick three representatives）"]
+    B --> C["一个典型 + 一个结构不同 + 一个边界（Typical, variant, edge case）"]
+    C --> D["只跑这三个，人工核对输出（Run three, verify manually）"]
+    D --> E{"输出符合预期？（Outputs correct?）"}
+    E -- "否" --> F["修管道：只浪费三次而非三千次（Fix cheaply at three）"]
+    F -. "修完重验三文件" .-> D
+    E -- "是" --> G["放行全量批（Launch the full batch）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G out;

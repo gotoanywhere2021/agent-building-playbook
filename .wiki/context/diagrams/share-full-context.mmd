@@ -1,0 +1,14 @@
+flowchart TD
+    A["编排者派发子任务（Delegation）"] --> B{"交接包完整吗？（Decision context included?）"}
+    B -- "只给窄任务描述" --> C["子代理自行微决策（Micro-decisions）：返回格式·取舍边界·空结果处理全靠猜"]
+    C --> D["假设从未被审阅（Unreviewed assumptions）：并行代理各自为政"]
+    D -. "补齐上下文" .-> E
+    B -- "完整交接" --> E["传递决策所需上下文（Share decision context）：目标·约束·已有决定·已消歧项"]
+    E --> F["子代理按同一准绳行动（Aligned micro-decisions）"]
+    F --> G["结果一致·可直接支撑下游决策（Consistent, decision-ready output）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E core;
+    class B,C,D gate;
+    class A,F,G out;

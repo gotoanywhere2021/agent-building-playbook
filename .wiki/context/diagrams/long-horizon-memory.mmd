@@ -1,0 +1,20 @@
+flowchart TD
+    A["长周期任务（Long-running task）：跨多个会话"] --> B{"单上下文装得下全程？（Fits one window?）"}
+    B -- "是" --> C["单会话完成（Single session）"]
+    B -- "否" --> D["三策略并用（Three strategies）"]
+    D --> E["压缩历史（Compaction）：留结论与产出，弃过程"]
+    D --> F["笔记文件（Notes file）：决策、待办、发现的事实；会话始读终写"]
+    D --> G["子任务隔离（Isolation）：新会话只继承所需上下文，返回摘要"]
+    E --> H["主会话保持高信号上下文（High-signal main context）"]
+    F --> H
+    G --> H
+    H --> I{"会话性能开始退化？（Degrading?）"}
+    I -- "是：历史又变稠密" --> J["再压缩，并按记忆分层取最小有用集合（Re-compact, minimal retrieval）"]
+    I -- "否" --> K["任务持续推进（Steady progress）"]
+    J -. "回到三策略" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,J core;
+    class B,I gate;
+    class A,C,K out;

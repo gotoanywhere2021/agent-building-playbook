@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">上下文工程优先于提示词工程</span></nav>
-<h1>上下文工程优先于提示词工程</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Context Engineering Over Prompt Engineering</p><p class="lede">模型的产出质量受限于上下文质量——雕琢模型看到的东西，比雕琢指令文本更重要。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>上下文工程优先于提示词工程</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Context Engineering Over Prompt Engineering</p><p class="lede">模型的产出质量受限于上下文质量——雕琢模型看到的东西，比雕琢指令文本更重要。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;输出不稳定或出错（Inconsistent or wrong output）&quot;] --&gt; B{&quot;只改措辞？（Rephrase the prompt first?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;提示词是抛光，收益有限（Polish, limited gain）&quot;]
+    B -- &quot;否&quot; --&gt; D[&quot;问模型看见了什么、缺了什么（Ask what the model sees）&quot;]
+    C --&gt; D
+    D --&gt; E[&quot;构造上下文：取舍、排序、压缩（Select, order, compress）&quot;]
+    E --&gt; F{&quot;事实与状态齐了吗？（Facts and state now present?）&quot;}
+    F -- &quot;否&quot; --&gt; E
+    F -- &quot;是&quot; --&gt; G[&quot;指令落在优质上下文之上（Instruction over rich context）&quot;]
+    G --&gt; H[&quot;上下文是架构，提示词是修饰（Context is architecture）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G core;
+    class B,F gate;
+    class A,C,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>提示词工程（prompt engineering）关注指令的措辞：任务怎么表述、赋予什么角色设定（persona）、请求什么格式。上下文工程（context engineering）把注意力上移——移到在指令被读到之前就已放入窗口的信息、文档、历史与状态。模型只能对它被给予的内容做推理；再华丽的指令文本也补不上缺失的事实、过时的数据，或一个让信号淹没在噪声里的臃肿上下文。把上下文当作首要设计面——放什么、不放什么、按什么顺序、以什么压缩形式——持续带来比打磨提示词措辞更大的收益。提示词工程是抛光；上下文工程是架构。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当模型在精心措辞的提示词下仍产出不一致或错误的输出时——问它看到了什么、没看到什么，而不是如何换个说法。</li><li>设计 RAG（检索增强生成）系统、智能体记忆或任何注入检索内容的流水线时——检索与压缩策略才是工程问题，最终那条指令不是。</li><li>调试一个在某些会话『知道』某事、在另一些会话『忘了』的智能体时——这种不一致几乎总是出在上下文构建，而不是提示词措辞。</li><li>当任务要求模型对现实世界状态（文件内容、API 响应、对话历史）做推理时——把这些状态当作一等工程工件（artifact），在放入上下文前先行甄选。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

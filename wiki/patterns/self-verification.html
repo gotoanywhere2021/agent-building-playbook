@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">给智能体验证自身工作的能力</span></nav>
-<h1>给智能体验证自身工作的能力</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Give Agents the Ability to Verify Their Own Work</p><p class="lede">能自己发现错误的智能体，比只会产出的智能体可靠几个数量级——先内置自我验证再上线。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>给智能体验证自身工作的能力</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Give Agents the Ability to Verify Their Own Work</p><p class="lede">能自己发现错误的智能体，比只会产出的智能体可靠几个数量级——先内置自我验证再上线。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;执行动作（Perform action）：写文件·调接口·生成结构化输出&quot;] --&gt; B[&quot;显式验证步骤（Explicit verify step）：介于『做了』与『报告完成』之间&quot;]
+    B --&gt; C{&quot;有独立信息源吗？（Independent ground truth?）&quot;}
+    C -- &quot;没有：同模型换个问法只是重复&quot; --&gt; D[&quot;不演验证，如实标注局限（No verification theater）&quot;]
+    C -- &quot;读回产物·跑测试·对照基准&quot; --&gt; E[&quot;运行独立检查（Run the independent check）&quot;]
+    E --&gt; F{&quot;验证通过？（Pass?）&quot;}
+    F -- &quot;未通过：错误被当场捕获&quot; --&gt; G[&quot;修复后重做（Fix and redo）&quot;]
+    G --&gt; A
+    F -- &quot;通过&quot; --&gt; H[&quot;此时才报告完成（Report success）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,D,F gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>没有验证能力的智能体是一个单遍系统：它产出输出然后停止，在交付之前无从察觉输出是错的。具备自我验证能力的智能体在报告完成之前，把输出过一个验证步骤——把结果对照规范检查、运行一次测试、读回它写的文件，或调用一个不共享智能体假设的二次检查。自我验证不要求单独的智能体或人在回路，虽然两者都可以加上。最低限度，它意味着智能体的工作流在『我执行了操作』与『我报告成功』之间包含一个显式的验证步骤。验证步骤必须能接触到地面真值（ground truth）或独立检查——让同一个模型确认自己的推理不是验证，是重复。能抓到错误的验证需要不同的信息源：磁盘上的实际输出工件、运行代码的测试套件、消费输出的下游系统，或与已知正确参照的比对。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何写文件、改状态或调用外部 API 的智能体——操作之后，读回工件或检查状态，确认操作产生了预期效果，再报告成功。</li><li>任何生成结构化输出（代码、JSON、配置）的智能体——交付之前把输出过一遍解析器、linter 或校验器，抓出智能体在自己文本里看不见的格式错误。</li><li>任何后续步骤依赖先前结果的多步智能体——在下一步消费之前验证每一步的输出。累积性错误远比被抓住的错误昂贵。</li><li>当错误输出的下游代价很高——按失败的后果校准验证强度。不可逆操作需要比可逆操作更强的验证。</li><li>从零设计新智能体时——把验证步骤与操作步骤同时设计。事后补验证更难，且往往暴露操作步骤根本没产出可验证的工件。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

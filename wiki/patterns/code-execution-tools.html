@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">一次代码执行胜过上百个工具定义</span></nav>
-<h1>一次代码执行胜过上百个工具定义</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Code Execution Beats Loading Hundreds of Tool Defs</p><p class="lede">单个代码执行工具——bash、Python、REPL——往往能替代几十个专用工具，并省去注册庞大工具集的上下文成本（模型每次调用都要推理它们）。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>一次代码执行胜过上百个工具定义</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Code Execution Beats Loading Hundreds of Tool Defs</p><p class="lede">单个代码执行工具——bash、Python、REPL——往往能替代几十个专用工具，并省去注册庞大工具集的上下文成本（模型每次调用都要推理它们）。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;专用工具清单不断膨胀（Sprawling tool catalog）&quot;] --&gt; B[&quot;定义挤占上下文，选择错误上升（Context cost and misselection）&quot;]
+    B --&gt; C{&quot;工具集超出可推理范围？（Beyond reliable reasoning?）&quot;}
+    C -- &quot;是&quot; --&gt; D[&quot;注册单个代码执行器（One code executor）&quot;]
+    C -- &quot;否&quot; --&gt; A
+    D --&gt; E[&quot;代理把操作写成代码：glob、SQL、jq（Write ops as code）&quot;]
+    E --&gt; F{&quot;执行环境可安全沙箱？（Safely sandboxed?）&quot;}
+    F -- &quot;不可：先定爆炸半径&quot; --&gt; G[&quot;高危操作退回受限专用工具（Typed tools for risk）&quot;]
+    F -- &quot;可&quot; --&gt; H[&quot;描述成本固定：全部操作共用一份定义（One definition for all ops）&quot;]
+    H --&gt; I[&quot;上下文预算回归工作内容（Context freed for work）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,H core;
+    class C,F gate;
+    class A,G,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>注册进智能体工具列表的每一个工具，都会通过名称与描述占据上下文窗口（context window）的空间，并对模型施加推理成本——模型在每次选择前都要评估各个候选工具。一个膨胀到 50 甚至 100 个工具的工具集会带来可观的开销：模型在每个推理步骤都要关注数十条描述，随着工具越来越难区分，选择错误成倍增加，而工具定义吞噬的上下文预算会挤占真正的工作内容。代码执行（code execution）工具——bash、Python REPL、JavaScript 运行时——提供了另一种架构：不为每个操作注册一个专用工具，而是注册一个通用执行器（executor），让智能体把操作写成代码。要列出匹配某个模式的文件？写一个 shell 通配（glob）。要查询数据库？写一条 SQL。要解析 JSON？写一个 jq 表达式或一行 Python。无论智能体需要执行多少种操作，工具定义成本都固定为一条描述；通用性的边界只取决于执行环境允许什么。这并不适用于所有情形——代码执行需要仔细的沙箱化（sandboxing），带来安全影响，且比预定义的工具调用更难审计——但当另一条路是一个超出模型可靠推理能力、不断蔓延的工具目录时，代码执行是更可靠的设计。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当工具集超过 20–30 个且选择错误正在增加时——把相关工具归并成一个代码执行端点，让智能体为所需操作写代码。</li><li>当工具定义正在消耗上下文窗口的显著份额时——度量工具列表的 token 成本；若超过可用上下文的 10–15%，评估通过代码执行来归并。</li><li>当任务需要单个工具都不支持的操作组合时——与其为每种组合新增一个工具，不如让智能体在代码中组合操作。</li><li>当智能体所需的操作是数据变换、文件操作或系统查询时——这些天然映射为代码，不需要定制工具逻辑。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

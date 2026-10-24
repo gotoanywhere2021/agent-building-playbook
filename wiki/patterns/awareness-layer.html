@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">建一个盯着你工作的感知层（Awareness Layer）</span></nav>
-<h1>建一个盯着你工作的感知层（Awareness Layer）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build an Awareness Layer That Watches Your Work</p><p class="lede">一个独立进程或智能体实时监视主力智能体的动作，能在漂移、失败与异常行为复合之前抓住它们——它是工作智能体无法为自己充当的那个守望者。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>建一个盯着你工作的感知层（Awareness Layer）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Build an Awareness Layer That Watches Your Work</p><p class="lede">一个独立进程或智能体实时监视主力智能体的动作，能在漂移、失败与异常行为复合之前抓住它们——它是工作智能体无法为自己充当的那个守望者。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;主代理执行任务（Primary agent works）&quot;] --&gt; B[&quot;事件流与指标（Event stream &amp; metrics）&quot;]
+    B --&gt; C[&quot;觉察层（Awareness layer）：站在执行上下文之外的哨兵，不指挥下一步&quot;]
+    C --&gt; D[&quot;对照预期轨迹找漂移（Compare to expected trajectory）&quot;]
+    D --&gt; E{&quot;偏离显著吗？（Gap significant?）&quot;}
+    E -- &quot;在轨&quot; --&gt; F[&quot;放行继续（Keep running）&quot;]
+    E -- &quot;目标漂移、失败被合理化、资源飙升&quot; --&gt; G[&quot;叫停或上报（Interrupt / alert）&quot;]
+    F -. &quot;继续旁观&quot; .-&gt; C
+    G -. &quot;纠偏后任务继续&quot; .-&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class E gate;
+    class A,B,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>正在执行任务的智能体（agent）无法同时评估任务是否正在走偏。工作智能体的注意力被任务占满；它在自身计划的语境里解读每一步，因而对跨越多步的模式在结构上失明——目标的渐进漂移、每次迭代都以不同说辞自我合理化的反复失败、自第三步起一路攀升的资源指标。感知层（awareness layer）是从执行上下文之外注视主智能体的第二观察者：它读取事件流、监控指标、把当前状态与预期轨迹对比，在差距变得显著时介入。这不是工作流意义上的监督者——它不指挥智能体的下一个动作。它是一名哨兵：一个站在不同观察点、带着不同议程的进程，唯一的职责是注意那些工作智能体所处位置注意不到的事情。感知层是让长时间自主运行变得可恢复的东西。没有它，智能体要么跑到成功、要么耗尽资源，没有任何机制去捕获『自信地朝着错误方向前进』的情形。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>智能体将在错误会复利的任务上运行超过几步时：检查中间状态的观察者能在问题尚可挽回时抓住它。</li><li>主智能体有已知的偏差或盲区时：专注于生成步骤的规划智能体，受益于一个检查生成步骤是否偏离原意的观察者。</li><li>资源消耗要紧时：监控 token 用量、API 调用次数或墙钟时间的感知层，能在失控的工作造成损害之前将其打断。</li><li>构建无人值守长期运行的系统时：人类操作者无法持续盯着；自动化的感知层就是替代品。</li><li>系统的失败模式是『静默成功』——无错完成却产出错误结果：独立验证输出属性的观察者能抓住这一类失败。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

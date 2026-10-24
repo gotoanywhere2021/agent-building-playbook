@@ -1,0 +1,15 @@
+flowchart TD
+    A["设计工具契约（Design the tool contract）"] --> B{"调用方是人还是模型？（Human or model caller?）"}
+    B -- "模型" --> C["清除人类便利：截断、分页、友好错误文案（Strip human affordances）"]
+    C --> D["单次调用返回完整数据（Complete data in one call）"]
+    D --> E["错误结构化：代码、原因、可恢复标志（Structured errors, not prose）"]
+    E --> F["成功响应附下一步所需元数据（Metadata to decide next step）"]
+    F --> G["模型把返回值当完整真相来行动（Treated as complete truth）"]
+    B -- "人机两用" --> H["加机器可读模式，保留人类默认（Machine-readable mode alongside）"]
+    H --> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B gate;
+    class A,G,H out;

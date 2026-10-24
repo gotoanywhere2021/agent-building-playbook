@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">需求（Requirement）是伪装的解决方案</span></nav>
-<h1>需求（Requirement）是伪装的解决方案</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Requirements Are Disguised Solutions</p><p class="lede">干系人要的是加一个字段、一个按钮、一份报表——但智能体会开开心心把这个被陈述的解法实现掉，哪怕它是坏流程的权宜之计；意图层必须追问这个请求到底想达成什么。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>需求（Requirement）是伪装的解决方案</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Requirements Are Disguised Solutions</p><p class="lede">干系人要的是加一个字段、一个按钮、一份报表——但智能体会开开心心把这个被陈述的解法实现掉，哪怕它是坏流程的权宜之计；意图层必须追问这个请求到底想达成什么。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;干系人报出实现（Stated solution）：『加个字段』『改下校验』『做个报表』&quot;] --&gt; B{&quot;是需求还是伪装的解法？（Need or disguised solution?）&quot;}
+    B -- &quot;硬约束：法规·固定接口&quot; --&gt; G[&quot;按字面实现（Build as stated）&quot;]
+    B -- &quot;是对解法的猜测&quot; --&gt; C[&quot;先问为什么再问怎么做（Why before how）：什么决策依赖它？防住什么失败？&quot;]
+    C --&gt; D[&quot;还原真实需要（Underlying need）&quot;]
+    D --&gt; E{&quot;承载它的流程还该存在吗？（Should the workflow survive?）&quot;}
+    E -- &quot;该存在&quot; --&gt; F[&quot;围绕需要重新设计（Design from the need）&quot;]
+    E -- &quot;不该：绕行方案&quot; --&gt; H[&quot;不自动化绕行（Don&#x27;t automate the workaround）&quot;]
+    F --&gt; I[&quot;智能体为对的事加速（Agent accelerates the right thing）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F core;
+    class B,E,H gate;
+    class A,D,G,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>利益相关方很少陈述需求；他们陈述的是实现。他们要一个字段、一条校验规则、一份报告、一个按钮或一处工作流变更——每一个都已经是解法的猜测，由他们拥有的工具、他们记得的系统、他们学会共存的变通办法塑形。在传统产品工作中，看穿陈述的解法、找到底层需求的职责属于产品管理、设计研究与实现团队。在一个智能体化的组织里，它成为机器接口的一等公民，因为智能体会欣然且迅速地照单全收——而如果陈述的解法是对一个坏流程的变通，智能体只是在加速错误的事情。意图层（intent layer）的职责是先问为什么再问怎么做：把『加这个字段』翻译成*什么决策依赖这个字段？*，把『换个方式校验』翻译成*我们在防止什么失败？*，把『做这个看板』翻译成*谁会在看到它之后改变行为？*，把『把这个工作流自动化』翻译成*这个工作流还应该存在吗？*，把『做得像旧系统一样』翻译成*哪些行为是本质的、哪些是历史偶然？*，把『答案要看情况』翻译成*哪些变量决定了情况、我们能收集例子吗？*。请求是需求的线索，不是需求本身；把它当作规范，就是把利益相关方的诊断当成了需求。本模式针对的是单个陈述的解法——一个字段、一条规则、一份报告；当伪装的解法是一整个本不该存在的工作流时，这个特例足够尖锐，值得它自己的纪律（见 Don&#x27;t Automate the Workaround）。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>利益相关方请求具体的实现细节（字段、按钮、规则）——先把它转换为其服务的决策或失败，再动手构建。</li><li>请求引用『旧系统』或『我们一直的做法』——先分离本质行为与历史偶然，再复现它们。</li><li>一个请求将把既有手工工作流自动化——先问这个工作流是否应该存续。</li><li>陈述的答案是『看情况』——拉住这个依赖：哪些变量，利益相关方能否提供带标注的例子而非规则？</li><li>你注意到某个智能体即将原样实现被要求的东西、却对为什么毫无模型——暂停并找回意图。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

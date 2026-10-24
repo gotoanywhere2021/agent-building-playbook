@@ -1,0 +1,15 @@
+flowchart TD
+    A["引入智能体（Adopt agents）"] --> B{"填入旧岗位槽位？（Drop agents into human-shaped slots?）"}
+    B -- "是：照搬旧流程" --> C["旧形态被保留：串行交接与协调开销照旧（Old inefficiencies preserved）"]
+    C --> D{"用『生成代码占比』度量成熟度？（Measure by percent generated?）"}
+    D -- "是" --> E["度量了错误目标（Wrong target）：署名率上升，结果未必变好"]
+    D -- "否：回到结果" --> G["以结果为纲（Outcome first）"]
+    B -- "否：从零重设计" --> F["围绕模型与工具能力重设计工作（Redesign work around capabilities）"]
+    F --> G["更好·更安全·更有价值的工作（Better, safer, more valuable）"]
+    E -. "重新聚焦结果" .-> G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class F core;
+    class B,C,D,E gate;
+    class A,G out;

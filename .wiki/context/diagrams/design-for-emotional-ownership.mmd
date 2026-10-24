@@ -1,0 +1,16 @@
+flowchart TD
+    A["自动化整夜跑完、结果正确（Correct output, invisible process）"] --> B{"人看得见过程吗？（Is the work legible?）"}
+    B -- "否：无头自动化" --> C["疏离、不信任、不愿署名（Alienated, won't own it）"]
+    B -- "是" --> D["为自主性设计人的界面（Design the human interface）"]
+    C --> D
+    D --> E["可见进展＋证明物＋关键处人工确认＋清晰交接（Progress, proofs, approvals, handoffs）"]
+    E --> F{"人愿意署名并辩护吗？（Willing to sign off?）"}
+    F -- "否：仍是旁观者" --> E
+    F -- "是" --> G["情感所有权建立（Emotional ownership）"]
+    G --> H["被信任、被维护、被持续使用（Trusted and kept in use）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B,F gate;
+    class A,C,G,H out;

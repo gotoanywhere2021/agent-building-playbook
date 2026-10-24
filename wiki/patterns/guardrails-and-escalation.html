@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">分层护轨（Guardrail）与人工升级</span></nav>
-<h1>分层护轨（Guardrail）与人工升级</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Layer Guardrails and Human Escalation</p><p class="lede">内置多层护轨——输入校验、输出检查、动作限额与显式升级路径——让错误在被复合之前拦住，让人在被损害之前请进来。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>分层护轨（Guardrail）与人工升级</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Layer Guardrails and Human Escalation</p><p class="lede">内置多层护轨——输入校验、输出检查、动作限额与显式升级路径——让错误在被复合之前拦住，让人在被损害之前请进来。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理请求进入（Request arrives）&quot;] --&gt; B[&quot;输入护栏（Input）：请求是否在预期参数内&quot;]
+    B --&gt; C[&quot;行动护栏（Action）：工具·资源·范围受限&quot;]
+    C --&gt; D[&quot;代理执行（Agent acts）&quot;]
+    D --&gt; E[&quot;输出护栏（Output）：格式·有效·安全·完整&quot;]
+    E --&gt; F{&quot;各层都接住了？（All layers hold?）&quot;}
+    F -- &quot;是&quot; --&gt; G[&quot;交付下游（Pass downstream）&quot;]
+    F -- &quot;有层被绕过&quot; --&gt; H[&quot;错误复合（Errors compound）&quot;]
+    F -- &quot;代理无法自决&quot; --&gt; I[&quot;人工升级（Human escalation）：按风险与必要性路由&quot;]
+    I -- &quot;裁决后继续&quot; --&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F,H,I gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>没有护栏（guardrail）运行的自主智能体（agent）不是可靠的系统——它是一笔等着复利的负债。护栏是约束和检查的集合，用来界定智能体行为、在其变成事故之前拦截错误。它们分层工作，每一层接住上一层漏掉的。输入护栏在智能体行动之前验证交给它的事是否落在预期参数之内。行动护栏约束智能体被允许做什么——能调用哪些工具、能修改哪些资源、能触达哪些范围——让一次判断错误不致变成一次灾难规模的错误。输出护栏在产出传给下游或展示给用户之前检查智能体生成了什么——检查格式、有效性、安全性和完整性。而人工升级路径（escalation path）确保当智能体到达护栏之内无法解决的决策点时，它把问题抛给人类，而不是靠猜或硬着头皮继续。这些层次并不独立。它们是纵深防御（defense in depth）：任何单层都可能被设计者未预见的案例绕过，但多层叠加更有可能接住漏网之鱼。设计原则是：智能体的失败应落在尽可能小的影响面上，人工升级路径负责接住其余一切。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当在生产环境部署一个错误会产生现实后果的智能体时——生产环境要求显式的护栏设计，而不是假定模型会自觉待在安全行为之内。</li><li>当智能体的动作空间包含不可逆操作时——无法撤销的动作需要在执行前有一条确认意图或限制范围的护栏。</li><li>当智能体将在较长周期内自主运行时——长期运行的智能体会累积小错误；定期的输出验证检查点能在其复合之前接住它们。</li><li>当智能体是新的、或运行在其可靠性尚未经实证验证的任务类型上时——可靠性建立期用更严格的护栏，待业绩记录（track record）确立后再放宽。</li></ul>
@@ -408,5 +431,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

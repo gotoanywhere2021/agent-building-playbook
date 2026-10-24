@@ -1,0 +1,14 @@
+flowchart TD
+    A["隐性知识领域（Tacit-knowledge domain）：绕行方案·本地规范·例外路径"] --> B["影子跟随用户（Shadow the session）：看真实工作·当场提问"]
+    B --> C["录制会话转录（Capture the transcript）"]
+    C --> D{"趁新鲜转化了吗？（Transform while fresh?）"}
+    D -- "只存档不加工" --> E["死重（Dead weight）：未加工的转录不是意图"]
+    E -. "补上转化" .-> F
+    D -- "立即转化" --> F["加速转化管线（Fast transformation）：用户故事·矛盾挖掘·领域术语·工作流建模·验收标准"]
+    F --> G["结构化意图工件（Intent artifacts）：驱动规格·原型与后续评审"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class D,E gate;
+    class A,C,G out;

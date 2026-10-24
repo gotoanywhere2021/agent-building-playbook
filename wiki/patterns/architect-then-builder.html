@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">两阶段构建：先架构师（Architect）后施工队（Builder）</span></nav>
-<h1>两阶段构建：先架构师（Architect）后施工队（Builder）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Two-Phase Build: Architect Then Builder</p><p class="lede">先跑一个架构师智能体产出完整规格，再跑施工智能体实现——绝不在一轮里混淆设计与实现两种角色。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>两阶段构建：先架构师（Architect）后施工队（Builder）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Two-Phase Build: Architect Then Builder</p><p class="lede">先跑一个架构师智能体产出完整规格，再跑施工智能体实现——绝不在一轮里混淆设计与实现两种角色。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;目标（Goal）&quot;] --&gt; B[&quot;架构师阶段（Architect）：产出完整规格书——模块边界、数据模型、接口契约、任务排序&quot;]
+    B --&gt; C{&quot;规格完成且经评审？（Spec complete &amp; reviewed?）&quot;}
+    C -- &quot;未就绪：继续设计&quot; --&gt; B
+    C -- &quot;就绪&quot; --&gt; D[&quot;构建者阶段（Builder）：严格按规格实现，不擅自重设计&quot;]
+    D --&gt; E{&quot;实现中发现规格缺口？（Spec gap found?）&quot;}
+    E -- &quot;有&quot; --&gt; F[&quot;作为发现上报，不悄悄用实现选择解决（Surface, don&#x27;t improvise）&quot;]
+    F -. &quot;缺口回到架构阶段修订&quot; .-&gt; B
+    E -- &quot;无&quot; --&gt; G[&quot;交付并对照规格评审（Deliver, review against spec）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,F core;
+    class C,E gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>设计与实现是认知上截然不同的活动。一个同时在想清楚要造什么、又动手去造的模型，往往做出孤立看合理、全局却不一致的决定——早期模块与后期模块设计风格各异，接口是摸索出来的而非规定出来的，代码刚写完设计就变了样，重构随即成为必需。两阶段模式把这两种活动拆成明确的智能体角色。架构师（architect）智能体接收目标并产出规格说明（specification）：模块边界、数据模型、接口契约、实现任务的先后次序。规格说明就是输出——不是代码。只有当规格说明完成并通过评审后，建造者（builder）智能体才开工。建造者严格按规格说明实现：它不重新设计；不改进它自认为欠佳的接口；不添加规格说明没有包含的特性。如果建造者发现规格说明不完整或自相矛盾，它将其作为一个发现上报，而不是通过实现上的选择悄悄消化掉。架构师与建造者被干净地分离，而正是这种分离维系着单智能体方式无法维持的纪律：你无法实现一个你尚未完成的设计。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>构建任何超过两三个模块的东西时——没有完整的设计环节，接口会随实现推进而漂移。</li><li>工作将由多个智能体或多名团队成员执行时——共享的规格说明确保每个建造者实现的是同一个设计。</li><li>范围足够含糊、实现者将不得不做非平凡设计决策时——这些决策属于架构师阶段，不属于实现阶段。</li><li>合并前需要质量评审时——规格说明给了评审者一个可对照实现来检查的靶子，而不必要求评审者从代码里逆向工程出原本的设计意图。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

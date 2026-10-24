@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">把未执行的步骤就地标出</span></nav>
-<h1>把未执行的步骤就地标出</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mark Un-Run Steps Inline for Review</p><p class="lede">没有被显式标记的跳过步骤与已完成的步骤无法区分——把缺口摆出来，否则它会被当成已被填上。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把未执行的步骤就地标出</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mark Un-Run Steps Inline for Review</p><p class="lede">没有被显式标记的跳过步骤与已完成的步骤无法区分——把缺口摆出来，否则它会被当成已被填上。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多步工作流（Multi-step pipeline）&quot;] --&gt; B{&quot;某一步被跳过？（Step skipped?）&quot;}
+    B -- &quot;未跳过&quot; --&gt; C[&quot;正常产出（Normal output）&quot;]
+    B -- &quot;被跳过&quot; --&gt; D{&quot;是否就地标注？（Marked inline?）&quot;}
+    D -- &quot;否：留白不标注&quot; --&gt; E[&quot;与『已完成』无从区分（Indistinguishable）&quot;]
+    E -. &quot;缺口静默累积&quot; .-&gt; F[&quot;下游在错误地基上失败（Downstream failure）&quot;]
+    D -- &quot;是：标注 + 原因&quot; --&gt; G[&quot;缺口显式可见（Gap visible）&quot;]
+    G --&gt; H{&quot;评审处置（Review decision）&quot;}
+    H -- &quot;补做&quot; --&gt; I[&quot;执行被跳过的步骤（Run it now）&quot;]
+    H -- &quot;延期或有意的跳过&quot; --&gt; J[&quot;可信产出：完成与跳过清晰可辨（Auditable output）&quot;]
+    I --&gt; J
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class G,I,J core;
+    class B,D,E,F,H gate;
+    class A,C out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在多步骤工作流中，有些步骤会被跳过——原因可能是条件未满足、时间受限、范围决策或此前步骤出错。当这些跳过没有在输出或产物中被显式标记时，它们就变得不可见：下游消费者和评审者无从区分一个已完成的步骤和一个从未运行的步骤。在行内标记被跳过的步骤——用标签、标志位、注释或结构化记录——让不完整性变得可见、可审计。评审随后就能明确处理缺口：决定补完、推迟，还是接受为有意为之。未标记的跳过会成为无形的沉默技术债，在不知不觉中累积，直到某个下游系统崩溃。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何可能包含未完全执行步骤的流水线或工作流输出——在每个未运行步骤本应出现的位置进行行内标注。</li><li>生成代表多步骤过程的报告、清单或结构化输出时：每个未勾选项都应携带说明其为何未勾选的标签，而不是留白。</li><li>把未完成的工作移交给另一个 agent 或人类评审者时：交接产物必须呈现跳过了什么、为什么，让接收者能做出有依据的决策。</li><li>调试流水线失败时：第一个检查项是是否有步骤被静默跳过，而不是执行后失败。</li><li>设计 agent 工作流时：在实现任何条件分支之前，先规定跳过标注的格式。</li></ul>
@@ -402,5 +426,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

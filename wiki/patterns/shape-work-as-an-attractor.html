@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">把工作流塑造成吸引子（Attractor）</span></nav>
-<h1>把工作流塑造成吸引子（Attractor）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Shape the Workflow as an Attractor</p><p class="lede">把工作流设计成：正确结果就是它的稳定平衡态——从大范围起点收敛而来、在模型漂移后仍会回归——并以该收敛判定成败，而不是某步自称完成。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把工作流塑造成吸引子（Attractor）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Shape the Workflow as an Attractor</p><p class="lede">把工作流设计成：正确结果就是它的稳定平衡态——从大范围起点收敛而来、在模型漂移后仍会回归——并以该收敛判定成败，而不是某步自称完成。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多阶段智能体工作流（Multi-stage agentic workflow）&quot;] --&gt; B[&quot;把期望结果雕成碗底（Carve the bowl）：让正确状态成为稳定平衡点&quot;]
+    B --&gt; C[&quot;布设反馈边（Wire feedback edges）：审查退回实现·测试失败触发诊断·矛盾触发修订&quot;]
+    C --&gt; D[&quot;模型运行并可能漂移（Model drifts）：产出貌似合理但错误的结果&quot;]
+    D --&gt; E{&quot;有无反馈边把它拉回？（Converge back?）&quot;}
+    E -- &quot;拉回：交还能修复它的阶段&quot; --&gt; D
+    E -- &quot;反复失败&quot; --&gt; F[&quot;升级给人或触发复盘（Escalate or postmortem），而非无限重试&quot;]
+    E -- &quot;收敛到接受态&quot; --&gt; G[&quot;以收敛论成败（Judge by convergence），不看步骤是否报完成&quot;]
+    D -. &quot;幂等且可续跑：重跑收敛而非滚雪球&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,F gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>吸引子（attractor）是一个系统从许多不同起点最终安定于其中、并在受扰后回归的状态——碗里的弹珠无论从哪里被拨动都会滚回碗底。最可靠的智能体工作流就是被刻意塑成这样的：正确且被接受的结果是碗底，图被凿成这样——无论模型从哪里出发、如何游走，工作都会倾向回到那个结果。这是对整个工作流拓扑的主张，不是任何单一步骤的特性。它还重新定义了『完成』的含义。传统自动化在脚本跑完时就结束了——它执行到了末尾而没有抛异常。那个定义无法在一个非确定性的行动者面前存活，因为模型可以跑完一步却仍然出错：它可能误解意图、偏离规范、过拟合到一个例子、卡住，或交回一个看起来合理却不干活的工件。吸引子形态的工作流用另一个问题来评判——系统收敛到期望状态了吗？——因此一个『成功』却产出错误但貌似合理结果的步骤，是工作流设计来吸收的扰动，不是终点线。设计目标不是阻止每一个错误——那是绝望的——而是让期望状态成为系统不断回落其中的那个状态，并确保没有任何貌似合理的失败能把弹珠滚过碗沿而下面空无一物。</p>
 <p>你用反馈边凿出这只碗：把图接成这样——一个失败的检查把工作路由回能够修复它的阶段，而不是强制向前推进。评审把工作送回实现；失败的测试触发诊断而不是盲目打补丁；发现的矛盾触发规范修订；不确定性阈值上报（escalate）给人类而不是押注一个猜测；反复失败触发复盘（postmortem）而不是无界重试。这些边大多由本库已有的模式构成——上报、根因诊断、有界停止条件、独立评审。吸引子视角增加的是你对工作流整体提出的问题：这件事每一种合理的走错方式，是否都有一条把它弯回期望状态的边；还是存在一些失败，直接滚出了碗沿？让步骤幂等（idempotent）且可恢复服务于同一个目的——如果重跑一步会朝结果收敛而不是把混乱滚雪球，盆地（basin）就更宽、均衡就更稳。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

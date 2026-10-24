@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">对抗式并行评审（Adversarial Parallel Review）</span></nav>
-<h1>对抗式并行评审（Adversarial Parallel Review）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Adversarial Parallel Review</p><p class="lede">跑多个低共享上下文、不同模型或角色的评审者，奖励重大发现而非数量，再由元评审者排序——因为实现者与它的 bug 共享同样的盲区。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>对抗式并行评审（Adversarial Parallel Review）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Adversarial Parallel Review</p><p class="lede">跑多个低共享上下文、不同模型或角色的评审者，奖励重大发现而非数量，再由元评审者排序——因为实现者与它的 bug 共享同样的盲区。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;实现者产出的工件（Artifact to review）&quot;] --&gt; B[&quot;多位独立评审并行（Parallel reviewers）：不同模型或角色，几乎不共享上下文&quot;]
+    B --&gt; C[&quot;按『重要发现』计分（Score on significant findings，不按数量）&quot;]
+    C --&gt; D[&quot;元评审人汇总排序（Meta-reviewer）：对比、去噪、选出真正要紧的发现&quot;]
+    D --&gt; E{&quot;有改变结果的要害发现？（Outcome-changing finding?）&quot;}
+    E -- &quot;无&quot; --&gt; H[&quot;可信结论（Ranked, defensible verdict）&quot;]
+    E -- &quot;有&quot; --&gt; F[&quot;路由回实现者修复（Fix routed back）&quot;]
+    F --&gt; G{&quot;换新评审者复审通过？（Fresh re-review pass?）&quot;}
+    G -- &quot;未通过&quot; -. &quot;再换一批新眼睛重评&quot; .-&gt; B
+    G -- &quot;通过&quot; --&gt; H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E,G gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>写出代码的模型是这段代码最糟糕的审阅者，因为它用以审阅的假设正是产生 bug 的那些假设——制造错误的盲区同时也把错误藏了起来。对抗式并行审阅（adversarial parallel review）打破这种相关性：同时运行多个审阅者，各自使用不同的模型家族或承担不同的角色，且对代码的来龙去脉几乎没有先验上下文。这里的『新鲜眼光』（fresh eyes）是字面意义的：一个没有参与创作、不携带其自我辩护逻辑的独立模型。审阅者按重大发现计分，而非按数量——因数量而受奖励的审阅者会学会制造吹毛求疵，激励必须指向影响力。由于独立审阅者会给出重叠、冲突且分量不等的批评，需要一个元审阅者（meta-reviewer）通读全部意见、进行对比，并排出哪些发现真正重要——丢弃噪音，把少数能改变结果的发现提上去。排好序、可执行的批评回流到实现侧，修复完成之后，由一位全新的审阅者复审，而不是由已经介入过的那位。整个结构的存在就是为了制造真正的独立性——不同的模型、不同的角色、隔离的上下文、按影响力加权的评分——因为共享的上下文，恰恰是让一个 bug 在自己的审阅里幸存下来的东西。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>漏掉 bug 的代价很高时——安全敏感的代码、不可逆的操作、任何在生产环境中出错代价高昂的东西。</li><li>失败方式微妙且高影响、而非显而易见时——单一审阅者若与作者共享同一套心智模型，恰恰会漏掉这一类错误。</li><li>实现模型自己也做了审阅并『什么都没找到』时——这是引入独立审阅者的信号，而不是让人安心的理由。</li><li>单个审阅者的裁定不足以独立采信时——多份独立批评加上元审阅者，才能给出有排序、可辩护的结果。</li><li>你能负担额外的模型调用，以及检查点处先扇出（fan-out）再排序这一步带来的延迟时。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

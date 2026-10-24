@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">先在 2 个上验证，再上 20 个</span></nav>
-<h1>先在 2 个上验证，再上 20 个</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Prove the Pipeline on 2 Before 20</p><p class="lede">在扩展到全量数据之前，先让整条流水线在两个样本上端到端跑通。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>先在 2 个上验证，再上 20 个</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Prove the Pipeline on 2 Before 20</p><p class="lede">在扩展到全量数据之前，先让整条流水线在两个样本上端到端跑通。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;新流水线或改动后的流水线（Pipeline ready to run）&quot;] --&gt; B{&quot;直接跑全量 20 条？（Full set now?）&quot;}
+    B -- &quot;是：先跑再说&quot; --&gt; C[&quot;规模放大的是错误而非生产力（Scaling multiplies errors）&quot;]
+    C --&gt; D[&quot;中途失败：前段算力浪费，产物互相不一致（Wasted cost, inconsistent partials）&quot;]
+    B -- &quot;否：先小样&quot; --&gt; E[&quot;全流程跑 2 条真实样本（Run 2 end-to-end）&quot;]
+    E --&gt; F{&quot;2 条全通过？（Both pass?）&quot;}
+    F -- &quot;否&quot; --&gt; G[&quot;小样本上修：诊断便宜、重跑便宜（Cheap to fix and retry）&quot;]
+    F -- &quot;是&quot; --&gt; H{&quot;流水线自上次证明后有改动？（Changed since?）&quot;}
+    H -- &quot;改动过&quot; --&gt; G
+    H -- &quot;未改动且已证明&quot; --&gt; I[&quot;放量到全量 20 条（Scale to full set）&quot;]
+    G -. &quot;修复后重新证明&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,G,I core;
+    class B,C,D,F,H gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在流水线于小样本上证明正确之前就扩展规模，放大的是错误，而不是生产力。当一条流水线在 20 个条目上运行、在第 7 个条目上失败时，你浪费了第 1–6 个条目的成本，必须在部分执行的状态下诊断失败，而且可能已产出了彼此不再一致的中间产物。先在 2 个条目上跑完整条流水线，只花费全量运行的一小部分，就能在扩展之前证明流水线端到端正确，并让任何失败都便宜可诊、便宜可重试。『2 在 20 之前』这个说法之所以具体，是因为团队总能说服自己 5 个就够了、第一个通过意味着全部都会通过、或者他们可以在规模化状态下诊断失败——他们做不到，至少不能可靠地做到。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何批处理作业、批量处理流水线或数据集变换：在全集之前先完整跑 2 个条目。</li><li>把新的 LLM 调用或 agent 步骤部署到生产时：在为全部流量启用之前，让 2 个真实示例走完整路径。</li><li>长时 agentic 任务开始前：对工作列表的前 2 个条目运行任务，评审全部输出，然后再继续。</li><li>不确定下游消费者能否处理输出格式时：先在 2 个条目上证明格式兼容，再生成全部输出。</li><li>流水线发生任何变更之后：在重跑全集之前先在 2 个条目上重新证明。</li></ul>
@@ -402,5 +426,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

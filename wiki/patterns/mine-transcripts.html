@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,27 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-knowledge">知识（knowledge）</a><span class="sep">›</span><span class="here">把转录稿挖成结构化知识</span></nav>
-<h1>把转录稿挖成结构化知识</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mine Transcripts Into Structured Knowledge</p><p class="lede">会议转录、会话日志与群聊讨论是原材料不是产出——先记录，再变换成主题簇、实体图、矛盾清单、行动仓库与经验手册；只录不变换得到的是存储不是知识。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把转录稿挖成结构化知识</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mine Transcripts Into Structured Knowledge</p><p class="lede">会议转录、会话日志与群聊讨论是原材料不是产出——先记录，再变换成主题簇、实体图、矛盾清单、行动仓库与经验手册；只录不变换得到的是存储不是知识。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;对话废气（Conversational exhaust）：会议转写 / 会话日志 / 群聊&quot;] --&gt; B[&quot;完整留存原始记录（Keep raw transcripts）&quot;]
+    B --&gt; C{&quot;定了要回答的问题吗？（Question defined?）&quot;}
+    C -- &quot;否：盲目转化也是淤泥&quot; --&gt; D[&quot;先定义问题（Define the question）&quot;]
+    C -- &quot;是&quot; --&gt; E[&quot;转化管道（Transform pipeline）&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;主题聚类（Topic clusters）&quot;]
+    E --&gt; G[&quot;实体图谱（Entity graphs）&quot;]
+    E --&gt; H[&quot;矛盾清单与行动仓库（Contradictions, actions）&quot;]
+    E --&gt; I[&quot;Takebook 与人格素材（Takebooks, persona material）&quot;]
+    F --&gt; J[&quot;可查询、可检索、可评估的知识（Queryable knowledge）&quot;]
+    G --&gt; J
+    H --&gt; J
+    I --&gt; J
+    B -. &quot;只存不转：转录囤积，产出存储而非知识&quot; .-&gt; K[&quot;无人在读的死存储（Dead storage）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F,G,H,I,J core;
+    class C,K gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>组织产生海量的对话尾气（conversational exhaust）——会议转录（transcript）、agent 会话日志、Slack 线程、支持对话——而条件反射式的做法是把每一条总结成整洁的笔记、其余丢弃。这恰恰扔掉了最有价值的部分。转录本身往往比生成的会议纪要更有用，因为它是可以从其中推导出许多不同结构化产物的原材料，每种产物服务一个独特目的。主题聚类（topic clusters）揭示跨会话反复出现的主题。实体图（entity graphs）追踪对话不断触及的人、项目、工具、概念和关系。矛盾清单（contradiction lists）呈现战略、价值观或需求相互冲突之处。行动库（action repositories）抽取埋在讨论中的任务、承诺和决策。Takebook 概括某个个人或组织对一个反复出现的主题的真实想法。人格素材（persona material）为领域专属评审者和数字孪生提供养料。模式候选（pattern candidates）标记值得编纂的重复性操作手法。统摄一切的洞见是：工作流不是『记录一切然后祈祷』——而是记录、变换、结构化、评估、检索。没有变换步骤的记录是转录囤积：它产出的是存储，不是知识，而没人能查询或信任的存储是负债，不是资产。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当团队积累了无人回访的转录、日志或聊天历史——那里有潜在知识，但前提是把它变换成可查询的产物。</li><li>当相同的问题、决策或分歧在会议间反复出现、却没人能指出它们上次在哪里被解决——实体图和行动库让历史变得可导航。</li><li>构建应当反映某个真人或组织思维方式的领域专属评审者、数字孪生或人格时——去挖他们的转录做 takebook 和人格素材，而不是手写一个猜测。</li><li>想发现团队已经在隐式使用的模式时——转录挖掘为模式登记处（registry）提供模式候选。</li><li>评估检索到的上下文是否真正有用时——派生的结构化产物远比原始转录转储更容易评估和检索。</li></ul>
@@ -406,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

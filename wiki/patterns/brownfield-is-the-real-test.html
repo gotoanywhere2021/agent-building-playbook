@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">棕地（Brownfield）才是真正的考验</span></nav>
-<h1>棕地（Brownfield）才是真正的考验</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Brownfield Is the Real Test</p><p class="lede">绿地原型容易庆祝；棕地系统才检验工作流能否应对遗留约束、隐藏依赖与生产风险——成熟的打法是先刻画既有行为、写回归测试，绝不盲目重写。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>棕地（Brownfield）才是真正的考验</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Brownfield Is the Real Test</p><p class="lede">绿地原型容易庆祝；棕地系统才检验工作流能否应对遗留约束、隐藏依赖与生产风险——成熟的打法是先刻画既有行为、写回归测试，绝不盲目重写。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;要动一个真实用户依赖的旧系统（Brownfield, not a greenfield demo）&quot;] --&gt; B[&quot;先问承重问题：重写后什么必须仍为真？（What must remain true?）&quot;]
+    B --&gt; C[&quot;刻画现有行为（Characterize）：读代码、日志与事故史&quot;]
+    C --&gt; D[&quot;先写回归测试钉住行为（Regression tests before any rewrite）&quot;]
+    D --&gt; E[&quot;在测试保护下改实现（Rewrite under protection）&quot;]
+    E --&gt; F[&quot;新旧并行跑，diff 输出（Side by side, diff outputs）&quot;]
+    F --&gt; G{&quot;行为一致？（Behavior preserved?）&quot;}
+    G -- &quot;有分歧&quot; --&gt; H[&quot;把分歧当数据修掉（Fix the divergence）&quot;]
+    H -. &quot;修完再并行比对&quot; .-&gt; F
+    G -- &quot;一致&quot; --&gt; I[&quot;『还能用』是被检验过的主张（A checked claim, not a hope）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E,H core;
+    class G gate;
+    class A,F,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>绿地（greenfield）工作在恭维一个智能体系统。一个全新原型没有遗留约束、没有要保留的生产行为、没有隐藏依赖、没有埋在代码里的组织记忆，错了也没有风险——这正是为什么一场光鲜的绿地演示，几乎证明不了一个工作流能否真正把活干完。棕地（brownfield）才是智能体成熟度的真正考验，因为棕地是所有这些压力同时在场的地方：真实用户依赖的运行系统、无人记录却人人依赖的行为、只在坏掉时才浮现的依赖、以事故计价的失败成本。令人鼓舞的发现是：智能体在棕地确实能派上用场，而且往往比预期的更有用，因为棕地环境里富含的恰恰是智能体擅长消费与产出的那些工件：它们能分析既有行为、从代码的现状生成用户故事、在任何重写之前建立回归测试、产出兼容层、并排运行新旧实现以比较输出、生成迁移计划、翻查日志与事故历史找出要紧的行为、并在保留行为的同时重写组件。危险用法与成熟用法之间的界线是清晰的。危险的版本是盲目的重写——把智能体指向旧系统、要一个新的、然后祈祷。成熟的版本从验收证据出发，先问那个承重的问题：重写之后什么必须仍然为真？它刻画既有行为、用回归测试把行为钉死，然后才动实现——于是『它还能工作』是一句经过核查的断言，而不是一句祈祷。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>修改或替换任何真实用户已经依赖的系统时——把保留当前行为当作首要要求，而不是事后考量。</li><li>你被一次干净重写诱惑时——先投入刻画并钉死既有系统实际做什么，然后在那些测试的保护下改动它。</li><li>既有系统的行为没有文档时——在动它之前，让智能体从代码、日志与事故历史生成用户故事、回归测试与行为描述。</li><li>评估一个智能体工作流是否真正成熟时——用带真实约束的棕地任务测试它，而不是一场把所有难点都藏起来的绿地演示。</li><li>在两个实现之间迁移时——并排运行新旧实现并 diff 其输出，让分歧作为数据被捕获，而不是作为事故被发现。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

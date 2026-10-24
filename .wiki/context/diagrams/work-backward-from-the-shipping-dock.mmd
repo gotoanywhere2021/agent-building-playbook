@@ -1,0 +1,15 @@
+flowchart TD
+    A["找到码头：工作在哪里变成真（The shipping dock）"] --> B["倒问清单：证据、验收人、该失败的测试、日志、回滚、场景、合规（The backward battery）"]
+    B --> C["答案沉淀为事前验收契约（Contract defined up front）"]
+    C --> D["契约塑造工作流：校验器、节点、升级规则（Contract shapes the graph）"]
+    D --> E["正向构建生成步骤去通过码头（Build forward to pass the dock）"]
+    E --> F{"契约逐条验收通过？（Passes the dock?）"}
+    F -- "否" --> E
+    F -- "是" --> G["完成自始即合同，而非临场判断（Done as a contract）"]
+    A -. "跳过倒推：事后发明证明，不算证明" .-> H["验收被反向凑合（Retrofitted acceptance）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F gate;
+    class A,G,H out;

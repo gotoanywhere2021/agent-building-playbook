@@ -1,0 +1,16 @@
+flowchart TD
+    A["编排器手上的任务（Task at the orchestrator）"] --> B["先算代价比（Price the decision first）"]
+    B --> C["委派成本＝简报＋子代理全程＋回读结果（Brief plus run plus ingest）"]
+    B --> D["内联成本＝自身上下文消耗＋机会成本（Inline cost plus opportunity cost）"]
+    C --> E{"委派更便宜？（Delegation cheaper?）"}
+    D --> E
+    E -- "是：细节繁重、结果可摘要、或可用更便宜模型" --> F["委派子代理（Delegate）"]
+    E -- "否：任务琐碎或简报过大" --> G["内联执行（Run inline）"]
+    F --> H["过程细节不进编排器上下文（Context spared the detail）"]
+    G --> I["省下纯开销（Overhead avoided）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F,G core;
+    class E gate;
+    class A,H,I out;

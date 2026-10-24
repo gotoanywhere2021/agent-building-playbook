@@ -1,0 +1,21 @@
+flowchart TD
+    A["多层级 Agent 系统（Layered agent system）"] --> B{"逐层判定：该层的寿命与角色是什么？（Per-layer framing）"}
+    B -- "一次性执行者" --> C["用后即弃的进程（Disposable process）：不命名、不留人格"]
+    B -- "评审 / 批评者" --> D["独立评判者（Independent critic）：被建来反对，而非迎合"]
+    B -- "编排者" --> E["类管理者（Manager-like orchestrator）：持久状态与身份"]
+    B -- "长期助手" --> F["长期协作者（Long-lived collaborator）：人格连续性成立"]
+    B -- "组织级 Agent" --> G["受政策约束的行动者（Policy-bound actor）：代表团队而非个人"]
+    C --> H{"隐喻是否被实现兑现？（Does framing match capability?）"}
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    H -- "过度许诺：给了它没有的记忆或权责" --> I["收回连续性，降级隐喻（Strip back）"]
+    H -- "匹配" --> J["心智模型诚实（Honest mental model）"]
+    I -. "重新逐层判定" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F,G,J core;
+    class B,H,I gate;
+    class A out;

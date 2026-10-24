@@ -1,0 +1,17 @@
+flowchart TD
+    A["要测的行为（Behavior under test）"] --> B["先定义外部可观察结果（Define the observable outcome）"]
+    B --> C["断言结果而非内部接线（Assert the what, not the how）"]
+    C --> D{"断言的是产物还是调用序列？（Artifact or tool-call sequence?）"}
+    D -- "调用序列：实现一改就碎" --> E["重写为针对产物的测试（Rewrite as a what-test）"]
+    E --> C
+    D -- "产物正确存在且可用" --> F["独立批评者挑战测试本身（Critic challenges the tests）"]
+    F --> G{"测试与代码共享同一误解？（Shared blind spot?）"}
+    G -- "是" --> H["测试与代码一起修正（Revise both）"]
+    H -. "失败同时回流代码与测试" .-> C
+    G -- "否" --> I["行为被锁定，重构安全（Refactor-safe suite）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,E,F core;
+    class D,G gate;
+    class A,H,I out;

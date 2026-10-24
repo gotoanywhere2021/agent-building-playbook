@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">记录意图（Intent），而不只是方法</span></nav>
-<h1>记录意图（Intent），而不只是方法</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Document Intent, Not Just Method</p><p class="lede">代码描述怎么做；注释与规格必须描述为什么——那些代码无法编码的理由。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>记录意图（Intent），而不只是方法</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Document Intent, Not Just Method</p><p class="lede">代码描述怎么做；注释与规格必须描述为什么——那些代码无法编码的理由。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代码＝完整的『怎么做』（Code records how）&quot;] --&gt; B{&quot;『为什么』有记录吗？（Is the why written down?）&quot;}
+    B -- &quot;否&quot; --&gt; C[&quot;后来者反向猜测理由（Successors reverse-engineer）&quot;]
+    C --&gt; D[&quot;错误假设渗进改动（Corrupted by false assumptions）&quot;]
+    B -- &quot;是&quot; --&gt; E[&quot;写意图层：理由、约束、被否决的替代方案（Write the intent layer）&quot;]
+    E --&gt; F[&quot;意图工件集：简报、术语表、验收标准、决策日志（Intent artifact set）&quot;]
+    F --&gt; G{&quot;放在代理够得着的地方？（Reachable where agents read?）&quot;}
+    G -- &quot;埋在聊天记录里&quot; --&gt; H[&quot;等于没写（As if never written）&quot;]
+    G -- &quot;仓库或知识库&quot; --&gt; I[&quot;后续代理按原意扩展（Extended without corruption）&quot;]
+    D -. &quot;回补意图文档&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,F core;
+    class B,G gate;
+    class A,D,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>代码是系统*做什么*与*怎么做*的完整可执行记录。但代码无法表达它自身存在背后的推理：为什么选这条路而不是别的路，这个实现满足的是什么约束，即使代码变化也必须保持的不变量（invariant）是什么。当文档仅限于用散文复述代码时，它没有增加任何信息。当文档捕捉意图（intent）——决策理由、被满足的约束、被否决的设计备选及其原因——它就成为这些信息唯一的存在之处。读没有意图文档的代码的智能体必须反向工程（reverse-engineer）推理，而它们做得并不可靠。读意图文档的智能体可以应用、扩展并纠正代码，而不会用错误假设污染它。</p>
 <p>成熟的意图层不止于零散的注释；它产出一套持久的<strong>意图工件集</strong>（intent artifact set），供下游智能体阅读、应用并对照验证：</p>
 <ul><li><strong>意图简报</strong>（intent brief）——目标、非目标、用户与约束的人类可读形式。</li><li><strong>领域术语表</strong>（domain glossary）——术语、其本地含义、禁止的解读，以及示例。</li><li><strong>用户故事</strong>（user story）——代表期望行为的具体场景。</li><li><strong>好/坏标注示例</strong>——用于判断与验证的案例，用领域自己的语言写成。</li><li><strong>验收标准</strong>（acceptance criteria）——工作已完成的可观察证明。</li><li><strong>待决问题</strong>（open questions）——需要在执行之前或之中由人澄清的事项。</li><li><strong>决策日志</strong>（decision log）——所做的假设、权衡过的取舍，以及为什么选了某条路径。</li><li><strong>风险登记册</strong>（risk register）——合规、安全、运营与声誉风险。</li></ul>
@@ -412,5 +435,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

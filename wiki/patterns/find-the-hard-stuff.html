@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-taste">品味（taste）</a><span class="sep">›</span><span class="here">找到真正难的部分</span></nav>
-<h1>找到真正难的部分</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Find the Hard Stuff</p><p class="lede">主动寻找问题里真正困难的地方——真正的工作几乎从不在它看起来该在的地方。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>找到真正难的部分</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Find the Hard Stuff</p><p class="lede">主动寻找问题里真正困难的地方——真正的工作几乎从不在它看起来该在的地方。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;接到问题（Problem in hand）&quot;] --&gt; B{&quot;从哪儿下手？（Where is the real work?）&quot;}
+    B -- &quot;滑向顺滑可控处&quot; --&gt; C[&quot;易做区（Tractable parts）：产出漂亮，不触要害&quot;]
+    B -- &quot;刻意探不舒服的地方&quot; --&gt; D[&quot;主动探测（Probe deliberately）：怎样会失败？依赖能否成立？&quot;]
+    D --&gt; E[&quot;找到真难点（Real difficulty）：隐藏约束·坏依赖·破模型的边界&quot;]
+    E --&gt; F[&quot;先验证难点可解（Verify solvable first）&quot;]
+    F --&gt; G[&quot;再动手实现（Then implement）&quot;]
+    C -. &quot;早期进展太顺＝警示信号&quot; .-&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B,C gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>每个问题都有表面难度和真实难度。表面难度是从外面看起来的样子：一件要建的东西、一个要回答的问题、一个要修的系统。真实难度是动手之后才发现的：你不知道它存在的约束、无法良好组合的依赖、打破干净模型的边界情况。开发者和 AI 智能体（agent）都会被拉向可轻松处理（tractable）的部分——能快速演示、产出可见结果、恰好契合既有模式的部分。难的部分在别处。找到它需要主动用力：你必须刻意去探那些让人不舒服的地方，提出没有干净答案的问题，并抵抗那些已被充分理解的部分的引力。工程中的品味（taste），很大程度上就是察觉自己正在做问题的简单版本、并追问困难版本是否才是真正所需的能力。智能体让这条纪律更加紧迫，而非更宽松——在可轻松处理的部分上猛加优化的智能体，会产出大量没有触及真实问题的输出。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在开始任何实现之前：问什么会让它失败，先去探那个区域，而不是你最有信心的区域。</li><li>当早期结果好得可疑时：早期就可见的进展，通常意味着工作正在集中于可轻松处理的部分；去找那些没有动静的地方。</li><li>为智能体界定任务范围时：先识别最难的依赖或约束，验证它可解，再生成以它为前提的代码。</li><li>调试时：bug 几乎从不在你最先看的地方；问问自己还没看哪里。</li><li>审查设计或计划时：问它默默假定了什么会成立，然后验证这些假定。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

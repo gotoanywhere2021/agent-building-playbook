@@ -1,0 +1,15 @@
+flowchart TD
+    A["某次运行出了问题或出乎意料（Prior run surprised us）"] --> B{"诊断从哪开始？（Hypothesize first or read the record?）"}
+    B -- "凭当前状态先猜想" --> C["假设先行（Hypothesis-first）：慢·易自我印证"]
+    B -- "先读会话记录（Read the transcript first）" --> D["读主证据（Primary evidence）：推理·工具调用·收到的输出·决策链"]
+    C -. "转回主证路径" .-> D
+    D --> E{"原因在记录里吗？（Cause in the record?）"}
+    E -- "是" --> F["凭证据定位原因（Diagnose from evidence）"]
+    E -- "记录缺失（No transcript）" --> G["标注观测缺口（Flag the observability gap），不以推断充数"]
+    F --> H["修复并校验完成声明与记录一致（Validate claims against the record）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,F core;
+    class B,C,E gate;
+    class A,G,H out;

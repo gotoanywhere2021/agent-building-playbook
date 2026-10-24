@@ -1,0 +1,15 @@
+flowchart TD
+    A["复杂意图难靠模型记牢（Intent too complex to recall）"] --> B["把意图压进确定性工具（Encode intent as a validator）"]
+    B --> C["评审工具只暴露策略允许的操作，其余拒绝（Unyielding affordance）"]
+    C --> D["代理产出物（Agent output）"]
+    D --> E{"评审工具裁决（Critic verdict）"}
+    E -- "失败：不可争辩" --> F["代理修改直到真的满足（Grind until it passes）"]
+    F --> D
+    E -- "通过" --> G["从『说服我你做完了』变成『让评审说通过』（Make the critic say yes）"]
+    G --> H["完成可被独立证实（Verified completion）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;

@@ -1,0 +1,16 @@
+flowchart TD
+    A["带脚手架的工作流（Scaffolded workflow）：补偿性步骤·冗长提示·审批门"] --> B["定期让更强模型体检（Stronger model inspects on cadence）"]
+    B --> C["列出不再值回成本的候选（Candidates）：删节点·缩提示·并步骤·降级模型"]
+    C --> D["把消融当实验执行（Run ablation as an experiment）"]
+    D --> E{"对比未消融基线：质量如何？（Quality vs baseline?）"}
+    E -- "质量保持（Holds）" --> F["确认是税负，保持删除（Keep it deleted）"]
+    E -- "质量下降（Drops）" --> G["实证重新正当化，恢复该步骤（Restore the step）"]
+    F --> H["更精简的工作流（Leaner harness）"]
+    H -. "模型再升级或周期到期" .-> B
+    G --> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,G gate;
+    class A,F,H out;

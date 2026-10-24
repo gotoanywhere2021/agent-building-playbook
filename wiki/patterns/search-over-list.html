@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-tool-design">工具设计（tool-design）</a><span class="sep">›</span><span class="here">给搜索/过滤，别给『全量列表』</span></nav>
-<h1>给搜索/过滤，别给『全量列表』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Prefer Search/Filter Over List-Everything</p><p class="lede">给智能体搜索或过滤接口，而不是返回全量列表的工具——先拿全表再肉眼扫描，是把上下文烧在大多会被丢弃的数据上。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>给搜索/过滤，别给『全量列表』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Prefer Search/Filter Over List-Everything</p><p class="lede">给智能体搜索或过滤接口，而不是返回全量列表的工具——先拿全表再肉眼扫描，是把上下文烧在大多会被丢弃的数据上。</p><div class="meta"><span class="chip solid" title="tool-design">工具设计（tool-design）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;设计返回集合的工具（Tool returning a collection）&quot;] --&gt; B{&quot;接口形态？（List-all or search?）&quot;}
+    B -- &quot;list_all 全量返回&quot; --&gt; C[&quot;整体载入上下文（Load everything）&quot;]
+    C --&gt; D[&quot;模型在上下文里自行筛选（Scan in-model）：无关条目烧掉令牌与注意力&quot;]
+    D -. &quot;重构为检索接口&quot; .-&gt; E
+    B -- &quot;find/search 带过滤参数&quot; --&gt; E[&quot;在工具层过滤（Filter at the tool layer）&quot;]
+    E --&gt; F[&quot;只返回相关结果（Only relevant hits）&quot;]
+    F --&gt; G{&quot;智能体确需全貌吗？（Genuinely needs the full set?）&quot;}
+    G -- &quot;是：如全量分诊（Triage all）&quot; --&gt; H[&quot;保留列表接口（Keep the list）&quot;]
+    G -- &quot;否&quot; --&gt; I[&quot;上下文留给真正的工作（Context saved for the work）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E core;
+    class B,C,D,G gate;
+    class A,F,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一个常见的工具设计错误是提供『列出全部』操作，然后期待智能体遍历结果找到所需。智能体调用 <code>list_files()</code>，收到 400 个文件路径，把它们装进上下文，然后扫描出它真正关心的两个文件。398 个无关路径消耗 token、挤占工作内容，并迫使模型在大量嘈杂载荷上分配注意力以提取一丁点有用信号。搜索优于列表（search-over-list）用有针对性的接口取代这一模式：不提供 <code>list_files()</code>，而是提供 <code>find_files(pattern=...)</code> 或 <code>search_files(query=...)</code>。智能体说明它在找什么；工具执行过滤；响应只含相关结果。这把工作从模型的上下文移到工具的实现——方向完全正确。在工具层过滤的成本近乎为零；在模型上下文窗口内过滤的成本以 token、延迟与推理质量计。该原则超出文件系统：任何可能返回大集合的工具都受益于搜索或过滤参数。数据库应当暴露查询，而不是整表转储。事件日志应当支持时间范围与类型过滤，而不是完整转储。配置存储应当支持按键查找，而不是序列化整个配置。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计任何自然响应是集合的工具时——至少加一个过滤参数，把结果限制在调用方声明需要的范围。</li><li>当智能体调用列表工具然后推理哪些条目可用——这就是该列表工具本应是搜索工具的信号。</li><li>当上下文被智能体只用了一部分的中介集合结果填满时——在工具层用有针对性的搜索取代『列出再扫描』模式。</li><li>在大结果集上翻页时——翻页往往是工具应暴露更丰富查询参数的信号，让智能体一次调用拿到正确的 N 条，而不是翻页直到找到。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

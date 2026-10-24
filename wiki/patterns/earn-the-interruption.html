@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">挣得这次打断（Interruption）</span></nav>
-<h1>挣得这次打断（Interruption）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Earn the Interruption</p><p class="lede">人的注意力稀缺，智能体不该因为撞上常规检查点就打断——只在人的判断此刻是瓶颈时打断；把人插在特定边界上（高风险发布、意图不明、高成本循环、合规例外、反复不收敛）。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>挣得这次打断（Interruption）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Earn the Interruption</p><p class="lede">人的注意力稀缺，智能体不该因为撞上常规检查点就打断——只在人的判断此刻是瓶颈时打断；把人插在特定边界上（高风险发布、意图不明、高成本循环、合规例外、反复不收敛）。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理执行中（Agent at work）&quot;] --&gt; B{&quot;人类判断成为瓶颈？（Human judgment now the bottleneck?）&quot;}
+    B -- &quot;否：例行节点不打扰&quot; --&gt; C[&quot;继续自主推进（Keep running）&quot;]
+    C --&gt; B
+    B -- &quot;是&quot; --&gt; D{&quot;属于指定的高代价边缘？（One of the earned edges?）&quot;}
+    D -- &quot;高风险部署、意图不明、循环不收敛、合规例外&quot; --&gt; E[&quot;按中断策略发起打扰（Interrupt per policy）&quot;]
+    D -- &quot;否：代理本该自己定&quot; --&gt; C
+    E --&gt; F[&quot;评审队列按风险与置信度排序（Risk-ranked review queue）&quot;]
+    F --&gt; G[&quot;每次打扰都值得读（Every interrupt worth reading）&quot;]
+    G -. &quot;若退化为处处打扰：人学会盖章式忽略，回校策略&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,F core;
+    class B,D gate;
+    class A,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>人类注意力是智能体系统中的稀缺资源，每一次打断（interruption）都在消耗它；大多数流水线（pipeline）犯的错误，是把人工批准当作一种模式（mode）——智能体每个阶段结束后都会撞上的检查点（checkpoint）——而不是当作工作流图（graph）中只有特定转换才会跨越的边（edge）。挣得打断（earning the interruption）意味着智能体不是因为到达了例行的边界而暂停；它暂停是因为人类判断真正成为了瓶颈，成为智能体无法自给的那一样东西。设计工作在于识别出那少数几条确实属于人的边——一次有风险或不可逆的部署、一个结果含糊的意图（intent）、一个成本攀升却不见收敛的循环、一个智能体无权解决的合规或政策例外、一个涉及品味或问责的用户侧决策、或者多次尝试后仍无法收敛的重复失败——并把人插到那里，别处不插。两个工件（artifact）让它落地：一份打断策略（interrupt policy），声明智能体何时可以向人求助，让打断的决定受治理而非即兴；以及一个审查队列（review queue），按风险、重要性与置信度给已完成的输出排优先级，让人把注意力先花在最要紧的事上。它取代的反模式（anti-pattern）是不断打断人——把每个检查点、每处不确定、每个结束的会话都作为对注意力的同等索取呈现出来——这会把人训练得完全无视智能体。按风险与必要性路由打断，每一件到达的都值得一读。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当智能体完成得比人能审查的速度快、审查积压成为吞吐量的约束性瓶颈时——按风险与置信度排优先级，而不是先进先出。</li><li>当工作流包含少数真正高风险的边（不可逆部署、合规例外、大额支出），四周环绕着大量例行边时——给高风险边上门禁（gate），其余放行。</li><li>当智能体不断在例行检查点上请求确认、而人已经开始走过场式盖章（rubber-stamping）时——这个反射说明打断策略失准了，而不是说明需要人。</li><li>当意图含糊到猜错的代价很高时——一次为澄清意图的打断是挣来的，因为智能体无法独自解决它。</li><li>当一个循环在反复尝试后仍不收敛时——升级（escalate），而不是在同一处不收敛上继续烧预算。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

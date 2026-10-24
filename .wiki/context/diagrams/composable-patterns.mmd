@@ -1,0 +1,16 @@
+flowchart TD
+    A["新工作流需求（Workflow to build）"] --> B{"继续写定制控制流？（Bespoke control flow again?）"}
+    B -- "是" --> C["每条工作流一门新语言，调试从零开始（Every workflow a new language）"]
+    B -- "否" --> D["选定命名原语：顺序、条件、扇出、扇入、循环、门（Named primitives）"]
+    D --> E["工作流＝原语的组合树（Composition tree）"]
+    E --> F["懂词汇表即可读、改、调试（Readable by anyone）"]
+    E --> G["用测试替身替换单个原语来测（Test doubles per primitive）"]
+    C -. "重构：抽出可识别的模式" .-> D
+    F --> H["下一条工作流＝重新组合（Recomposition, not reinvention）"]
+    G --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B gate;
+    class A,C,H out;

@@ -1,0 +1,13 @@
+flowchart TD
+    A["代理间移交大产物（Agent-to-agent handoff）"] --> B{"收方只需切片而非全文？（Slice, not the whole?）"}
+    B -- "是" --> C["只传薄指针：路径、ID、章节标记（Path, ID, section marker）"]
+    B -- "否：小值或必用全文" --> D["直接内联（Inline instead）"]
+    C --> E["接收方需要时才拉取所需切片（Pull the slice just in time）"]
+    E --> F["零中毒：窗口里只有自己选择加载的内容（Zero poisoning）"]
+    F -. "大结果落盘，回传摘要加指针" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E core;
+    class B gate;
+    class A,D,F out;

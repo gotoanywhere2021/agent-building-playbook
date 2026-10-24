@@ -1,0 +1,14 @@
+flowchart TD
+    A["项目陷阱（Gotcha）：反复出现的小坑"] --> B{"只在特定场景才相关？（Situational?）"}
+    B -- "全局恒真" --> C["常备指令文件（Standing instructions）"]
+    B -- "仅在特定情境" --> D["把指引嵌进工具输出（Embed in tool output）"]
+    C -. "文件膨胀，单行失效（Prompt bloat）" .-> B
+    D --> E["脚本检测触发情境（Script detects the situation）"]
+    E --> F["指引恰逢其时浮现（Guidance at the right moment）"]
+    F --> G["人与代理共用同一产物（Same artifact serves both）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B gate;
+    class A,C,F,G out;

@@ -1,0 +1,17 @@
+flowchart TD
+    A["构建代理系统（Building an agent）"] --> B["先画循环再写代码（Design the loop before code）"]
+    B --> C["感知：模型能看见什么（Perceive）"]
+    C --> D["决策：选下一个动作（Decide）"]
+    D --> E["行动：调用工具、改变状态（Act）"]
+    E --> F{"验证：结果符合预期？（Verify — the most omitted stage）"}
+    F -- "失败：走恢复路径" --> G["恢复或修正（Recover）"]
+    F -- "通过" --> H{"达到停止条件？（Stopping condition?）"}
+    G --> C
+    H -- "否" --> C
+    H -- "是" --> I["可靠收尾（Reliable completion）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E,G core;
+    class F,H gate;
+    class A,I out;

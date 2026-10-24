@@ -1,0 +1,17 @@
+flowchart TD
+    A["一个系统里好用的实践（A practice that works）"] --> B{"可复用的单元是什么？（What is the unit?）"}
+    B -- "整个工具照搬" --> C["拖走全部实现（Wholesale copy）"]
+    B -- "价值在性状本身" --> D["分离表型与机体（Phenotype vs organism）"]
+    D --> E["提取性状（Extract trait）：提示·校验循环·文件结构·CLI 交互"]
+    E --> F["移植进新系统（Transfer into target）"]
+    F --> G["系统级：语义移植（Semantic porting）——跨栈重造行为而非抄代码"]
+    G --> H{"越界风险？（License·fidelity·security?）"}
+    H -- "有" --> I["纳入治理：审查·验证·法律确认（Governed transfer）"]
+    H -- "干净" --> J["性状在新系统安家（Trait lands）"]
+    I --> J
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F core;
+    class B,H gate;
+    class A,C,G,I,J out;

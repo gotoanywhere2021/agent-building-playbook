@@ -1,0 +1,16 @@
+flowchart TD
+    A["强模型该花在哪？（Where to spend it?）"] --> B{"任务一次性还是反复跑？（One-shot or recurring?）"}
+    B -- "一次性" --> C["直接用强模型完成任务（Strong model on the task）"]
+    B -- "反复运行" --> D["把强模型投给装置本身（Invest in the harness）"]
+    D --> E["打磨提示·编排图·校验·交接工件（Sharpen prompts·graph·checks·artifacts）"]
+    E --> F["更好的装置（Better harness）"]
+    F --> G["廉价模型经由装置生产（Cheap models run through it）"]
+    G --> H{"产出达标？（Quality holds?）"}
+    H -- "漂移：结构补不动" --> E
+    H -- "达标" --> I["此后每次运行都受益（Every future run benefits）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B,H gate;
+    class A,C,I out;

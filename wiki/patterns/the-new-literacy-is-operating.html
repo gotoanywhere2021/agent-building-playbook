@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">新素养是『操作（Operating）』，不是提示词</span></nav>
-<h1>新素养是『操作（Operating）』，不是提示词</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">The New Literacy Is Operating, Not Prompting</p><p class="lede">当机器写下大部分实现，关键技能从敲代码转向操舵、分解、检视、验证与治理智能体工作流——为操作训练，而不是为提示词技巧。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>新素养是『操作（Operating）』，不是提示词</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">The New Literacy Is Operating, Not Prompting</p><p class="lede">当机器写下大部分实现，关键技能从敲代码转向操舵、分解、检视、验证与治理智能体工作流——为操作训练，而不是为提示词技巧。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;机器写了大部分实现（Machine writes most of the code）&quot;] --&gt; B{&quot;该练哪种素养？（Which literacy to train?）&quot;}
+    B -- &quot;只练提示技巧&quot; --&gt; C[&quot;只会下指令并祈祷，难辨对错（Prompts and hope）&quot;]
+    B -- &quot;练运营能力&quot; --&gt; D[&quot;精确表达意图与验收标准（Intent and acceptance criteria）&quot;]
+    D --&gt; E[&quot;分解任务，并行管理多个会话（Decompose, manage sessions）&quot;]
+    E --&gt; F[&quot;检视产物而非轻信自信的外观（Inspect, never just trust）&quot;]
+    F --&gt; G[&quot;组织对抗式评审与独立验证（Adversarial review, validation）&quot;]
+    G --&gt; H{&quot;同一流程反复手操？（Steering recurs?）&quot;}
+    H -- &quot;是&quot; --&gt; I[&quot;沉淀为可复用技能或模式（Capture as a reusable skill）&quot;]
+    H -- &quot;否&quot; --&gt; J[&quot;能驾驭、能检视、能叫停机器（Steer, inspect, stop）&quot;]
+    I -. &quot;下次直接复用&quot; .-&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,I core;
+    class B,H gate;
+    class A,C,J out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体工作改变了应该训练哪种技能。过去，手写代码是从业者磨炼判断力的方式——实现行为本身构建了心智模型。当机器写出大部分实现时，这条训练路径变窄了，相关的技能变成学会驾驭、分解、检视、验证和治理（govern）智能体工作流，而不是亲手敲出解法。新的素养（literacy）不是提示词的技巧——不是一袋子哄模型的措辞——而是运营（operating）：运营一个由智能体构成的生产系统的持久能力。具体而言，为它训练意味着教人如何精确表达意图、如何在动工前提出澄清问题、如何构建定义『完成』的验收标准、如何检视生成的作品而不轻信其自信的外观、如何运行对抗式评审、如何使用为智能体设计的工具、如何同时管理多个会话、如何避免污染上下文、如何识别何时该让机器停下，以及如何把重复的实践沉淀为可复用的技能或模式。这些是运营技能，可跨任务、跨模型迁移，也正是『能有效监督一支智能体舰队的人』与『只会发提示词然后祈祷的人』之间的分界。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>为智能体团队设计培训或入职时：把课程围绕运营技能构建——意图、分解、检视、验证、治理——而不是围绕提示词措辞。</li><li>当从业者能让智能体产出结果、却无法可靠判断它是否正确时——先投资检视与验收标准技能，再谈更多提示词技巧。</li><li>当某人管理多个智能体却不断丢活时——把会话管理与注意力纪律当作一等技能来教。</li><li>当重复的人工驾驭不断出现时——训练人们把它沉淀为可复用的技能或模式，而不是每次重新即兴。</li><li>评估或招聘智能体岗位时：考察运营能力——他们能否驾驭、检视并叫停机器——而不是仅看提示词的流畅度。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

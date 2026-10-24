@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">注意力（Attention）才是稀缺资源</span></nav>
-<h1>注意力（Attention）才是稀缺资源</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Attention Is the Scarce Resource</p><p class="lede">当智能体产出的工作、选项与结果超过人类能检视的量，瓶颈不再是机器吞吐而是人的注意力——把注意力当作被预算、被管理的资源，不是无限输入。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>注意力（Attention）才是稀缺资源</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Attention Is the Scarce Resource</p><p class="lede">当智能体产出的工作、选项与结果超过人类能检视的量，瓶颈不再是机器吞吐而是人的注意力——把注意力当作被预算、被管理的资源，不是无限输入。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多代理并行，产出洪流（Many agents, a flood of output）&quot;] --&gt; B[&quot;过载症状（Symptoms）：待审积压、状态不明、『已完成』无证据、token 花费与价值脱钩&quot;]
+    B --&gt; C[&quot;换框架：注意力是最须管理的稀缺资源（A managed scarce resource）&quot;]
+    C --&gt; D[&quot;像预算算力一样预算注意力（Budget attention deliberately）&quot;]
+    D --&gt; E{&quot;此处判断是真正的约束吗？（Is judgment the constraint here?）&quot;}
+    E -- &quot;是：高利害判断&quot; --&gt; F[&quot;人的目光投向改变结果之处（Gaze where it changes the outcome）&quot;]
+    E -- &quot;否：可机械判定或低利害&quot; --&gt; G[&quot;用界面过滤、汇总、排序，别惊动人（Filter, summarize, prioritize）&quot;]
+    F --&gt; H[&quot;判断落在刀刃上（Judgment where it counts）&quot;]
+    G --&gt; H
+    H -. &quot;腾出的注意力再分配&quot; .-&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class E gate;
+    class A,B,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>随着智能体（agent）的能力增强，限制因素不再是机器能做多少工作，而变成人类能对其中多少工作给出有意义的关注。单个从业者如今同时运行许多智能体——编码会话、云端工作流、审阅智能体、聊天机器人、转录处理器、后台监控器——问题不再是机器产出不足，而是产出洪流没有一个适配人类注意力的界面。过载呈现出可识别的症状：太多完成待审的会话；众多运行中的智能体没有统一的状态视图；通知在错误的时刻响起；人被反复拉进低价值决策；对自主运行的工作日渐失联；分不清哪个智能体卡住需要帮助；token 花费与价值之间没有可读的联系；看起来完成了的工件被呈上，却没有证据表明它们真的能用。战略性的应对是：停止把注意力当作免费、无限的输入，开始把它当作组织最稀缺的受管理资源——做预算、刻意分配给最高风险的判断，并由过滤、汇总、排序的界面加以保护，使人的目光落在能改变结果的地方、别处皆不落。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个人监督的智能体超过一两个、完成工作的体量开始超出其真正能审阅的范围时。</li><li>注意到审阅积压在增长、会话完成的速度快于任何人能检查的速度、或『完成』的工件没有证据就堆积起来时。</li><li>决定下一步做什么时：问自己瓶颈是更多机器产能，还是对你已拥有的稀缺人类注意力做更好的分配。</li><li>设计智能体工作流时：像给算力或钱做预算那样，显式地为人类注意力做预算，并把它路由到判断力才是真正约束的决策上。</li><li>token 花费攀升却没有一个关于产出了什么价值的清楚故事时，把它当作注意力分配的失败，而不只是成本问题。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

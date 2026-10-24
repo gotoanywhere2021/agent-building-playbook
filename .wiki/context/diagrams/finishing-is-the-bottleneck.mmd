@@ -1,0 +1,14 @@
+flowchart TD
+    A["启动近乎免费：貌似80%出炉（Cheap start）"] --> B{"它完成了吗？（Finished or just plausible?）"}
+    B -- "继续收敛" --> C["收尾20%（Finishing）：测试·评审·证据·部署·反馈"]
+    C --> D{"收敛了吗？（Accepted, shipped, observed?）"}
+    D -- "否：补缺口" --> C
+    D -- "是" --> E["完成态（Converged work）"]
+    B -- "『演示过』当『完成了』" --> F["『差不多』负债堆积（Almost-done debt）"]
+    F -. "产出量不等于价值" .-> G["度量收敛率（Convergence rate），而非启动数"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C core;
+    class B,D gate;
+    class A,E,F,G out;

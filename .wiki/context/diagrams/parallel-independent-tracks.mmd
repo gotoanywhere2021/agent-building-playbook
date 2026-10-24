@@ -1,0 +1,20 @@
+flowchart TD
+    A["编排者的一组任务（Task set from orchestrator）"] --> B{"派发前独立性三查（Independence check）"}
+    B -- "B 需要 A 的输出" --> C["必须串行（Sequential）"]
+    B -- "写同一共享资源" --> C
+    B -- "无依赖 / 无共享写 / 汇总顺序无关" --> D["同时派发全部任务（Dispatch all at once）"]
+    D --> E["Agent 轨道一（Track A）"]
+    D --> F["Agent 轨道二（Track B）"]
+    D --> G["Agent 轨道三（Track C）"]
+    E --> H["等待全部结果（Wait for all）"]
+    F --> H
+    G --> H
+    H --> I["聚合结果（Aggregate）"]
+    I --> J["墙钟时间线性缩短（Linear wall-clock speedup）"]
+    H -. "任一轨道撞见共享状态：回退串行" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,I,J core;
+    class B,C gate;
+    class A out;

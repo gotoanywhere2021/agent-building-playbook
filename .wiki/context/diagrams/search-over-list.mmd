@@ -1,0 +1,16 @@
+flowchart TD
+    A["设计返回集合的工具（Tool returning a collection）"] --> B{"接口形态？（List-all or search?）"}
+    B -- "list_all 全量返回" --> C["整体载入上下文（Load everything）"]
+    C --> D["模型在上下文里自行筛选（Scan in-model）：无关条目烧掉令牌与注意力"]
+    D -. "重构为检索接口" .-> E
+    B -- "find/search 带过滤参数" --> E["在工具层过滤（Filter at the tool layer）"]
+    E --> F["只返回相关结果（Only relevant hits）"]
+    F --> G{"智能体确需全貌吗？（Genuinely needs the full set?）"}
+    G -- "是：如全量分诊（Triage all）" --> H["保留列表接口（Keep the list）"]
+    G -- "否" --> I["上下文留给真正的工作（Context saved for the work）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E core;
+    class B,C,D,G gate;
+    class A,F,H,I out;

@@ -1,0 +1,18 @@
+flowchart TD
+    A["治理写成文档（Policy document）"] --> B{"何时约束行动？（When does it bind?）"}
+    B -- "事后复查" --> C["违规已成事故（Violation already an incident）"]
+    B -- "行动当下" --> D["治理嵌入基础设施（Embedded infrastructure）"]
+    D --> E["LLM 网关（Gateway）：日志·成本·路由·观测"]
+    D --> F["工作流执行器（Runner）：工件留痕·审批边"]
+    D --> G["模式库（Pattern library）：安全操作成默认"]
+    E --> H["策略在行动时刻生效（Enforced at the moment of action）"]
+    F --> H
+    G --> H
+    H --> I["平时隐形，关键时承重（Invisible when working, load-bearing when it matters）"]
+    C -. "反模式提醒：文档不是约束" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B,C gate;
+    class A,H,I out;

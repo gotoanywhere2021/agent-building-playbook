@@ -1,0 +1,16 @@
+flowchart TD
+    A["待验证的部署或变更（Deployment to verify）"] --> B{"在哪里运行工作负载？（Where does it run?）"}
+    B -- "mock 或本地近似" --> C["测的是 mock 而非系统（You tested the mock）"]
+    B -- "场景具破坏性：生产库 / 资金 / 共享设施" --> D["结构等价的隔离预发（Structurally identical staging）"]
+    B -- "真实环境可直接用" --> E["在真实系统执行真实负载（Run in the real place）"]
+    C --> F["模拟出的自信，不是知识（Confidence, not knowledge）"]
+    D --> G["真实拓扑、真实版本、真实负载下暴露问题（Real issues surface）"]
+    E --> G
+    G --> H["以承载真实信息的证据支撑判断与发布（Evidence-bearing ground truth）"]
+    F -. "临时结果标记为暂定，尽早换真实环境复跑" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G,H core;
+    class B,C,F gate;
+    class A out;

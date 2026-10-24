@@ -1,0 +1,21 @@
+flowchart TD
+    A["新会话启动：上下文一片空白（Fresh session, blank context）"] --> B{"环境事实已落盘？（Facts persisted?）"}
+    B -- "否" --> C["重新探索环境（Re-discover）"]
+    C --> D["重复付 token 与延迟，重犯同样的错误假设（Same wrong assumptions）"]
+    B -- "是" --> E["开局先读事实文件（Read facts first）"]
+    E --> F["WORKSPACE.md：目录布局与约定（Layout, conventions）"]
+    E --> G["env.yaml：工具版本与拓扑状态（Versions, topology）"]
+    E --> H["凭据与端点文件（Secrets, endpoints）"]
+    F --> I["带着准确环境模型开工（Grounded start）"]
+    G --> I
+    H --> I
+    I --> J{"环境发生变化？（Environment changed?）"}
+    J -- "是：新机器 / 新配置" --> K["第一件事：更新事实文件（Update facts first）"]
+    J -- "否" --> L["事实持续可信（Facts stay true）"]
+    K -. "供下一个会话读取" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H,I,K,L core;
+    class B,C,D,J gate;
+    class A out;

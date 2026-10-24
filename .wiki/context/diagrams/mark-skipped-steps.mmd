@@ -1,0 +1,17 @@
+flowchart TD
+    A["多步工作流（Multi-step pipeline）"] --> B{"某一步被跳过？（Step skipped?）"}
+    B -- "未跳过" --> C["正常产出（Normal output）"]
+    B -- "被跳过" --> D{"是否就地标注？（Marked inline?）"}
+    D -- "否：留白不标注" --> E["与『已完成』无从区分（Indistinguishable）"]
+    E -. "缺口静默累积" .-> F["下游在错误地基上失败（Downstream failure）"]
+    D -- "是：标注 + 原因" --> G["缺口显式可见（Gap visible）"]
+    G --> H{"评审处置（Review decision）"}
+    H -- "补做" --> I["执行被跳过的步骤（Run it now）"]
+    H -- "延期或有意的跳过" --> J["可信产出：完成与跳过清晰可辨（Auditable output）"]
+    I --> J
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class G,I,J core;
+    class B,D,E,F,H gate;
+    class A,C out;

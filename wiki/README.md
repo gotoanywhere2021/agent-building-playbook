@@ -11,6 +11,9 @@ Palantir 文档站式布局（吸顶搜索 + 左侧目录树 + 面包屑 + 右�
   每个模式的中文标题与一句话摘要；缺失条目渲染时回退英文）。
 - **中文正文层：** `../.wiki/context/zh-bodies/{slug}.md`（可选：每个模式
   一篇译文正文；有则中文为主、英文原文折叠在页面底部）。
+- **图解层：** `../.wiki/context/diagrams/{slug}.mmd`（可选：每模式一张
+  Mermaid 流程/结构图，渲染在详情页顶部『模式图解』卡片；渲染库自托管于
+  `.wiki/assets/mermaid.min.js`，发布时复制到本目录 `assets/`）。
 - **Agent 视图：** `../INDEX.md`（另一个独立生成物）。
 - **生成内容：** `index.html`（家族卡片首页）、`explore.html`（目录浏览器，
   替代旧版轮盘）、`families/{family}.html`、`patterns/{kebab}.html`。

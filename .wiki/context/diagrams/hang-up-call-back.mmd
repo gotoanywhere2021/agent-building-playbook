@@ -1,0 +1,15 @@
+flowchart TD
+    A["会话走偏（Session derails）"] --> B{"是根本性错误吗？（Fundamentally wrong?）"}
+    B -- "局部小错" --> C["就地纠正即可（Correct in place）"]
+    B -- "前提就错了" --> D["就地纠正为何失效：坏想法仍在上下文里锚定（Context poisoning）"]
+    D --> E["挂断回拨（Hang up, call back）：回滚到拐点之前"]
+    E --> F["保留仍正确的部分（Keep what was on track）"]
+    F --> G["把教训编码进新提示（Encode the lesson in the re-prompt）"]
+    G --> H["坏转录消亡（Bad transcript dies）"]
+    H --> I["干净上下文重新出发（Clean re-attempt）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G core;
+    class B,D gate;
+    class A,C,H,I out;

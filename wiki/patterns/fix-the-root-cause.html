@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">修根因（Root Cause），要诊断</span></nav>
-<h1>修根因（Root Cause），要诊断</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Fix the Root Cause, Demand a Diagnosis</p><p class="lede">智能体倾向于只补看得见的症状——对反复出现、生产级或架构级问题，要求先产出解释根因的诊断工件，再接受任何修复。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>修根因（Root Cause），要诊断</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Fix the Root Cause, Demand a Diagnosis</p><p class="lede">智能体倾向于只补看得见的症状——对反复出现、生产级或架构级问题，要求先产出解释根因的诊断工件，再接受任何修复。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;缺陷出现（Defect）&quot;] --&gt; B[&quot;代理修补可见症状（Patch the symptom）&quot;]
+    B --&gt; C{&quot;可以就此收手吗？（Acceptable?）&quot;}
+    C -- &quot;一次性·低风险&quot; --&gt; D[&quot;直接修复即可（Direct fix fine）&quot;]
+    C -- &quot;复发·生产·架构级&quot; --&gt; E[&quot;要求诊断工件（Require a diagnosis artifact）&quot;]
+    E --&gt; F[&quot;写明根因与机理（Root cause and mechanism）&quot;]
+    F --&gt; G[&quot;识别同因波及面（Blast radius）&quot;]
+    G --&gt; H[&quot;针对根因修复（Fix the cause）&quot;]
+    H --&gt; I[&quot;沉淀为可复用证据（Reusable knowledge）&quot;]
+    I -. &quot;同因再现：回到诊断&quot; .-&gt; F
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H core;
+    class C gate;
+    class A,B,D,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>任由自身的惯性发展，智能体（agent）会孤立地修 bug：找到可见的症状，用最小的局部改动让它消失，然后报告成功——从不顺着线索回溯到原因。这不是懒惰；这是一个以『让失败信号停止』为优化目标的系统的默认行为，而症状补丁让信号停止的效果与真正的修复一样好——直到原因在别处再次浮出水面。对策是拒绝仅凭『症状消失了』接受修复，转而要求一份诊断工件（diagnosis artifact）：对失败为何发生的明确说明——是真实机制，不是表面现象——它先于修复并为修复提供正当性。诊断要指明根因，解释它如何产生了观察到的症状，识别同一原因还可能影响什么，然后才提出针对原因而非表面的改动。这条纪律不是免费的，所以它被用在复发症状代价高昂的地方：反复出现的问题（同一个 bug 换着新伪装不断回来）、在生产环境发现的问题（误诊的影响半径是真实用户），以及架构层面的问题（局部补丁可能把结构性缺陷固化）。对一次性的外观故障，直接修就好；对一个已经出现三次的 bug，要求诊断才能把无穷无尽的补丁流变成一个持久的修复。这份工件还会在未来兑现——成文的根因诊断，正是未来的智能体或人类理解系统为何如此运行所需的那类证据。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当同一个 bug 或同类 bug 反复出现时——复发就是此前修复命中的是症状而非原因的信号。</li><li>当缺陷在生产环境被发现时——误诊原因意味着真实故障仍在运行、伺机复发。</li><li>当问题触及架构级行为时——局部补丁可能掩盖并固化结构性缺陷。</li><li>当智能体提出的修复让症状消失、却解释不了症状为何发生时——先要求诊断，再接受改动。</li><li>当你希望修复能沉淀为持久的组织知识时——成文的根因诊断是可复用的证据，而不只是一张被关闭的工单。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

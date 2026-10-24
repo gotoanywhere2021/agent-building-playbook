@@ -1,0 +1,15 @@
+flowchart TD
+    A["干系人报出实现（Stated solution）：『加个字段』『改下校验』『做个报表』"] --> B{"是需求还是伪装的解法？（Need or disguised solution?）"}
+    B -- "硬约束：法规·固定接口" --> G["按字面实现（Build as stated）"]
+    B -- "是对解法的猜测" --> C["先问为什么再问怎么做（Why before how）：什么决策依赖它？防住什么失败？"]
+    C --> D["还原真实需要（Underlying need）"]
+    D --> E{"承载它的流程还该存在吗？（Should the workflow survive?）"}
+    E -- "该存在" --> F["围绕需要重新设计（Design from the need）"]
+    E -- "不该：绕行方案" --> H["不自动化绕行（Don't automate the workaround）"]
+    F --> I["智能体为对的事加速（Agent accelerates the right thing）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,F core;
+    class B,E,H gate;
+    class A,D,G,I out;

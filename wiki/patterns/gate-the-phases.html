@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">显式设置阶段闸门（Gate）</span></nav>
-<h1>显式设置阶段闸门（Gate）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Gate the Phases Explicitly</p><p class="lede">在设计与构建之间、构建与发布之间宣告硬切换——模糊的阶段产出无法评审也无法回滚的工作。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>显式设置阶段闸门（Gate）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Gate the Phases Explicitly</p><p class="lede">在设计与构建之间、构建与发布之间宣告硬切换——模糊的阶段产出无法评审也无法回滚的工作。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;任务输入（Task）&quot;] --&gt; B[&quot;设计阶段（Design）&quot;]
+    B --&gt; C{&quot;关口：设计成立？（Go or kill?）&quot;}
+    C -- &quot;否：回炉&quot; --&gt; B
+    C -- &quot;是&quot; --&gt; D[&quot;实现阶段（Build）&quot;]
+    D --&gt; E{&quot;关口：验证通过？（Verified?）&quot;}
+    E -- &quot;否：回修&quot; --&gt; D
+    E -- &quot;是&quot; --&gt; F[&quot;交付（Ship）&quot;]
+    A -. &quot;跳过关口：一气呵成&quot; .-&gt; G[&quot;阶段糊化（Phases blur）&quot;]
+    G --&gt; H[&quot;难以评审·无法回滚（Unreviewable, unrollbackable）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D core;
+    class C,E,G,H gate;
+    class A,F out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>开发工作会经过可辨认的阶段：理解问题、设计方案、实现、验证、交付。在 AI 辅助的工作流中，这些阶段很容易坍缩——被要求『自己搞定』的智能体（agent）会在一轮不间断的对话里完成设计、实现并声称完成，产出的工作在阶段边界处无法评审，而那里恰恰是抓问题最便宜的地方。显式设置阶段门（gate）意味着在每个阶段之间声明一个可见的检查点：在此评估进展、浮现假设，并审慎而非默认地做出是否继续的决定。门不必涉及人类——它可以是一个测试、一个验证脚本或一次结构化的智能体交接——但它必须是真实的决策点，不是走过场。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何多步骤工作流，只要一个阶段的产出会成为下一阶段的输入——在两者之间设门，让错误的传播不超过一个阶段。</li><li>向智能体委派工作时：明确指定智能体负责哪个阶段，以及什么工件标志着其阶段的结束。</li><li>当需求只有部分已知时：在设计阶段之后设门、先验证设计再构建，而不是构建之后才发现设计错了。</li><li>当涉及多个智能体或多人时：门是让各方工作保持对齐的协调机制，无需持续同步。</li><li>调试坏掉的管道时：识别缺失或被跳过的是哪道门；错误几乎总是源自那里。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

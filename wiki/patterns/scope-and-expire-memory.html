@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">给记忆划定作用域并让它过期</span></nav>
-<h1>给记忆划定作用域并让它过期</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Scope and Expire Memory</p><p class="lede">单一全局记忆池会导致上下文污染、执念与僵化——智能体死抱着被否决的架构与过时假设；默认使用带作用域、会过期的记忆，因为遗忘是特性不是缺陷。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="knowledge" href="../explore.html#dim-knowledge">知识（knowledge）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>给记忆划定作用域并让它过期</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Scope and Expire Memory</p><p class="lede">单一全局记忆池会导致上下文污染、执念与僵化——智能体死抱着被否决的架构与过时假设；默认使用带作用域、会过期的记忆，因为遗忘是特性不是缺陷。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="knowledge" href="../explore.html#dim-knowledge">知识（knowledge）</a><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;跨会话持久化（Persistence across sessions）&quot;] --&gt; B{&quot;记忆如何组织？（One global pool or scoped?）&quot;}
+    B -- &quot;全局大池（One giant memory）&quot; --&gt; C[&quot;上下文劣化（Decay）：中毒·偏执·停滞·令牌浪费·虚假连续性&quot;]
+    C -. &quot;重构为分区&quot; .-&gt; D
+    B -- &quot;按范围分区&quot; --&gt; D[&quot;范围化记忆（Scoped memory）：按项目·角色·任务分池&quot;]
+    D --&gt; E{&quot;这条记忆仍相关吗？（Still relevant?）&quot;}
+    E -- &quot;过期或失效&quot; --&gt; F[&quot;标记过期·归档或删除（Expire and archive）：遗忘是特性&quot;]
+    E -- &quot;仍相关&quot; --&gt; G[&quot;保留在其所属范围（Keep in scope）&quot;]
+    F --&gt; H[&quot;决策史可查但不进每次提示（History queryable, not in every prompt）&quot;]
+    G --&gt; H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,G core;
+    class B,C,E gate;
+    class A,F,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一个不加区分记住所有事情的模型并非能力更强——它更难被引导。当所有持久化信息都流入一个通用记忆池，智能体会过度索引于先前信息：它执着于一个你早已丢弃的架构，反复回到一个你早已降权的关注点，并把两个会话之前就已失效的假设跨会话保留下来。失败类型学是具体的。上下文毒化（context poisoning）：坏掉的或过时的信息不断重现并塑造新的输出。执念（obsession）：智能体固着在一个人类早已翻篇的问题上。停滞（stagnation）：早期想法变成吸引子（attractor），排挤新的方向。token 浪费：无关历史消耗工作窗口。虚假连续性（false continuity）：系统看起来连贯，同时悄悄把错误假设向前携带。隐私与策略泄漏：为一个作用域准备的上下文出现在另一个作用域。『一个巨大的记忆文件』反模式是同一种疾病的浓缩形态——无差别的记忆变成难以检索、难以审计、容易被毒化的上下文淤泥（sludge）。安全的默认是作用域化的记忆：持久化按项目、按角色、按任务划分，而不是汇入单一全局存储，并把衰减与删除当作一等操作。把记忆标记为过时，让失去相关性的上下文过期或归档，保留决策历史但不强迫那段历史进入每一次提示词。遗忘不是要被工程手段消除的缺陷；它是防止过时想法支配新工作的机制。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>为跨多个会话、项目或用户运行的智能体设计任何持久化层时——在伸手要全局存储之前，先选择仍然服务任务的最窄作用域。</li><li>当智能体不断复活一个被否决的方案、一个已关闭的问题，或一个团队早已修订的假设——记忆正在毒化上下文，需要划定作用域或设过期。</li><li>当上下文成本在长期合作中持续攀升而质量没有相应增益——无差别的历史正被携带，本应衰减。</li><li>当同一个记忆存储横跨多个客户、团队或信任边界——作用域划分是隐私与策略控制，不只是性能控制。</li><li>当你发现自己在维护一个不断增长的记忆或指令文件——在它变成淤泥之前，按作用域拆分并加入过期。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

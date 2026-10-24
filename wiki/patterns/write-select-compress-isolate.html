@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">四个动作：写出、选取、压缩、隔离</span></nav>
-<h1>四个动作：写出、选取、压缩、隔离</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">&quot;Four Moves: Write, Select, Compress, Isolate&quot;</p><p class="lede">每一个上下文管理决策都是四个动作之一——写出（write）、选取（select）、压缩（compress）、或隔离（isolate）到子智能体。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>四个动作：写出、选取、压缩、隔离</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">&quot;Four Moves: Write, Select, Compress, Isolate&quot;</p><p class="lede">每一个上下文管理决策都是四个动作之一——写出（write）、选取（select）、压缩（compress）、或隔离（isolate）到子智能体。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;上下文管理出问题了？（Context problem?）&quot;] --&gt; B{&quot;症状是哪一种？（Which symptom?）&quot;}
+    B -- &quot;跨会话丢状态&quot; --&gt; C[&quot;写：中间产物落成持久工件（Write to a persistent artifact）&quot;]
+    B -- &quot;可用材料太多&quot; --&gt; D[&quot;选：只取当前步骤相关的切片（Select the relevant slice）&quot;]
+    B -- &quot;上下文持续膨胀&quot; --&gt; E{&quot;内容须亲历过程，还是只需结果？（Process or outcome?）&quot;}
+    E -- &quot;只需结果&quot; --&gt; F[&quot;隔离：细节交给新鲜子智能体，只回传结果（Isolate into a sub-agent）&quot;]
+    E -- &quot;过程要留在本窗内但太长&quot; --&gt; G[&quot;压缩：把冗长内容提炼为保信号的摘要（Compress to a dense summary）&quot;]
+    C --&gt; H[&quot;上下文管线 = 四种动作的有序组合（Pipeline as ordered moves）&quot;]
+    D --&gt; H
+    F --&gt; H
+    G --&gt; H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class B,E gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>面对上下文管理问题时，恰好有四个动作可用。写出（Write）：把易逝的推理或中间结果转化为持久产物（文件、笔记、检查点），使其能穿越上下文重置并被精确读回。选择（Select）：从大量可用材料中，只挑与当前步骤相关的部分——检索、过滤、切片、摘录。压缩（Compress）：把冗长内容（长文档、完整对话史、详细计划）缩减为保留信号的稠密摘要，甩掉 token 成本。隔离（Isolate）：把细节繁重的子任务委托给一个全新的智能体，让工作发生在主上下文窗口之外，只有结果返回。这四个动作并非任意——它们穷尽地映射了上下文可被塑造的方式。一条工程良好的上下文流水线，可以完全用『对什么内容、以什么顺序、应用了哪些动作』来描述。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>诊断上下文管理问题时：找出缺的是哪个动作。上下文持续增长？需要压缩或隔离。跨会话丢状态？需要写出。检索到的内容太多？需要选择。</li><li>设计多智能体流水线时：在把内容传给下一阶段之前，规定哪个智能体应用哪个动作。</li><li>编写系统提示词（system prompt）或注入内容时：问每一块内容是原始产物（写出）、最相关切片（选择）、摘要（压缩），还是应当被整体卸载（隔离）。</li><li>当长时运行的智能体输出退化时：四动作框架就是诊断工具——找出哪个动作缺失或被误用。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

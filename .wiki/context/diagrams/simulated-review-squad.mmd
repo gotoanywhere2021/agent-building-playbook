@@ -1,0 +1,15 @@
+flowchart TD
+    A["工件即将面世（Artifact before real users）"] --> B["组建模拟评审团（Assemble the squad）：专家与新手用户·合规·客服·怀疑派工程师·无障碍·安全"]
+    B --> C["用真实材料定角色（Ground personas in real material）：转录·工单·销售电话·影子记录"]
+    C --> D["各视角并行读工件（Parallel simulated review）：各以自身关切提问"]
+    D --> E{"产生异议了吗？（Objections?）"}
+    E -- "有：新手被绊·合规暴露·潜在工单" --> F["趁便宜先修（Fix while cheap）"]
+    F --> D
+    E -- "无" --> G["模拟是滤镜不是放行闸（Filter, not release gate）"]
+    G --> H["需真人权威时升级（Escalate to real authority）；上线后继续收真实反馈"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;

@@ -1,0 +1,14 @@
+flowchart TD
+    A["实现代理完成工作（Implementer finishes）"] --> B["不采信自查：同一批假设既造错也掩错（Self-review shares the blind spots）"]
+    B --> C["第二审计代理冷读工件（Auditor reads the artifact cold）"]
+    C --> D["核验三问：符合规格？步骤真做了？成功主张有证据？（Spec, steps, evidence）"]
+    D --> E{"审计通过？（Verdict?）"}
+    E -- "不通过" --> F["打回修改（Rework）"]
+    F -. "重做后再次送审" .-> A
+    E -- "通过" --> G["放行到下一阶段；审计结论即审计留痕（Release; verdict = audit trail）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E gate;
+    class A,F,G out;

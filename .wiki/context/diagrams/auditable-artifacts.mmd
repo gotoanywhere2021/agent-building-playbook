@@ -1,0 +1,14 @@
+flowchart TD
+    A["多步流水线（Multi-step pipeline）"] --> B["每阶段先声明产物（Declare the artifact per stage）"]
+    B --> C["阶段执行，工件落盘（Run, write the artifact）"]
+    C --> D{"没有产物，或产物含糊？（Missing or vague artifact?）"}
+    D -- "是" --> E["审计缺口（Audit gap）：无法回放与验证，只能盲信"]
+    D -- "否" --> F["工件五项体检（The artifact bar）：装得进上下文、可冷启动续作、可版本对比、结构化、保留意图"]
+    F --> G["下游消费：独立检视、选择性回放、跨代理交接——也是最可靠的近期记忆（Inspect, replay, hand off）"]
+    G -. "追溯污染源头 / 从指定阶段重放" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D,E gate;
+    class A,G out;

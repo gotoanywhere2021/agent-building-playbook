@@ -1,0 +1,15 @@
+flowchart TD
+    A["收到自动化请求（Request to automate）"] --> B["先问流程为何存在（Ask why it exists）"]
+    B --> C{"逐段分辨：真实需要还是历史意外？（Real need or historical accident?）"}
+    C -- "历史意外：约束已消失" --> D["删除，不复刻进代码（Remove, never encode）"]
+    C -- "真实需要" --> E["保留并进入自动化（Keep for automation）"]
+    D --> F["失能不被提速固化（Dysfunction not entrenched at machine speed）"]
+    E --> G{"它在绕开另一个坏流程吗？（Workaround for a broken process?）"}
+    G -- "是" --> H["停下：修根因或缩小范围（Fix upstream or narrow scope）"]
+    G -- "否：流程本身健全" --> I["放心加速（Accelerate with confidence）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,H core;
+    class C,G gate;
+    class A,F,I out;

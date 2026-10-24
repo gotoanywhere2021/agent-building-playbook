@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">智能体的挣扎是信号（Signal）</span></nav>
-<h1>智能体的挣扎是信号（Signal）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">The Agent&#x27;s Struggle Is a Signal</p><p class="lede">当智能体开始在代码库里打转——漏掉重复调用点、改到一半上下文耗尽、对失败的测试找借口——把它读作可维护性正在衰减的早期预警，去重构，而不是跟它缠斗。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span><a class="chip" title="taste" href="../explore.html#dim-taste">品味（taste）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>智能体的挣扎是信号（Signal）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">The Agent&#x27;s Struggle Is a Signal</p><p class="lede">当智能体开始在代码库里打转——漏掉重复调用点、改到一半上下文耗尽、对失败的测试找借口——把它读作可维护性正在衰减的早期预警，去重构，而不是跟它缠斗。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span><a class="chip" title="taste" href="../explore.html#dim-taste">品味（taste）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理执行任务（Agent at work）&quot;] --&gt; B[&quot;挣扎的典型症状（Struggle tells）：漏改重复调用点、上下文耗尽、测试仍红却报完成、自相矛盾&quot;]
+    B --&gt; C{&quot;是代码的问题，还是模型的局限？（Code smell or model limit?）&quot;}
+    C -- &quot;确认是代码信号&quot; --&gt; D[&quot;读作可维护性退化的早期警报（Early warning of decay）&quot;]
+    D --&gt; E[&quot;让代理复盘：点名可维护性问题，产出重构计划（Name problems, plan the refactor）&quot;]
+    E --&gt; F[&quot;人审计划并纠偏（Human reviews and steers）&quot;]
+    F --&gt; G[&quot;执行重构（Refactor）：代理自行清理，或用专业工具做结构化重构&quot;]
+    G --&gt; H[&quot;可维护性回升（Health restored）&quot;]
+    H -. &quot;观察代理是否恢复一次过&quot; .-&gt; A
+    C -- &quot;实为模型局限或任务本身难&quot; --&gt; I[&quot;不动代码：换提示或换工具（Don&#x27;t refactor working code）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class C gate;
+    class A,B,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>代码库一旦变得纠缠不清，智能体在其上的表现就会退化——而这种退化是一支可用的仪表，不只是令人沮丧。当智能体更新了若干重复调用点（call site）中的一个、却悄悄漏掉其余的；当它为把一次变更完整握住而耗尽上下文；当它在测试仍然红着时宣布完工；当它坚称失败是『符合预期』、随后又自相矛盾——这些都不是随机的模型失误；它们是代码矿井里的金丝雀（canary in the code mine）。让代码对智能体困难的那些性质——重复、低内聚、应当一起变更的东西散落各处、迫使一次性加载过多上下文的复杂度——同样是让人类困难的性质。因此，与其把智能体的吃力当作对抗它的理由或归咎于模型的理由，不如把它当作代码质量正在滑落的早期预警信号，并据此行动：让智能体审阅代码、点名可维护性问题、规划一次重构；审阅并引导这份计划；如果智能体自己无法把代码清理得足够好，就用称手的重构工具完成结构性重构。这一做法把一件恼人之事重新框定为反馈。一个过去一次搞定、如今突然要试三次的智能体，正在告诉你关于代码的某件事，而廉价的应对是去听。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个过去能把代码库处理得很好的智能体开始乱撞、卡顿或需要多次尝试——把它表现的变化当作诊断信号，而不只是运气不好。</li><li>看到经典征兆——变更只落在一份重复副本上而漏了同侪、测试仍在失败时报告『我完成了』、对什么能用的说法自相矛盾——把它们读作重复与复杂度的坏味道（smell）。</li><li>想把一个在更干净代码库上本可胜任的任务归咎于模型时——换工具之前，先检查代码。</li><li>作为常备习惯：像盯着构建时长或事故率那样，把智能体的费力程度当作可维护性的先行指标来观察。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+flowchart TD
+    A["主代理执行任务（Primary agent works）"] --> B["事件流与指标（Event stream & metrics）"]
+    B --> C["觉察层（Awareness layer）：站在执行上下文之外的哨兵，不指挥下一步"]
+    C --> D["对照预期轨迹找漂移（Compare to expected trajectory）"]
+    D --> E{"偏离显著吗？（Gap significant?）"}
+    E -- "在轨" --> F["放行继续（Keep running）"]
+    E -- "目标漂移、失败被合理化、资源飙升" --> G["叫停或上报（Interrupt / alert）"]
+    F -. "继续旁观" .-> C
+    G -. "纠偏后任务继续" .-> A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class E gate;
+    class A,B,F,G out;

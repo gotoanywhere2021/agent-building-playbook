@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,27 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">把生产闭环回到修复</span></nav>
-<h1>把生产闭环回到修复</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Close the Loop From Production Back to Fix</p><p class="lede">收尾不止于部署——把支持消息、事故、指标与用户反馈接入分诊循环：提议修复、验证、在开关后面发布、观察信号是否消失；这是智能体版的丰田生产方式。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把生产闭环回到修复</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Close the Loop From Production Back to Fix</p><p class="lede">收尾不止于部署——把支持消息、事故、指标与用户反馈接入分诊循环：提议修复、验证、在开关后面发布、观察信号是否消失；这是智能体版的丰田生产方式。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="observability" href="../explore.html#dim-observability">可观测性（observability）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;生产信号（Signals）：支持消息 / 事故 / 指标异常 / 用户报告&quot;] --&gt; B[&quot;Agent 分诊（Triage）：对照已知问题与近期变更&quot;]
+    B --&gt; C{&quot;可行动？（Actionable?）&quot;}
+    C -- &quot;否：噪音&quot; --&gt; Z[&quot;沉淀进知识库（Knowledge base）&quot;]
+    C -- &quot;是&quot; --&gt; E{&quot;风险等级？（Risk level?）&quot;}
+    E -- &quot;高风险&quot; --&gt; F[&quot;人工深度判断（Deep human review）&quot;]
+    E -- &quot;低风险&quot; --&gt; G[&quot;开分支提出修复（Propose fix on branch）&quot;]
+    G --&gt; H[&quot;验证工作流（Validation runs）&quot;]
+    H --&gt; I{&quot;按风险人工审批（Risk-gated approval）&quot;}
+    I -- &quot;拒绝&quot; --&gt; G
+    I -- &quot;批准&quot; --&gt; K[&quot;特性开关 / 灰度发布（Flag / staged rollout）&quot;]
+    K --&gt; L{&quot;原信号消失了吗？（Signal cleared?）&quot;}
+    L -- &quot;未消失&quot; --&gt; G
+    L -- &quot;消失&quot; --&gt; Z
+    Z -. &quot;同类问题下次更快识别&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F,G,H,K core;
+    class C,E,I,L gate;
+    class A,Z out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>部署不是收尾的终点；它是最有价值的反馈开始涌入的地方，而 agent 系统可以被接上线路去消费这些反馈。信号早已存在——支持消息、Slack 线程、生产事故、用户报告、指标异常——通常它们排着队等一个人去注意到、分诊、复现、修复并发布。生产反馈回路（production feedback loop）把这段距离闭合：把信号直接接入 agent 工作流——用户报告、支持消息、事故或指标异常出现；一个 agent 对照已知问题与近期变更做分诊；agent 判定它是否可行动；若风险低，agent 开分支并提出修复；一个验证工作流对该修复运行；人依据评估的风险批准或驳回；修复在功能旗标（feature flag）或灰度发布之后上线；系统观察原始反馈是否真的消失；经验被写回知识库，让同类问题下次被更快识别。它的力量在于压缩了用户之痛与产品变更之间的环路；它的安全在于环路从不跳过控制——验证、按风险设门的人类批准、分阶段曝光，以及对信号是否清除的观察。这是丰田式生产系统的 agent 版本：在源头观察缺陷，缩小批量让修复持续流动而非堆积成大型高风险发布，闭合反馈回路让问题训练系统，并改进流程本身而不是只打补丁。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当真实的用户侧信号（支持、Slack、事故、错误率、指标异常）的积累速度快于人类分诊速度——把它接入一个提出经过分诊、已验证修复的 agent 回路。</li><li>当你想缩短报告缺陷与修复上线之间的距离，又不移除高风险变更的人类批准闸门。</li><li>当同类问题反复出现——把回路接线，让每次处置都写回知识库，使识别与分诊随时间改进。</li><li>当你能把修复绑定到其来源信号并观察信号是否消失——闭环确认修复真的生效，而不只是被合并。</li><li>当你要的是持续的小修正而非大批量发布——这个回路偏好小的、可逆的、被观察的变更。</li></ul>
@@ -406,5 +434,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+flowchart TD
+    A["一大块工作（One big blob）"] --> B{"两句话能说清这个任务吗？（Two sentences or less?）"}
+    B -- "说不清" --> C["继续拆分（Split further）"]
+    C -. "重新过检" .-> B
+    B -- "说得清" --> D["三十分钟级任务（30-minute unit）：单一行为、单一决定"]
+    D --> E["完成即提交（Complete & commit）"]
+    E --> F["五分钟读完全部 diff（Five-minute review）"]
+    F --> G{"一眼可信吗？（Trust at a glance?）"}
+    G -- "diff 大到没法读" -. "退回再拆" .-> C
+    G -- "通过" --> H["干净交接；回滚只涉一个行为（Clean handoff, one-behavior rollback）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F core;
+    class B,G gate;
+    class A,H out;

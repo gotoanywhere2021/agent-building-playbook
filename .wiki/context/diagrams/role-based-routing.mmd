@@ -1,0 +1,14 @@
+flowchart TD
+    A["编排代码引用抽象角色（Code cites capability roles）：『fast』『reasoning』『coding』"] --> B["运行时解析（Runtime resolution）：路由矩阵将角色映射为当前最优模型"]
+    B --> C["按解析结果执行（Execute）"]
+    C --> D{"模型更新换代？（Model released, deprecated, or repriced?）"}
+    D -- "是" --> E["只改配置映射（Edit the routing matrix），代码不动"]
+    E --> B
+    D -- "否" --> F["角色是稳定身份，模型只是实现（Role stable, model swappable）"]
+    F --> G["按环境覆盖（Per-env overrides）：开发全走便宜模型，生产按层选优"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C core;
+    class D,E gate;
+    class A,F,G out;

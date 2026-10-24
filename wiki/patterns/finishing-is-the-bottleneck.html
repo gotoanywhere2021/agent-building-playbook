@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">瓶颈在收尾（Finishing），不在起跑</span></nav>
-<h1>瓶颈在收尾（Finishing），不在起跑</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Finishing Is the Bottleneck, Not Starting</p><p class="lede">模型让起步变得容易——说得过去的 80% 很快出现——但说得过去不等于完成，最后 20% 吃掉大部分注意力与风险；真正的指标是收敛：可靠抵达『已验收、已上线、被观察』。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>瓶颈在收尾（Finishing），不在起跑</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Finishing Is the Bottleneck, Not Starting</p><p class="lede">模型让起步变得容易——说得过去的 80% 很快出现——但说得过去不等于完成，最后 20% 吃掉大部分注意力与风险；真正的指标是收敛：可靠抵达『已验收、已上线、被观察』。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;启动近乎免费：貌似80%出炉（Cheap start）&quot;] --&gt; B{&quot;它完成了吗？（Finished or just plausible?）&quot;}
+    B -- &quot;继续收敛&quot; --&gt; C[&quot;收尾20%（Finishing）：测试·评审·证据·部署·反馈&quot;]
+    C --&gt; D{&quot;收敛了吗？（Accepted, shipped, observed?）&quot;}
+    D -- &quot;否：补缺口&quot; --&gt; C
+    D -- &quot;是&quot; --&gt; E[&quot;完成态（Converged work）&quot;]
+    B -- &quot;『演示过』当『完成了』&quot; --&gt; F[&quot;『差不多』负债堆积（Almost-done debt）&quot;]
+    F -. &quot;产出量不等于价值&quot; .-&gt; G[&quot;度量收敛率（Convergence rate），而非启动数&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C core;
+    class B,D gate;
+    class A,E,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体（agent）工作的经济学已经倒置：开始近乎免费，收尾依然昂贵。模型可以在几分钟内产出一个貌似成立的 80% 方案——代码、演示、文档、原型——而这种产出的速度本身就是陷阱，因为貌似成立的工作和完成的工作不是一回事。完成的工作通过了测试、经受住了独立评审、产出了证据、处理了边界情况、满足了用户预期、遵守了约束、安全上线，并生成了可据以行动的反馈。最后的 20%——模型让它看起来几乎完成的那部分——才是注意力、风险和组织成本真正集中的地方。更糟的是，智能体系统产生未完成工作的速度超过人类检查的速度，因此若没有收尾纪律，组织会悄悄积累演示、分支、原型、未合并代码、只修一半的 bug、浅层测试，以及那些看起来像进展、实则都是债务的『差不多完成』工件。所以瓶颈不是代码生成。瓶颈是收敛（convergence）：工作可靠地达到一个被接受的状态——已实现、已评审、已测试、已记录、已部署、已观测、并已纳入产品或组织——的这一性质。演示在这里是最诱人的假信号，因为演示展示的是可能性，不是就绪度；把『它能演示』当成『它完成了』，正是团队把 80% 工件误认为完成品的经典方式。对智能体系统而言，正确的度量不是它能开始多少，而是它收敛得有多可靠。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>评估一个智能体工作流的价值时：度量收敛（已开始的工作中达到被接受、已交付、已观测状态的比例），而不是产出工件的吞吐量。</li><li>当团队感觉自己很有产出但什么都没上线时——开始多、收尾少的管道的症状，就是一批令人印象深刻却未合并的『差不多完成』工作。</li><li>决定在装置（harness）的哪个环节投入工程精力时：收尾阶段（验证、评审、证据、部署、反馈）通常比生成更值得投入。</li><li>当有人提议凭一次演示就上线时——停下来问：要让这件事算完成而不只是被展示，还必须成立什么。</li><li>当智能体产出的体量超出人类检查能力时——那正是你需要把收尾纪律编码进工作流的信号，而不是再加更多评审者。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

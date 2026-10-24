@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">API 变更时，先改测试</span></nav>
-<h1>API 变更时，先改测试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Tests Are Code — Update Them First on API Change</p><p class="lede">API 变了先更新测试再改实现——测试就是规格，先改它逼你在动手前定义这次变更意味着什么。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>API 变更时，先改测试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Tests Are Code — Update Them First on API Change</p><p class="lede">API 变了先更新测试再改实现——测试就是规格，先改它逼你在动手前定义这次变更意味着什么。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;API 变更需求（API change required）&quot;] --&gt; B[&quot;先改测试以表达新契约（Update tests to the new contract first）&quot;]
+    B --&gt; C[&quot;套件先红：规格先于实现失败（Red suite is the executable spec）&quot;]
+    C --&gt; D[&quot;失败暴露将被破坏的调用方（Failures surface broken callers）&quot;]
+    D --&gt; E[&quot;再改实现直至转绿（Implement until green）&quot;]
+    E --&gt; F{&quot;全部通过？（All green?）&quot;}
+    F -- &quot;否：继续对规格实现&quot; --&gt; E
+    F -- &quot;是&quot; --&gt; G[&quot;可评审边界：先规格提交，后实现提交（Spec commit, then impl commit）&quot;]
+    C -. &quot;反例：先改实现再凑测试&quot; .-&gt; H[&quot;测试漂移：测试只描述已建成之物（Test drift）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E core;
+    class F gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>测试不是对可用代码的注解——它们是关于代码应该做什么的可执行规范（specification）。当 API 变更时，测试表达的是新契约（contract）。先更新测试——在动实现之前——迫使你为『变更后的 API 应该做什么』做出具体决定，暴露会被破坏的调用方（因为测试更新会把它们显形），并产出一套失败的测试来引导实现。相反的顺序——先改实现、再把测试改成匹配——会让实现定义规范，而不是规范定义实现。这是测试积累『测试漂移（test drift）』的主要途径：测试描述的是代码*做什么*而不是它*应该做什么*，且永远抓不到这个差别。在 API 变更时先更新测试，与 TDD 中『先写测试再写代码』是同一条纪律，应用于修改场景：测试即规范，规范先于构建。它还产生一个清晰的提交边界（commit boundary）——『更新测试以反映新 API 形态』是一个可评审的产物，先说明变更是什么；『更新实现以匹配新规范』再说明变更如何实现。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何 API 签名变更时（参数增删、重命名或改类型）——先更新调用方的测试期望，再更新实现，然后验证尚未更新的调用方会被新失败的测试捕获。</li><li>重构接口时：先针对重构后的目标接口写测试，验证它们对当前实现失败，然后执行重构直至测试通过。</li><li>修复由错误行为引起的 bug 时：先写一个证明当前行为错误的测试（它失败），再修复实现直至测试通过。不要先修复、再事后补回归测试。</li><li>评审他人的 API 变更时：问一句测试是否先于实现被更新。若不是，测试描述的是被建出来的东西，而非打算建的东西。</li><li>当测试套件陈旧、未在 CI 中运行时：第一任务是让它跑起来，而不是跳过测试。跑不起来的测试不是测试——它们是注释。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

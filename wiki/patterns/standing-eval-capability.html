@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">评估是常备能力，不是一次性闸门</span></nav>
-<h1>评估是常备能力，不是一次性闸门</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Evals Are a Standing Capability, Not a One-Time Gate</p><p class="lede">只在上线时跑一次、此后再不跑的评估套件不是评估套件——它是一份度量着某个已不存在系统的历史文档。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>评估是常备能力，不是一次性闸门</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Evals Are a Standing Capability, Not a One-Time Gate</p><p class="lede">只在上线时跑一次、此后再不跑的评估套件不是评估套件——它是一份度量着某个已不存在系统的历史文档。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;评估套件随系统入库（Suite in version control）&quot;] --&gt; B[&quot;CI 常跑、可随时触发（Runs in CI, cheap on demand）&quot;]
+    B --&gt; C[&quot;结果落盘、跨次可比（Results stored and compared）&quot;]
+    C --&gt; D[&quot;每次变更：先跑基线，改后再跑（Baseline, change, re-run）&quot;]
+    D --&gt; E{&quot;指标退化？（Regressed?）&quot;}
+    E -- &quot;退化：可归因&quot; --&gt; F[&quot;补用例复现并修复（Reproduce and fix）&quot;]
+    F -. &quot;修复后重跑对比&quot; .-&gt; D
+    E -- &quot;未退化&quot; --&gt; G[&quot;维持常备能力，随每次变更重跑（Standing capability）&quot;]
+    G --&gt; H{&quot;消融：装置仍贡献增益？（Does the harness still earn its keep?）&quot;}
+    H -- &quot;否：新模型已覆盖&quot; --&gt; I[&quot;裁剪被淘汰的编排（Prune scaffolding）&quot;]
+    H -- &quot;是&quot; --&gt; J[&quot;保留仍拉动指标的编排（Keep what moves the numbers）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class A,B,C,D,F core;
+    class E,H gate;
+    class G,I,J out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>评估（eval）最有价值的时刻不是初次发布，而是随时间推移——模型在变、提示词（prompt）在漂移、数据分布在移动、系统在演化。一套常备的评估能力意味着：评估套件可以随时由任何团队成员运行，每次产生相同的测量协议，且结果在不同运行之间可比——从而使性能随时间的变化可被检测、可被归因。这要求的不只是编写评估脚本：评估套件必须与其所评估的系统一同纳入版本控制，必须在 CI 中运行（或可按需触发），结果必须被存储和比较而非仅仅打印，团队还必须有『在发布可能影响质量的变更之前运行评估』的规范。一个无法低成本按需运行的评估，在它最有价值的时刻——变更即将发布之前——不会被运行。结果不被存储的评估无法与历史运行比较。不进版本控制的评估，会比它本要度量的系统更快过时。</p>
 <p>一套常备能力还应把测试装置（harness）与模型分开评估。随着基础模型变强，人们容易把所有提升归功于模型，同时继续为编排付费——检索（retrieval）、脚手架（scaffolding）、工具接线、多步工作流——这些可能已经不值这个价，甚至更糟，可能在拖累系统。分辨的办法是：在带与不带测试装置（或带与不带检索到的上下文）两种条件下运行同样的任务并比较——差值就是测试装置本身贡献的部分，与底下的模型隔离开来。没有这种消融（ablation），一次明显的提升就无法归因——你说不清是新模型变好了，是编排变好了，还是编排已经悄悄不再重要。把测试装置当作被测量的对象而不仅是默认前提，才能让团队剪掉已被更强模型淘汰的脚手架，并加倍投入那些仍在推动指标的部件。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +432,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-knowledge">知识（knowledge）</a><span class="sep">›</span><span class="here">挖掘矛盾（Contradiction）</span></nav>
-<h1>挖掘矛盾（Contradiction）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mine for Contradictions</p><p class="lede">矛盾是高信号——它揭示组织在没更新工件的情况下改了主意，或从未调和过相互竞争的目标；跨转录稿、规格与决策记录跑一个检测器，把冲突摆上桌面讨论而不是自动修复。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="intent" href="../explore.html#dim-intent">意图（intent）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>挖掘矛盾（Contradiction）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Mine for Contradictions</p><p class="lede">矛盾是高信号——它揭示组织在没更新工件的情况下改了主意，或从未调和过相互竞争的目标；跨转录稿、规格与决策记录跑一个检测器，把冲突摆上桌面讨论而不是自动修复。</p><div class="meta"><span class="chip solid" title="knowledge">知识（knowledge）</span><a class="chip" title="intent" href="../explore.html#dim-intent">意图（intent）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;语料池：纪要、规格、决策（Transcripts, specs, decisions）&quot;] --&gt; B[&quot;矛盾探测器扫描（Contradiction detector runs）&quot;]
+    B --&gt; C{&quot;发现不相容断言？（Incompatible assertions?）&quot;}
+    C -- &quot;否&quot; --&gt; D[&quot;换下一批语料（Next corpus）&quot;]
+    D -. &quot;回到语料池&quot; .-&gt; A
+    C -- &quot;是&quot; --&gt; E[&quot;列出矛盾：改口未同步、术语双义、计划违背价值观（Name the conflicts）&quot;]
+    E --&gt; F{&quot;有人愿意接手裁决？（A forum to triage?）&quot;}
+    F -- &quot;有&quot; --&gt; G[&quot;交人讨论裁定：绝不自动改写（Humans decide, never auto-fix）&quot;]
+    F -- &quot;无&quot; --&gt; H[&quot;搁置：无人处理的清单只是未读堆积（Shelve）&quot;]
+    G --&gt; I[&quot;意图重新对齐（Reconciled intent）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,G core;
+    class C,F gate;
+    class A,D,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>组织知识体内部的矛盾很少是打个补丁就能了事的简单错误——它是一个高信号指标，说明两件真实的事情正处于张力之中。要么组织改变过主意，却从未更新记录旧立场的工件（artifact）；要么它从未调和它同时真实持有的两个目标。矛盾探测器（contradiction detector）把这当作知识工作：它跑遍记录稿、笔记、文档、规格（spec）与决策，追问一组聚焦的问题。哪里有两个互不兼容的东西同时被断言？哪里有人改了主意而规格没有跟上？哪里一个计划违背了一条公开宣称的价值？哪里客户信号与宣称的产品方向不一致？哪里两个团队用同一个词指不同的东西？产出具体而令人不适：一个团队说速度至上，却保留着摧毁自主权的审批门禁（gate）；一个产品声称服务一线操作者，却在为高管仪表盘做优化；一家公司说它想要杠杆（leverage），却只度量裁员人数；一份规格宣布某个工作流已弃用，而支持工单显示用户仍在依赖它；一个智能体被指示不得使用某个绕行方案（workaround），而那个绕行方案就躺在它自己的历史笔记里。关键的设计约束是：输出必须让矛盾变得可讨论，而不是自动解决它。自动修复一个矛盾，等于在人类有意或无意同时持有的两个立场之间悄悄选定赢家——这恰恰是应当浮现给人来判断的事，不该被工具埋掉。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>挖掘一份记录稿或一个文档语料库时——矛盾抽取（contradiction extraction）是能从中产出的价值最高的派生工件之一。</li><li>当规格、计划或一组公开价值已经与观察到的行为脱节，你怀疑工件不再反映现实时。</li><li>两个团队总是各说各话时——同一个词的两种用法就是值得显式呈现的矛盾。</li><li>在把智能体托付给长周期任务之前，验证它自身的指令、笔记与策略内部一致时。</li><li>当意图比产出更重要时：矛盾暴露的是未被调和的意图，无论怎样打磨交付物都修不好。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

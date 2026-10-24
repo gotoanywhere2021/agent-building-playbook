@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">把多步工作编码成菜谱（Recipe）</span></nav>
-<h1>把多步工作编码成菜谱（Recipe）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Encode Multi-Step Work as a Recipe</p><p class="lede">对话是『发生过什么』的一次轨迹；菜谱是可重放、可检视、可版本化、可恢复的规格。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把多步工作编码成菜谱（Recipe）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Encode Multi-Step Work as a Recipe</p><p class="lede">对话是『发生过什么』的一次轨迹；菜谱是可重放、可检视、可版本化、可恢复的规格。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多步工作（Multi-step work）&quot;] --&gt; B{&quot;会重复执行吗？（Run more than once?）&quot;}
+    B -- &quot;一次性探索（One-off）&quot; --&gt; C[&quot;临时对话（Ad-hoc chat）：不可重放·不可审计&quot;]
+    B -- &quot;会重复&quot; --&gt; D[&quot;编码为配方（Encode as recipe）：命名步骤＋输入输出＋依赖&quot;]
+    D --&gt; E[&quot;带检查点执行（Checkpointed execution）&quot;]
+    E --&gt; F{&quot;中断或失败？（Interrupted?）&quot;}
+    F -- &quot;从最近检查点恢复（Resume）&quot; --&gt; E
+    F -- &quot;全部完成&quot; --&gt; G[&quot;可重放·可审计·可版本化（Replayable and auditable）&quot;]
+    G --&gt; H[&quot;换代理换日子，结果一致（Same result by any agent）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E core;
+    class B,C,F gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>以临时对话形式表达的多步骤工作——『现在做 X，现在做 Y，现在做 Z』——本质上是脆弱的：它无法从检查点（checkpoint）重放，没有可供校验的 schema，会在无人察觉的情况下累积上下文直到某处崩坏，而且任何没有参与对话的人都看不见它的状态。配方（recipe）把同样的工作编码为声明式规范：每个步骤都被命名，其输入与输出有定义，依赖是显式的，执行可以在中断后恢复。配方带检查点、可审计、受版本控制。它们把一次性的对话转变为可复现的工作流——另一个智能体、在另一天，也能执行出同样的结果。</p>
 <p>聊天对人类来说是表达意图的便利方式，却是对长期运行的工作的糟糕表示——它只是发生过一次的痕迹，不是可以重放、检查或从中恢复的结构。成熟形态的配方是一张工作流图（workflow graph），而这张图就是工作运行其上的操作系统。图的节点是离散的工作单元——规划（plan）、实现（implement）、评审（review）、测试（test）、部署（deploy）、询问人类（ask-human）、检查日志（inspect-logs）——每个节点有自己的上下文与成功条件。边是推进、重试、分支、上报（escalate）或停止的条件。节点周围摆放着在节点之间承载状态的持久工件（artifact）、被分配到各角色的模型、检查模型工作的确定性工具，以及拥有重大决策权的人类。以这种方式看待工作，你才能把它当作系统来推理，而不是每次都从对话记录重新推导。</p>
 <p>与之对立的反模式是把巨型提示词当作操作系统：把上述所有结构塞进一整块庞大的指令。巨型提示词可以暂时奏效，但它掩盖了阶段、让评估变得困难（因为没有可评估的边界），并把上下文变成一个杂物抽屉，所有关注点同时争夺模型的注意力。修法是把重复的行为移出提示词、放进有名字的技能（skill）、脚本、文件或图节点——给每个阶段一个名字、一个边界和一个工件，提示词就不再是整台机器，而成为其中一个节点。</p>
@@ -410,5 +432,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

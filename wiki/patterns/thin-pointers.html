@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,19 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">薄指针（Thin Pointers），零污染</span></nav>
-<h1>薄指针（Thin Pointers），零污染</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">&quot;Thin Pointers, Zero Poisoning&quot;</p><p class="lede">在智能体之间传递文件路径与引用而非完整内容——让每个智能体只在需要时拉取它需要的部分。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>薄指针（Thin Pointers），零污染</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">&quot;Thin Pointers, Zero Poisoning&quot;</p><p class="lede">在智能体之间传递文件路径与引用而非完整内容——让每个智能体只在需要时拉取它需要的部分。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理间移交大产物（Agent-to-agent handoff）&quot;] --&gt; B{&quot;收方只需切片而非全文？（Slice, not the whole?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;只传薄指针：路径、ID、章节标记（Path, ID, section marker）&quot;]
+    B -- &quot;否：小值或必用全文&quot; --&gt; D[&quot;直接内联（Inline instead）&quot;]
+    C --&gt; E[&quot;接收方需要时才拉取所需切片（Pull the slice just in time）&quot;]
+    E --&gt; F[&quot;零中毒：窗口里只有自己选择加载的内容（Zero poisoning）&quot;]
+    F -. &quot;大结果落盘，回传摘要加指针&quot; .-&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E core;
+    class B gate;
+    class A,D,F out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当智能体之间交接工作时，诱惑是把内容内联——传整个文件、完整文档、全部工具输出——好让接收方智能体『拥有它可能需要的一切』。结果是上下文污染（context poisoning）：接收方智能体的窗口塞满它未必需要的内容，难以分辨相关与无关，还要为把完整载荷带过随后的每一步推理付出 token 成本。薄指针（thin pointer）用引用替代内容：一个文件路径、一个文档 ID、一个章节标题、一个工具调用模式、一份关于内容在哪里以及如何只取所需部分的结构化描述。接收方智能体读取指针，在需要时恰好取回需要的切片，从不加载其余部分。薄指针把即时检索（just-in-time retrieval）原则应用于智能体间通信：传地址，不传对象。零污染（zero poisoning）是目标——任何智能体的上下文里，都不应出现它自己没有选择加载的内容。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在智能体之间传递大型产物（文件、文档、数据集、代码）时——传路径与相关段落标记，不传内容。</li><li>当编排者（orchestrator）的上下文中积累了先前步骤的工具输出、而它们不再被直接需要时——用指向其落盘文件的指针替换它们，然后继续。</li><li>在多智能体流水线中设计智能体间协议时——把交换格式规定为结构化引用，而非内嵌载荷。</li><li>当子智能体返回大结果、而编排者只需要摘要时——接收摘要加上指向磁盘上完整结果的指针；由编排者决定是否解引用（dereference）。</li></ul>
@@ -406,5 +426,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

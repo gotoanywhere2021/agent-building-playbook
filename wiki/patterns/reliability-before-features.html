@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-meta-principles">元原则（meta-principles）</a><span class="sep">›</span><span class="here">先修可靠性（Reliability），再谈功能</span></nav>
-<h1>先修可靠性（Reliability），再谈功能</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Fix Reliability Before Features</p><p class="lede">真正的敌人是不稳定而不是能力不足——『时灵时不灵』的系统比『稳定地失败』的系统更难改进。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>先修可靠性（Reliability），再谈功能</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Fix Reliability Before Features</p><p class="lede">真正的敌人是不稳定而不是能力不足——『时灵时不灵』的系统比『稳定地失败』的系统更难改进。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="reliability" href="../explore.html#dim-reliability">可靠性（reliability）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;系统跑通但不稳定（Works，flaky）&quot;] --&gt; B{&quot;输入不变，结果仍高波动？（High variance?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;先修可靠性（Fix reliability first）&quot;]
+    B -- &quot;否&quot; --&gt; E[&quot;基线可信（Trustworthy baseline）&quot;]
+    C --&gt; E
+    E --&gt; F{&quot;要加新功能？（New capability requested?）&quot;}
+    F -- &quot;可靠性预算未耗尽（Error budget holds）&quot; --&gt; G[&quot;在稳定基线上加能力（Add on stable base）&quot;]
+    F -- &quot;预算耗尽（Budget exhausted）&quot; --&gt; C
+    G --&gt; H[&quot;信号可测，改进可辨（Measurable signal）&quot;]
+    G -. &quot;出现回归波动&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,G core;
+    class B,F gate;
+    class A,E,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>先加能力后修可靠性的直觉几乎总是错的。一个成功率为 70% 的系统不是『七成的解』——它是一个不可靠的系统，产出不可靠的数据、不可靠的用户信任，以及不可靠的进一步改进信号。抖动（flakiness）掩盖其他一切问题：如果基线本就充满噪声，你无法判断一次提示词修改是帮忙还是帮倒忙。一个可靠地失败的系统，远比一个间歇性地成功的系统有用，因为可靠的失败可测量、可诊断、可改进。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在添加任何新能力之前，确认现有能力运行干净、可重复。</li><li>当评估（eval）或工作流在输入不变的情况下跨运行表现出高方差——先修它再前进。</li><li>当利益相关方在要更多功能而当前系统已经不稳时——关于可靠性的对话必须先行。</li><li>在任何基础设施变更之后：在之上继续构建前，先验证可靠性没有回退。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

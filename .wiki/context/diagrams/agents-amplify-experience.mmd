@@ -1,0 +1,16 @@
+flowchart TD
+    A["执行瓶颈被代理移除（Execution bottleneck removed）"] --> B["暴露真正的瓶颈：判断力（Judgment is the bottleneck）"]
+    B --> C{"输出你能评价吗？（Can you evaluate the output?）"}
+    C -- "能：好判断被放大" --> D["放大为卓越产出（Amplified excellence）"]
+    C -- "不能：错误被自信放大" --> E["规模化自信的错误（Confident mistakes at scale）"]
+    D --> F["评审质量是产出的下限（Your review sets the floor）"]
+    E --> F
+    F --> G["给经验装代理：清晰验收标准 + 独立验证（Guardrails as experience proxy）"]
+    G --> H["边用边长出品味（Develop taste alongside use）"]
+    H -. "评价力长成后重判" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F,G core;
+    class C gate;
+    class A,D,E,H out;

@@ -33,6 +33,7 @@ WIKI_DIR="${2:-wiki}"
 TAXONOMY="${3:-wheel/taxonomy.yaml}"
 ZH_DICT="${4:-.wiki/context/zh.json}"
 ZH_BODIES="${5:-.wiki/context/zh-bodies}"
+DIAGRAMS="${6:-.wiki/context/diagrams}"
 DIST_DIR=".wiki/dist"
 
 PY=python3
@@ -61,7 +62,7 @@ fi
 echo "Rendering $PATTERNS_DIR -> $WIKI_DIR ..." >&2
 
 # All rendering logic lives in the embedded stdlib-only Python program below.
-PATTERNS_DIR="$PATTERNS_DIR" WIKI_DIR="$WIKI_DIR" TAXONOMY="$TAXONOMY" ZH_DICT="$ZH_DICT" ZH_BODIES="$ZH_BODIES" "$PY" - <<'PYEOF'
+PATTERNS_DIR="$PATTERNS_DIR" WIKI_DIR="$WIKI_DIR" TAXONOMY="$TAXONOMY" ZH_DICT="$ZH_DICT" ZH_BODIES="$ZH_BODIES" DIAGRAMS="$DIAGRAMS" WIKI_SRC="$SCRIPT_DIR" "$PY" - <<'PYEOF'
 import html
 import json
 import os
@@ -74,6 +75,8 @@ wiki_dir = Path(os.environ["WIKI_DIR"])
 taxonomy_path = Path(os.environ["TAXONOMY"])
 zh_path = Path(os.environ["ZH_DICT"]) if os.environ.get("ZH_DICT") else None
 zh_bodies_dir = Path(os.environ["ZH_BODIES"]) if os.environ.get("ZH_BODIES") else None
+diagrams_dir = Path(os.environ["DIAGRAMS"]) if os.environ.get("DIAGRAMS") else None
+wiki_src = Path(os.environ["WIKI_SRC"]) if os.environ.get("WIKI_SRC") else None
 
 SITE_NAME = "智能体构建手册"
 CSS = """
@@ -209,6 +212,14 @@ ul.rows li:hover { border-color:#9fb8d8; background:var(--wash); }
 ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
+
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
 
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
@@ -394,6 +405,33 @@ def load_zh_bodies(path: Path | None) -> dict[str, str]:
 
 
 ZH_BODIES = load_zh_bodies(zh_bodies_dir)
+
+
+def load_diagrams(path: Path | None) -> dict[str, str]:
+    """Optional per-pattern mermaid diagrams: one {slug}.mmd file each.
+    Rendered client-side by the vendored mermaid.min.js (offline, no CDN)."""
+    if path is None or not path.is_dir():
+        return {}
+    out: dict[str, str] = {}
+    for f in sorted(path.glob("*.mmd")):
+        text = f.read_text(encoding="utf-8").strip()
+        if text:
+            out[f.stem] = text
+    return out
+
+
+DIAGRAMS = load_diagrams(diagrams_dir)
+
+MERMAID_SNIPPET = (
+    '<script src="{prefix}assets/mermaid.min.js"></script>\n'
+    "<script>mermaid.initialize({{startOnLoad:true,theme:'base',securityLevel:'strict',"
+    "flowchart:{{htmlLabels:false}},themeVariables:{{"
+    "fontFamily:'-apple-system,\\\"Segoe UI\\\",\\\"PingFang SC\\\","
+    "\\\"Microsoft YaHei\\\",\\\"Noto Sans SC\\\",Helvetica,Arial,sans-serif',"
+    "fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',"
+    "primaryTextColor:'#182430',lineColor:'#5b6b7b',"
+    "clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}}}});</script>"
+)
 
 
 def fam_pair(en: str) -> str:
@@ -638,9 +676,11 @@ def toc_rail(toc: list[dict]) -> str:
 
 
 def page(title: str, depth: int, crumb: str, content: str, *,
-         tree_html: str, toc: list[dict] | None = None, active: str = "") -> str:
+         tree_html: str, toc: list[dict] | None = None, active: str = "",
+         mermaid: bool = False) -> str:
     prefix = "../" * depth
     body_cls = "has-toc" if toc and len(toc) >= 2 else ""
+    scripts = MERMAID_SNIPPET.format(prefix=prefix) if mermaid else ""
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -676,6 +716,7 @@ def page(title: str, depth: int, crumb: str, content: str, *,
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="{prefix}index.html">首页</a>
 &middot; <a href="{prefix}explore.html">浏览目录</a></footer>
+{scripts}
 </body>
 </html>
 """
@@ -735,6 +776,14 @@ def main():
             for f in out_dir.glob("*.html"):
                 f.unlink()
         out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Ship the vendored mermaid loader next to the generated pages (the
+    # script tag on diagram pages points at assets/mermaid.min.js).
+    # WIKI_SRC is .wiki/scripts; the vendored file lives at .wiki/assets/.
+    vendored = wiki_src.parent / "assets" / "mermaid.min.js"
+    if vendored.is_file():
+        (wiki_dir / "assets").mkdir(parents=True, exist_ok=True)
+        (wiki_dir / "assets" / "mermaid.min.js").write_bytes(vendored.read_bytes())
 
     # ---- Landing page ----
     cards = []
@@ -913,12 +962,25 @@ def main():
                     f'href="../explore.html#dim-{slugify(t)}">{html.escape(dim_pair(t))}</a>'
                     for t in p["dimensions"] if t != d["name"]
                 )
+                # Optional PM-style diagram (mermaid), authored in the
+                # diagrams layer; pages without one simply omit the card.
+                diagram = DIAGRAMS.get(p["slug"])
+                diagram_html = ""
+                if diagram:
+                    diagram_html = (
+                        '<section class="diagram" id="diagram">'
+                        "<h2>模式图解（Diagram）</h2>"
+                        f'<pre class="mermaid">{html.escape(diagram)}</pre>'
+                        "</section>"
+                    )
+
                 content = (
                     "<h1>" + html.escape(pat_title(p)) + "</h1>"
                     f'<p class="ol" style="color:var(--muted);margin:0 0 14px;">'
                     f"{html.escape(p['title'])}</p>"
                     f'<p class="lede">{html.escape(pat_ol(p))}</p>'
                     f'<div class="meta">{chips}</div>'
+                    + diagram_html
                     + body_block
                     + related
                 )
@@ -934,7 +996,8 @@ def main():
                 )
                 sidebar_p = build_sidebar(tree, "../", open_all=False, active_slug=p["slug"])
                 (wiki_dir / "patterns" / f"{p['slug']}.html").write_text(
-                    page(pat_title(p), 1, crumb, content, tree_html=sidebar_p, toc=toc),
+                    page(pat_title(p), 1, crumb, content, tree_html=sidebar_p, toc=toc,
+                         mermaid=diagram is not None),
                     encoding="utf-8",
                 )
 

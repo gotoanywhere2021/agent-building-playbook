@@ -1,0 +1,16 @@
+flowchart TD
+    A["代理批量产出选项（Agents generate in volume）"] --> B{"『差不多』就收下？（Accept as good enough?）"}
+    B -- "是" --> C["自满收下：代理的夸奖会拉平品味（Complacency flattens taste）"]
+    B -- "否：追问好在哪" --> D["刻意校准：看好例、研坏例、说出为什么（Calibrate on exemplars and failures）"]
+    C -. "重建评价习惯" .-> D
+    D --> E["对『仅仅合格』保持不满（Dissatisfied with adequate）"]
+    E --> F{"觉得不对却说不出？（Feels off, can't say why?）"}
+    F -- "是" --> G["放慢，把它命名：品味正在成形（Name it; taste forming）"]
+    G --> D
+    F -- "能判断了" --> H["编辑成为稀缺职能：会选的人更值钱（Editing is the scarce function）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G core;
+    class B,F gate;
+    class A,C,H out;

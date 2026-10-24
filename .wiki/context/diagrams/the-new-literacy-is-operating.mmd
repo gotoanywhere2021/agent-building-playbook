@@ -1,0 +1,17 @@
+flowchart TD
+    A["机器写了大部分实现（Machine writes most of the code）"] --> B{"该练哪种素养？（Which literacy to train?）"}
+    B -- "只练提示技巧" --> C["只会下指令并祈祷，难辨对错（Prompts and hope）"]
+    B -- "练运营能力" --> D["精确表达意图与验收标准（Intent and acceptance criteria）"]
+    D --> E["分解任务，并行管理多个会话（Decompose, manage sessions）"]
+    E --> F["检视产物而非轻信自信的外观（Inspect, never just trust）"]
+    F --> G["组织对抗式评审与独立验证（Adversarial review, validation）"]
+    G --> H{"同一流程反复手操？（Steering recurs?）"}
+    H -- "是" --> I["沉淀为可复用技能或模式（Capture as a reusable skill）"]
+    H -- "否" --> J["能驾驭、能检视、能叫停机器（Steer, inspect, stop）"]
+    I -. "下次直接复用" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,I core;
+    class B,H gate;
+    class A,C,J out;

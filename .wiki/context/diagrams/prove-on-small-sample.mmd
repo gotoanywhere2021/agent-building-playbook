@@ -1,0 +1,17 @@
+flowchart TD
+    A["新流水线或改动后的流水线（Pipeline ready to run）"] --> B{"直接跑全量 20 条？（Full set now?）"}
+    B -- "是：先跑再说" --> C["规模放大的是错误而非生产力（Scaling multiplies errors）"]
+    C --> D["中途失败：前段算力浪费，产物互相不一致（Wasted cost, inconsistent partials）"]
+    B -- "否：先小样" --> E["全流程跑 2 条真实样本（Run 2 end-to-end）"]
+    E --> F{"2 条全通过？（Both pass?）"}
+    F -- "否" --> G["小样本上修：诊断便宜、重跑便宜（Cheap to fix and retry）"]
+    F -- "是" --> H{"流水线自上次证明后有改动？（Changed since?）"}
+    H -- "改动过" --> G
+    H -- "未改动且已证明" --> I["放量到全量 20 条（Scale to full set）"]
+    G -. "修复后重新证明" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,G,I core;
+    class B,C,D,F,H gate;
+    class A out;

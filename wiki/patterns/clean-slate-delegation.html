@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">默认干净起点（Clean-Slate）委派</span></nav>
-<h1>默认干净起点（Clean-Slate）委派</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Default to Clean-Slate Delegation</p><p class="lede">派生子智能体时从空上下文开始，只提供任务所需——共享历史不是免费的上下文，而是混淆的遗传源。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>默认干净起点（Clean-Slate）委派</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Default to Clean-Slate Delegation</p><p class="lede">派生子智能体时从空上下文开始，只提供任务所需——共享历史不是免费的上下文，而是混淆的遗传源。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;编排者派生子代理（Orchestrator spawns a subagent）&quot;] --&gt; B[&quot;默认空白上下文（Default: clean slate）&quot;]
+    B --&gt; C[&quot;显式构造简报（Construct the briefing）：任务、约束、可视为已定的结论&quot;]
+    C --&gt; D{&quot;它真需要完整历史吗？（Does it truly need history?）&quot;}
+    D -- &quot;需要：历史本身就是分析对象（如总结对话）&quot; --&gt; E[&quot;例外：带全量上下文（History is the subject）&quot;]
+    D -- &quot;不需要&quot; --&gt; F[&quot;只传蒸馏简报，不倒历史（Distill, don&#x27;t dump）&quot;]
+    F --&gt; G[&quot;子代理干净起步，一次做对（Focused, first-try-right）&quot;]
+    A -. &quot;偷懒全量转储&quot; .-&gt; H[&quot;继承混乱（Inherited confusion）：无关、矛盾、已被推翻的信息全跟上&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D gate;
+    class A,E,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当编排者（orchestrator）孵化子智能体（subagent）时，默认假设常常是共享上下文越多越好——把完整的对话历史、所有先前的工具结果、迄今为止的每个决定都给它，它就拥有一切成功所需。这个假设通常是错的。被整批发送的上下文，不只携带相关信息，还携带无关的、自相矛盾的、已被推翻的。继承编排者全部历史的子智能体，同时继承每一次走错的路、每一个被丢弃的路数、每一个编排者后来推翻了的临时决定。子智能体无法区分活的信号与噪音。它把无关的东西填进自己的上下文窗口，留给要紧之物更少的空间，还可能被那些看起来像约束、实则不是的中间状态主动搞糊涂。白板委派（clean-slate delegation）把这一切倒转：任何子智能体的默认上下文是空的。编排者显式构造子智能体需要的东西——任务、约束、可视为既定前提的结论——并且只传递这些。这不是更少的信息；这是更准确的信息，去掉了搅局的杂质。编排者的职责是蒸馏，不是倾倒。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>孵化一个执行专注、自包含任务的子智能体时——给它一份针对任务的简报，而不是完整对话历史。</li><li>编排者的对话很长，或包含会让专注的子智能体感到困惑或分心的探索性内容时。</li><li>多个子智能体并行运行、每个都需要对同一组约束有一致而准确的视图时——每智能体一份简报，比每个都继承同一份长历史再各自从中提取更可靠。</li><li>子智能体将做出需要一次就做对的决策时——白板简报降低了无关的继承状态污染决策的概率。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

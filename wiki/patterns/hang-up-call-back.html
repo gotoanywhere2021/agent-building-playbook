@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">挂断，重拨</span></nav>
-<h1>挂断，重拨</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Hang Up, Call Back</p><p class="lede">当智能体对话走偏，不要原地纠偏——重写历史并重新发起，让模型根本没见过那个坏想法。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>挂断，重拨</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Hang Up, Call Back</p><p class="lede">当智能体对话走偏，不要原地纠偏——重写历史并重新发起，让模型根本没见过那个坏想法。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;会话走偏（Session derails）&quot;] --&gt; B{&quot;是根本性错误吗？（Fundamentally wrong?）&quot;}
+    B -- &quot;局部小错&quot; --&gt; C[&quot;就地纠正即可（Correct in place）&quot;]
+    B -- &quot;前提就错了&quot; --&gt; D[&quot;就地纠正为何失效：坏想法仍在上下文里锚定（Context poisoning）&quot;]
+    D --&gt; E[&quot;挂断回拨（Hang up, call back）：回滚到拐点之前&quot;]
+    E --&gt; F[&quot;保留仍正确的部分（Keep what was on track）&quot;]
+    F --&gt; G[&quot;把教训编码进新提示（Encode the lesson in the re-prompt）&quot;]
+    G --&gt; H[&quot;坏转录消亡（Bad transcript dies）&quot;]
+    H --&gt; I[&quot;干净上下文重新出发（Clean re-attempt）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G core;
+    class B,D gate;
+    class A,C,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当会话沿着一条根本错误的路走下去时，本能是在原地纠正它：解释哪里错了、重新定向、让对话继续。这通常会失败，原因有二。第一，被否定的方案仍在上下文里活着——模型锚定在这些 token 上，无论你纠正得多坚决，都会不断漂回那个坏设计。第二，死胡同的对话记录烧掉上下文预算，所以即使纠正生效了，新的尝试也在更小的空间和更差的注意力下运行。</p>
 <p>解决办法就是你在客服电话跑偏时做的事：挂断，重打。下一位客服对刚才搞砸的通话毫无记忆，而你已经确切知道该怎么表述诉求。在智能体（agent）会话中，这一招是回退（rewind），不是重新开始——把对话回卷到走错之前，保留一切仍在正轨上的内容，然后从那里重新提示（re-prompt）。从失败路径学到的东西在重新提示中存活：一条编码了你此刻所知的修改后提示词，或一条重新定义了『完成』含义的成功标准。糟糕的对话记录本身死去。真正干活的模型永远不会看到那个坏主意，也永远不会被错误的 token 污染。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

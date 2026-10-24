@@ -1,0 +1,16 @@
+flowchart TD
+    A["混合工作流设计（Hybrid workflow）"] --> B["模型步：处理歧义、综合、诊断（Model step for judgment）"]
+    B --> C["输出可查状态：文件路径、测试结果、状态码（Emits checkable state）"]
+    C --> D["确定性轨道：脚本、测试、校验器（Deterministic rail checks it）"]
+    D --> E{"轨道通过？（Rail passes?）"}
+    E -- "否：漂移被拦下" --> F["回到模型修正（Back to the model）"]
+    F --> B
+    E -- "是" --> G{"还有待判断的环节？（More judgment ahead?）"}
+    G -- "有：继续交替" --> B
+    G -- "无" --> H["模型不必完美，轨道接住漂移（Neither layer must be perfect）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E,G gate;
+    class A,H out;

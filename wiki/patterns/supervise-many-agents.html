@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">用一个界面监督多个智能体</span></nav>
-<h1>用一个界面监督多个智能体</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Supervise Many Agents Through One Interface</p><p class="lede">智能体一多，瓶颈变成人的看见能力——建监督面：在跑/卡住/完成/昂贵/等待中的仪表盘、状态播报、注意力防火墙、评审队列、成本监视，以及唤醒旧会话问责的能力。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>用一个界面监督多个智能体</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Supervise Many Agents Through One Interface</p><p class="lede">智能体一多，瓶颈变成人的看见能力——建监督面：在跑/卡住/完成/昂贵/等待中的仪表盘、状态播报、注意力防火墙、评审队列、成本监视，以及唤醒旧会话问责的能力。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;一群并发智能体（A fleet of agents）&quot;] --&gt; B[&quot;状态排气：各会话流出摘要、成本与风险（Status exhaust）&quot;]
+    B --&gt; C[&quot;注意力防火墙：滤掉例行噪音，只浮出相关变化（Attention firewall）&quot;]
+    C --&gt; D[&quot;仪表盘：在跑、卡住、完成、昂贵、待审一眼可见（Dashboard）&quot;]
+    D --&gt; E{&quot;哪个会话真正需要人？（What needs the human?）&quot;}
+    E -- &quot;完成待审&quot; --&gt; F[&quot;审查队列：按风险与置信度排序（Review queue）&quot;]
+    E -- &quot;异常漂移或失控&quot; --&gt; G[&quot;背景审计与成本监控捕获（Auditor + cost monitor）&quot;]
+    G -. &quot;失控循环按经济信号报警&quot; .-&gt; H[&quot;中断策略：何时允许打扰人（Interrupt policy）&quot;]
+    F --&gt; I[&quot;人裁决：放行、修正或追责（Human verdict）&quot;]
+    H --&gt; I
+    I -. &quot;复活旧会话，按先前状态问责&quot; .-&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F,G,H core;
+    class E gate;
+    class A,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一旦一个人要运行的智能体超过寥寥几个——编码会话、云端工作流、评审小组、机器人、后台监控——瓶颈就不再是机器的工作，而是人看清机器工作的能力。没有合适的界面，过多输出涌来：完成的会话堆积未审、跨会话状态不明、通知在错误的时间触发，没人能判断哪个智能体真正需要帮助。监督界面（supervision surface）是让一队智能体对一个人变得可读的唯一界面，它由一小套注意力工具组装而成。智能体仪表盘（agent dashboard）显示哪些会话在运行、卡住、完成、昂贵或等待评审，让舰队状态一目了然。状态排流（status exhaust）是每个智能体发出的流——摘要、产物、成本、风险与建议的下一步——使一个会话无需重新推导历史即可被理解。注意力防火墙（attention firewall）过滤嘈杂频道、只呈现相关变化，让人不被例行琐事淹没。打断策略（interrupt policy）规定智能体何时可以求助。会话复活（session resurrection）让人可以恢复旧会话并追究其对先前状态的责任，而不是在上下文过期时丢失线索。后台审计员（background auditor）观察运行中的智能体，汇总操作者本会错过的异常。评审队列（review queue）按风险、重要性与置信度为已完成的产出排优先级。成本监控器（cost monitor）对照产出价值追踪 token 花费，让失控循环被经济学而不是仅靠错误捕获。重点不在于任何一个部件；而在于：监督众多智能体本身就是设计问题，界面即产品。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当一个人负责的并发智能体数量超出其脑内容量时——仪表盘与状态排流把不可知的舰队变成可读的舰队。</li><li>当完成的工作快于评审、你分不清该先看哪个输出时——按风险与置信度排序的评审队列就是缺失的那块界面。</li><li>当智能体长时间无人值守运行时——后台审计员与成本监控器能捕获操作者没有盯着的漂移、失控循环与静默失败。</li><li>当会话在任务中途被放弃、上下文丢失时——会话复活让长时程工作可恢复、可问责，而不是被意外丢弃。</li><li>当通知噪音已经训练团队无视智能体输出时——注意力防火墙加打断策略能恢复信号。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

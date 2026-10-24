@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">用第二个智能体当审计员（Auditor）</span></nav>
-<h1>用第二个智能体当审计员（Auditor）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Use a Second Agent as Auditor</p><p class="lede">做了工作的智能体是验证这份工作的最差人选——让另一个与原始断言无利害关系的智能体坐进审计席。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>用第二个智能体当审计员（Auditor）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Use a Second Agent as Auditor</p><p class="lede">做了工作的智能体是验证这份工作的最差人选——让另一个与原始断言无利害关系的智能体坐进审计席。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;实现代理完成工作（Implementer finishes）&quot;] --&gt; B[&quot;不采信自查：同一批假设既造错也掩错（Self-review shares the blind spots）&quot;]
+    B --&gt; C[&quot;第二审计代理冷读工件（Auditor reads the artifact cold）&quot;]
+    C --&gt; D[&quot;核验三问：符合规格？步骤真做了？成功主张有证据？（Spec, steps, evidence）&quot;]
+    D --&gt; E{&quot;审计通过？（Verdict?）&quot;}
+    E -- &quot;不通过&quot; --&gt; F[&quot;打回修改（Rework）&quot;]
+    F -. &quot;重做后再次送审&quot; .-&gt; A
+    E -- &quot;通过&quot; --&gt; G[&quot;放行到下一阶段；审计结论即审计留痕（Release; verdict = audit trail）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E gate;
+    class A,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当一个任务由智能体完成，该智能体对自己输出的验证在结构上就已受损：它用以推理的假设、偏差与上下文，正是产出原始工作的那些。被置于审计者（auditor）角色的第二个智能体没有这些锚点。它冷读（cold read）工件——不带导致其产生的决策史——并独立判断输出是否符合规格说明、要求的步骤是否真的执行了、成功的断言是否有证据支撑。审计者智能体不被要求重做工作；它被要求对照既定要求验证工作的产出。角色的分离正是让验证有意义的机制。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何失败会造成显著下游代价的高风险流水线步骤——在输出被下一阶段消费之前，加入一个审计者智能体。</li><li>某个智能体有虚报完成的前科时——审计者能系统性地暴露这一模式，而不是一例一例地抓。</li><li>任何不可逆操作之前（部署、发送、删除、发布）——先经过一个审计者智能体。</li><li>实现多智能体工作流时：把审计者角色作为编排（orchestration）的一部分显式设计，而不是事后补丁。</li><li>需要合规或问责时：审计者智能体的裁定成为审计轨迹（audit trail）。</li></ul>
@@ -402,5 +423,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

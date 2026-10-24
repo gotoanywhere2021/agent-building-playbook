@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">把会话历史当第一手证据</span></nav>
-<h1>把会话历史当第一手证据</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Use Session History as Primary Evidence</p><p class="lede">当之前的运行出了问题——或出了彩——会话转录（transcript）就是第一手证据；读它是诊断的第一个动作，不是其他办法失败后的退路。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把会话历史当第一手证据</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Use Session History as Primary Evidence</p><p class="lede">当之前的运行出了问题——或出了彩——会话转录（transcript）就是第一手证据；读它是诊断的第一个动作，不是其他办法失败后的退路。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;某次运行出了问题或出乎意料（Prior run surprised us）&quot;] --&gt; B{&quot;诊断从哪开始？（Hypothesize first or read the record?）&quot;}
+    B -- &quot;凭当前状态先猜想&quot; --&gt; C[&quot;假设先行（Hypothesis-first）：慢·易自我印证&quot;]
+    B -- &quot;先读会话记录（Read the transcript first）&quot; --&gt; D[&quot;读主证据（Primary evidence）：推理·工具调用·收到的输出·决策链&quot;]
+    C -. &quot;转回主证路径&quot; .-&gt; D
+    D --&gt; E{&quot;原因在记录里吗？（Cause in the record?）&quot;}
+    E -- &quot;是&quot; --&gt; F[&quot;凭证据定位原因（Diagnose from evidence）&quot;]
+    E -- &quot;记录缺失（No transcript）&quot; --&gt; G[&quot;标注观测缺口（Flag the observability gap），不以推断充数&quot;]
+    F --&gt; H[&quot;修复并校验完成声明与记录一致（Validate claims against the record）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,F core;
+    class B,C,E gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当系统表现异常，即时本能是看当前状态然后向前推理：检查输出、查配置、重跑命令。这是假设先行的诊断——先构造一个『可能发生了什么』的模型，再寻找证实它的证据。会话历史把这一切倒转：实际发生过什么的记录已经存在。模型的推理、它做的工具调用、它收到的输出、它采取的决策及其所处的上下文——所有这些都被记录在案、可获得、且是确定的。阅读它不是贬义上的考古；它是阅读一手史料。一个以失败告终的会话包含失败事件、其直接上下文，以及导致失败的决策链。一个意外成功的会话同样如此。把会话历史当作一手证据，意味着对任何关于过去运行的问题，把阅读记录作为诊断的第一动作，而不是在其他方法失败后才尝试的事情。这份记录比从当前状态重建更可靠，比从零复现更快，比任何关于『大概发生了什么』的假设更有信息量。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>诊断先前运行的失败时：先读会话记录，再重跑、再检查当前状态、再形成假设。成因更可能已在记录里，而不是从当前状态可推。</li><li>验证先前运行确实做了它声称的事时：智能体的完成声明是断言；会话记录才是支持或反驳它们的证据。</li><li>在智能体或会话之间交接任务时：接收方智能体应把阅读先前会话的历史作为第一动作，而不是依赖先前智能体对自己产出的总结。</li><li>调试反复出现的失败时：对比多次失败运行的会话历史，找出共同模式。单次运行检视找到局部成因；跨运行对比找到结构性成因。</li><li>以质量或安全为目的评估智能体行为时：会话记录是智能体实际做了什么的地面真值（ground truth），而不是它报告自己做了什么。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

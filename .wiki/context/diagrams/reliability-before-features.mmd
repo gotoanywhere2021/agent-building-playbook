@@ -1,0 +1,16 @@
+flowchart TD
+    A["系统跑通但不稳定（Works，flaky）"] --> B{"输入不变，结果仍高波动？（High variance?）"}
+    B -- "是" --> C["先修可靠性（Fix reliability first）"]
+    B -- "否" --> E["基线可信（Trustworthy baseline）"]
+    C --> E
+    E --> F{"要加新功能？（New capability requested?）"}
+    F -- "可靠性预算未耗尽（Error budget holds）" --> G["在稳定基线上加能力（Add on stable base）"]
+    F -- "预算耗尽（Budget exhausted）" --> C
+    G --> H["信号可测，改进可辨（Measurable signal）"]
+    G -. "出现回归波动" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,G core;
+    class B,F gate;
+    class A,E,H out;

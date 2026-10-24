@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">可组合的编排模式</span></nav>
-<h1>可组合的编排模式</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Composable Orchestration Patterns</p><p class="lede">用一小组命名且可复用的原语——顺序、条件、扇出（fan-out）、循环——构建编排，而不是为每个工作流写一次性控制流。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>可组合的编排模式</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Composable Orchestration Patterns</p><p class="lede">用一小组命名且可复用的原语——顺序、条件、扇出（fan-out）、循环——构建编排，而不是为每个工作流写一次性控制流。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;新工作流需求（Workflow to build）&quot;] --&gt; B{&quot;继续写定制控制流？（Bespoke control flow again?）&quot;}
+    B -- &quot;是&quot; --&gt; C[&quot;每条工作流一门新语言，调试从零开始（Every workflow a new language）&quot;]
+    B -- &quot;否&quot; --&gt; D[&quot;选定命名原语：顺序、条件、扇出、扇入、循环、门（Named primitives）&quot;]
+    D --&gt; E[&quot;工作流＝原语的组合树（Composition tree）&quot;]
+    E --&gt; F[&quot;懂词汇表即可读、改、调试（Readable by anyone）&quot;]
+    E --&gt; G[&quot;用测试替身替换单个原语来测（Test doubles per primitive）&quot;]
+    C -. &quot;重构：抽出可识别的模式&quot; .-&gt; D
+    F --&gt; H[&quot;下一条工作流＝重新组合（Recomposition, not reinvention）&quot;]
+    G --&gt; H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B gate;
+    class A,C,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>编排（orchestration）逻辑有一种长成不可维护的过程式代码的倾向：if-else 树嵌在循环里、循环嵌在回调里，工作流状态作为可变变量层层穿线。另一条路是用一小组命名的编排原语（primitive）——顺序（sequence）、条件（conditional）、扇出（fan-out）、扇入（fan-in）、循环（loop）、门禁（gate）——来构建，把任何工作流表达为这些模式的组合，而不是定制逻辑。顺序按次序运行步骤；条件依据前一步的输出分支；扇出生成并行的工作者（worker）；扇入等待并行工作者完成并聚合其结果；循环反复运行某一步骤直到条件满足；门禁在继续之前等待人工批准。这些不是特殊用途的构造——它们就是编排的词汇表。任何工作流都可以表达为这些模式的树；以这种方式表达的工作流，任何懂得这套词汇的人都能阅读、修改和调试。它还能通过把某个模式的实现替换为测试替身（test double）来测试，因为每个原语彼此隔离。反之，当编排被写成定制的过程式代码时，每个新工作流都是一门新语言，每次调试都要从头理解这门语言。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计超过三四步的新工作流时——先识别需要哪些编排模式，把结构表达为这些模式的组合，然后再写代码。</li><li>现有工作流的控制流不清晰时——通过抽取可辨认的模式（循环、条件、门禁）并使其显式化来重构。</li><li>构建工作流创作层或 DSL（领域专用语言）时——从一小组可组合的原语出发，而不是一个庞大的功能集；原语的组合足以覆盖复杂情形。</li><li>向新成员介绍某个工作流时——表达为组合原语的工作流可以用原语词汇来讲解，而无须逐步走读定制代码。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

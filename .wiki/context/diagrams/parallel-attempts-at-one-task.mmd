@@ -1,0 +1,22 @@
+flowchart TD
+    A["同一任务 + 已提交检查点（One task, one checkpoint）"] --> B{"单次成功率是否够高？（Single roll enough?）"}
+    B -- "可靠成功" --> C["单次实现即可（Single attempt）"]
+    B -- "困难或质量敏感" --> D["分叉隔离工作区（Fork worktrees）"]
+    C -. "若单次反复失败：升级为并行掷骰" .-> D
+    D --> E["并行实现三到五路（3 to 5 parallel attempts）"]
+    E --> F["尝试一（Attempt 1）"]
+    E --> G["尝试二（Attempt 2）"]
+    E --> H["尝试三（Attempt 3）"]
+    F --> I{"全部评审（Review all）"}
+    G --> I
+    H --> I
+    I -- "有整体最优" --> J["选最优（Pick best）"]
+    I -- "各有最强部件" --> K["拼接最强部分（Splice best parts）"]
+    J --> L["用廉价 token 换昂贵的人力时间（Tokens for human time）"]
+    K --> L
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,J,K core;
+    class B,I gate;
+    class A,C,L out;

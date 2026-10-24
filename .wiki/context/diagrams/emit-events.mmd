@@ -1,0 +1,15 @@
+flowchart TD
+    A["代理执行（Agent runs）"] --> B{"值得记录的时刻？（Moment that matters?）"}
+    B -- "状态转换·决策·外部调用" --> C["发出结构化事件（Emit structured event）"]
+    B -- "无关琐事：不记录" --> A
+    C --> D["类型化记录（Typed record）：输入·输出·动机"]
+    D --> E["事件流（Event stream）"]
+    E --> F["消费者（Consumers）：仪表盘·分析·下游代理"]
+    F --> G["事后重建执行叙事（Reconstruct the run）"]
+    G -. "发现无事件覆盖的盲区" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B gate;
+    class A,E,F,G out;

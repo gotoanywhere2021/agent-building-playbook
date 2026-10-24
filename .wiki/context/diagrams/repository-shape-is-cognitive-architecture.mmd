@@ -1,0 +1,15 @@
+flowchart TD
+    A["仓库即工作记忆（Repo as working memory and context boundary）"] --> B{"边界划在哪？（How wide?）"}
+    B -- "过宽：万物可达" --> C["上下文中毒（Poisoning）：无关文件淹没注意力"]
+    B -- "过窄：依赖在界外" --> D["上下文饥饿（Starvation）：够不到便幻觉（Hallucinate）"]
+    B -- "按工作裁剪" --> E["按任务类别刻意划定（Size the boundary to the work）"]
+    C --> E
+    D --> E
+    E --> F["工作形态变化时重划边界（Revisit when the work changes）"]
+    F -. "任务变迁或漂移" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F core;
+    class B,C,D gate;
+    class A out;

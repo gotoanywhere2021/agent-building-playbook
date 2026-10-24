@@ -1,0 +1,14 @@
+flowchart TD
+    A["各队各自重造轮子（Teams reinvent the same wheels）"] --> B["沉淀条目（Capture the entry）：问题、用法、反指征、评估法、出处与维护人"]
+    B --> C{"条目可信吗？（Trustworthy entry?）"}
+    C -- "只讲『何时用』，不讲『何时别用』" --> D["拒收：货拜物目录（Cargo-cult catalog）"]
+    C -- "含反指征与评估法" --> E["注册表就位（Registry）：版本化、署名、可检索"]
+    E --> F["取用与改造，而非强制同栈（Pull & adapt, not uniformity）"]
+    F --> G["用好再回馈：新条目与修正（Contribute back）"]
+    G -. "有人供养才不腐烂（Unowned = rot）" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,F core;
+    class C gate;
+    class A,D,G out;

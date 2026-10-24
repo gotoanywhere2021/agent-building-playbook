@@ -1,0 +1,16 @@
+flowchart TD
+    A["业务问题（Problem space）"] --> B["教练框定问题与验证标准（Coach frames the problem）"]
+    B --> C["玩家驱动代理推进（Player drives the agent）"]
+    C --> D["交接物落盘：规格、计划、日志、决策（Durable handoff artifacts）"]
+    D --> E{"需要资深判断？（Judgment bottleneck?）"}
+    E -- "是" --> F["教练介入：指导、评审、判断转移（Coach intervenes）"]
+    F --> C
+    E -- "否" --> G["按气质路由下一阶段（Route by temperament）"]
+    G -. "新阶段继续由玩家驱动" .-> C
+    G --> H["杠杆＝资深判断同时注入多条工作流（Leverage at scale）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;

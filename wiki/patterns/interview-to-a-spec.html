@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">先访谈出规格（Spec），再实现</span></nav>
-<h1>先访谈出规格（Spec），再实现</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Interview to a Spec Before Implementing</p><p class="lede">在意图面前放一个怀疑的访谈者——先问为什么再问怎么做、复述它的理解、在能干净复述目标前拒绝动手、产出一份人类可否决的精炼规格——把混乱意图变成可执行规格。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>先访谈出规格（Spec），再实现</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Interview to a Spec Before Implementing</p><p class="lede">在意图面前放一个怀疑的访谈者——先问为什么再问怎么做、复述它的理解、在能干净复述目标前拒绝动手、产出一份人类可否决的精炼规格——把混乱意图变成可执行规格。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="verification" href="../explore.html#dim-verification">验证（verification）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;一行冲动需求（One-line impulse）&quot;] --&gt; B[&quot;怀疑论访谈者（Skeptical interviewer）&quot;]
+    B --&gt; C[&quot;先问为什么，再问怎么做（Why before how）&quot;]
+    C --&gt; D[&quot;复述理解，暴露误读（Reflect understanding back）&quot;]
+    D --&gt; E{&quot;能干净复述目标？（Clean restatement?）&quot;}
+    E -- &quot;不能：继续追问未知与矛盾&quot; --&gt; C
+    E -- &quot;能&quot; --&gt; F[&quot;精简规格（Concise spec）：验收·场景·约束·开放问题&quot;]
+    F --&gt; G{&quot;人类审阅：批准还是拒绝？（Approve or reject?）&quot;}
+    G -- &quot;拒绝：带意见回炉&quot; --&gt; B
+    G -- &quot;批准&quot; --&gt; H[&quot;进入实现（Implement）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,G gate;
+    class A,F,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在任何代码被写出之前，意图应先经过一段对话，其职责是把凌乱的人类愿望编译成可执行的规格说明。正确的互动更接近一次辅导或治疗性的对话，而不是命令行：系统不急于给出方案，而是帮助人类发现其自身的意图——先问为什么，再问怎么做；把目标与干系人提出的实现分开；复述自己当前的理解，让误读尽早浮现；索取好结果与坏结果的例子；并指出它发现的未知与矛盾。访谈者（interviewer）在设计上就是怀疑的——它拒绝开始构建，直到能用自己的话干净地复述目标，扮演一个从含糊意图到规格说明的编译器；它用这样的问题探查：*我们在解决什么问题，谁在承受它，什么都不做会怎样，什么会让方案不可接受，哪些例子定义了成功，什么不应被改动，实现应当产出什么证明。*对话产出的不是一份冗长的逐字记录，而是一份工作工件——一份包含验收标准、用户故事、场景、约束和待决问题的精炼规格说明——小到人类能读完并拒绝或批准它。这防住了把第一条提示词当成规格说明的常见失败：第一条提示词是一个冲动，是意图过程的输入，不是最终指令；拿着它直接跑的智能体（agent）跳过了意图真正被确定的那个步骤。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个请求以单行提示词到达、而你正想直接开始构建时——先送它过一遍访谈，把冲动变成规格说明。</li><li>工作的风险或成本高到构建错东西的代价比对话本身更大时。</li><li>目标是含糊的、有争议的，或者被表述为一个方案而非一个需求时。</li><li>你想要一份持久、可检查的工件（规格说明、验收标准、待决问题），让下游的智能体和人类都能据此工作时。</li><li>智能体持续产出貌似合理却错误的输出，因为没有人赶在执行前钉死成功标准时。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+flowchart TD
+    A["专用工具清单不断膨胀（Sprawling tool catalog）"] --> B["定义挤占上下文，选择错误上升（Context cost and misselection）"]
+    B --> C{"工具集超出可推理范围？（Beyond reliable reasoning?）"}
+    C -- "是" --> D["注册单个代码执行器（One code executor）"]
+    C -- "否" --> A
+    D --> E["代理把操作写成代码：glob、SQL、jq（Write ops as code）"]
+    E --> F{"执行环境可安全沙箱？（Safely sandboxed?）"}
+    F -- "不可：先定爆炸半径" --> G["高危操作退回受限专用工具（Typed tools for risk）"]
+    F -- "可" --> H["描述成本固定：全部操作共用一份定义（One definition for all ops）"]
+    H --> I["上下文预算回归工作内容（Context freed for work）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,H core;
+    class C,F gate;
+    class A,G,I out;

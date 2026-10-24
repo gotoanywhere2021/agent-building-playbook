@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,25 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-cost-routing">成本路由（cost-routing）</a><span class="sep">›</span><span class="here">按阶段匹配模型</span></nav>
-<h1>按阶段匹配模型</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Match Model to Stage</p><p class="lede">工作流的不同阶段应匹配不同能力档位的模型——贵模型路由到复杂推理阶段，便宜模型到机械执行阶段，别弄反。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>按阶段匹配模型</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Match Model to Stage</p><p class="lede">工作流的不同阶段应匹配不同能力档位的模型——贵模型路由到复杂推理阶段，便宜模型到机械执行阶段，别弄反。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;多阶段流水线（Multi-stage pipeline）&quot;] --&gt; B[&quot;逐阶段评估认知负荷（Assess per-stage demand）&quot;]
+    B --&gt; C{&quot;该阶段的最低充分档位？（Minimum sufficient tier）&quot;}
+    C -- &quot;高风险推理：需求综合 / 架构决策&quot; --&gt; D[&quot;最强模型（Most capable tier）&quot;]
+    C -- &quot;机械任务：解析 / 分类 / 格式化&quot; --&gt; E[&quot;最便宜的合格模型（Cheapest sufficient）&quot;]
+    C -- &quot;评审角色&quot; --&gt; F[&quot;与实现者不同的模型家族（Different family）&quot;]
+    D --&gt; G[&quot;最小充分模型原则（Minimum sufficient model）&quot;]
+    E --&gt; G
+    F --&gt; G
+    G --&gt; H{&quot;审计成本与质量（Audit cost and quality）&quot;}
+    H -- &quot;机械档出错：其实更敏感&quot; --&gt; I[&quot;回调该阶段档位（Raise tier）&quot;]
+    H -- &quot;合格&quot; --&gt; J[&quot;同等质量、更低成本（Same quality, lower cost）&quot;]
+    I -. &quot;重新校准分档&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,F,G,J core;
+    class C,H,I gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>每条多阶段 AI 流水线都混合着不同任务类型：有些阶段需要深度推理、细腻判断或创造性综合；另一些是机械性的——解析、分类、格式化、抽取、路由决策。把所有阶段一视同仁、全部跑在最强大（也最昂贵）的模型上，并不是保守的选择——而是浪费：它通常不会让机械阶段的产出变得更好，却让成本随任务数线性膨胀。本模式是把每个阶段的认知需求映射到合适的模型档位。高风险的推理阶段——评估含糊的需求、综合相互冲突的证据、做架构决策——值得用最强的模型。机械阶段——从格式良好的输入中抽取结构化字段、重排输出格式、把请求归入已知分类——可以交给一个快速、便宜的模型而不损失质量。对每个阶段的校准问题不是『我们手里有哪个模型？』，而是『在这里能产出可接受结果的最低能力档位是什么？』在每个阶段运行恰好够用的模型不是妥协，而是正确的工程决策。</p>
 <p>按阶段路由模型常被框定为省钱手段，它确实省钱——但更深层的理由是：分配给某个角色的模型塑造了该角色的行为方式，这让路由成为一个关于工作流本身的设计决策。典型角色图中的每个角色需要不同类型的模型：</p>
 <table><thead><tr><th>角色</th><th>模型选择模式</th></tr></thead><tbody><tr><td><strong>规划者（Planner）</strong></td><td>当跨整个任务的全局连贯性重要时，用更强、更贵的模型。</td></tr><tr><td><strong>执行者（Executor）</strong></td><td>结构已定、范围清晰时，用更便宜或更快的模型做实现。</td></tr><tr><td><strong>评审者（Reviewer）</strong></td><td>选与实现者*不同*的模型家族，以减少共享盲区。</td></tr><tr><td><strong>批评者（Critic）</strong></td><td>对抗性框架、全新上下文或多个模型——独立性才是目的。</td></tr><tr><td><strong>摘要者（Summarizer）</strong></td><td>输出有界且结果在下游被校验时，用更便宜的模型。</td></tr><tr><td><strong>研究者（Researcher）</strong></td><td>具备检索、浏览或大上下文窗口的模型或工具。</td></tr></tbody></table>
@@ -412,5 +438,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

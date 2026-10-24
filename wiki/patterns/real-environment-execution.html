@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-observability">可观测性（observability）</a><span class="sep">›</span><span class="here">在真实环境跑真实负载</span></nav>
-<h1>在真实环境跑真实负载</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Run Real Workloads in Their Proper Environment</p><p class="lede">在模拟或沙箱环境里跑负载的智能体只会发现模拟的问题——想要真实答案，就在真实的地方跑真实的东西。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>在真实环境跑真实负载</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Run Real Workloads in Their Proper Environment</p><p class="lede">在模拟或沙箱环境里跑负载的智能体只会发现模拟的问题——想要真实答案，就在真实的地方跑真实的东西。</p><div class="meta"><span class="chip solid" title="observability">可观测性（observability）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;待验证的部署或变更（Deployment to verify）&quot;] --&gt; B{&quot;在哪里运行工作负载？（Where does it run?）&quot;}
+    B -- &quot;mock 或本地近似&quot; --&gt; C[&quot;测的是 mock 而非系统（You tested the mock）&quot;]
+    B -- &quot;场景具破坏性：生产库 / 资金 / 共享设施&quot; --&gt; D[&quot;结构等价的隔离预发（Structurally identical staging）&quot;]
+    B -- &quot;真实环境可直接用&quot; --&gt; E[&quot;在真实系统执行真实负载（Run in the real place）&quot;]
+    C --&gt; F[&quot;模拟出的自信，不是知识（Confidence, not knowledge）&quot;]
+    D --&gt; G[&quot;真实拓扑、真实版本、真实负载下暴露问题（Real issues surface）&quot;]
+    E --&gt; G
+    G --&gt; H[&quot;以承载真实信息的证据支撑判断与发布（Evidence-bearing ground truth）&quot;]
+    F -. &quot;临时结果标记为暂定，尽早换真实环境复跑&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G,H core;
+    class B,C,F gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>一个对着 mock、stub 或缩水的本地仿制品来测试部署的 agent，并不是在测试部署——它在测试 mock。环境是承重结构（load-bearing）。生产系统依赖特定的网络拓扑、真实的服务版本、实际的资源约束、真实的延迟，以及一个已连续运行数月的系统所累积的配置漂移。这些没有一样会出现在模拟中。在恰当环境中执行负载的 agent 会发现任何其他上下文都不可见的问题：低负载下正常、真实并发下崩溃的服务；真实机器上存在而 CI 镜像中不存在的文件路径；某个次要更新中改变了形状、而其测试替身（test double）从未同步的 API 响应。在恰当环境中运行负载不是偏好——它是生成携带着真实系统信息的证据的唯一途径。模拟运行产生信心，不产生知识。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>验证一个部署真的在服务流量时：让一个真实请求穿过真实技术栈，而不是对『服务已启动』做合成断言。</li><li>性能特征重要时：在目标环境之外跑的基准测试，测量的是错误的机器、错误的内存总线和错误的争用模式。</li><li>服务间集成是问题所在时：集成问题在真实网络中显形，而不是在绕过序列化、认证与路由的本地 mock 里。</li><li>调试生产故障时：在与生产匹配的环境中复现故障。在本地开发环境中诊断生产崩溃是假设生成，不是调试。</li><li>评估 agent 的工具输出时：如果 agent 的工具运行了一条命令，这条命令应当对着真实目标系统运行——而不是本地近似——其输出才能用于决策。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

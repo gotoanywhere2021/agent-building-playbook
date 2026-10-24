@@ -1,0 +1,16 @@
+flowchart TD
+    A["多代理并行，产出洪流（Many agents, a flood of output）"] --> B["过载症状（Symptoms）：待审积压、状态不明、『已完成』无证据、token 花费与价值脱钩"]
+    B --> C["换框架：注意力是最须管理的稀缺资源（A managed scarce resource）"]
+    C --> D["像预算算力一样预算注意力（Budget attention deliberately）"]
+    D --> E{"此处判断是真正的约束吗？（Is judgment the constraint here?）"}
+    E -- "是：高利害判断" --> F["人的目光投向改变结果之处（Gaze where it changes the outcome）"]
+    E -- "否：可机械判定或低利害" --> G["用界面过滤、汇总、排序，别惊动人（Filter, summarize, prioritize）"]
+    F --> H["判断落在刀刃上（Judgment where it counts）"]
+    G --> H
+    H -. "腾出的注意力再分配" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class E gate;
+    class A,B,H out;

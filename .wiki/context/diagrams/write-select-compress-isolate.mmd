@@ -1,0 +1,17 @@
+flowchart TD
+    A["上下文管理出问题了？（Context problem?）"] --> B{"症状是哪一种？（Which symptom?）"}
+    B -- "跨会话丢状态" --> C["写：中间产物落成持久工件（Write to a persistent artifact）"]
+    B -- "可用材料太多" --> D["选：只取当前步骤相关的切片（Select the relevant slice）"]
+    B -- "上下文持续膨胀" --> E{"内容须亲历过程，还是只需结果？（Process or outcome?）"}
+    E -- "只需结果" --> F["隔离：细节交给新鲜子智能体，只回传结果（Isolate into a sub-agent）"]
+    E -- "过程要留在本窗内但太长" --> G["压缩：把冗长内容提炼为保信号的摘要（Compress to a dense summary）"]
+    C --> H["上下文管线 = 四种动作的有序组合（Pipeline as ordered moves）"]
+    D --> H
+    F --> H
+    G --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class B,E gate;
+    class A,H out;

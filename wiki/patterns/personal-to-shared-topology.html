@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,29 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-meta-principles">元原则（meta-principles）</a><span class="sep">›</span><span class="here">从个人工作流到共享运营模型</span></nav>
-<h1>从个人工作流到共享运营模型</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">From Personal Workflow to Shared Operating Model</p><p class="lede">工程师个人的强大工作流无法自动组合成团队运营模型，局部最优的智能体方案还可能违反战略与共同品味；组织需要共享工件、评审规范、可观测性与模式。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>从个人工作流到共享运营模型</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">From Personal Workflow to Shared Operating Model</p><p class="lede">工程师个人的强大工作流无法自动组合成团队运营模型，局部最优的智能体方案还可能违反战略与共同品味；组织需要共享工件、评审规范、可观测性与模式。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;个人高效工作流（Personal workflows）：各自的提示与习惯&quot;] --&gt; B{&quot;个人实践能否组合？（Does it compose?）&quot;}
+    B -- &quot;否：十二座孤岛&quot; --&gt; C[&quot;不可评审、不可传承、不可治理（Unreviewable islands）&quot;]
+    C --&gt; D[&quot;局部最优悄悄违背组织策略（Local optimum vs org strategy）&quot;]
+    B -- &quot;是：各自已证明有效&quot; --&gt; E[&quot;在其上构建共享拓扑（Shared topology）&quot;]
+    E --&gt; F[&quot;共享工件（Shared artifacts）：规格 / 计划 / 决策 / 日志&quot;]
+    E --&gt; G[&quot;共享评审规范（Review norms）&quot;]
+    E --&gt; H[&quot;共享可观测性（Observability）&quot;]
+    E --&gt; I[&quot;共享模式库（Pattern library）：含失败模式&quot;]
+    F --&gt; J[&quot;私人杠杆变成对齐的运营模型（Aligned operating model）&quot;]
+    G --&gt; J
+    H --&gt; J
+    I --&gt; J
+    J --&gt; K{&quot;是否官僚化、扼杀独创？（Over-standardized?）&quot;}
+    K -- &quot;是：对齐而非统一&quot; --&gt; L[&quot;回松标准，保留个体流派（Align, not uniform）&quot;]
+    K -. &quot;持续捕捉个人新手法入库&quot; .-&gt; I
+    L -. &quot;回到个人探索&quot; .-&gt; A
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H,I,J,L core;
+    class B,C,D,K gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>个人实践者借 agent 变得极其高效，演化出个人工作流——自己的提示词、工具、会话习惯和引导直觉——产生出色的局部结果。但个人的聪明不会自动组合成团队运营模型。十几个人各自运行私有、未成文的工作流，不是一个与 agent 协作良好的组织；而是十几座孤岛，其做法无法被评审、移交、治理或共同改进。更糟的是，agent 默认局部优化，最好的局部答案可能悄悄违反组织的战略、政策或共享品味——对某位工程师的任务最优的工作流，可能与整个系统需要去的方向相互拉扯。解法是在个人效能之上刻意构建组织拓扑（topology）：共享产物（规范、计划、决策、日志）让工作在人与人之间可携带；共享评审规范让质量成为团队属性而非个人习惯；共享可观测性让组织能看到它的 agent 在做什么、花多少；共享模式库让某人发现的有用操作手法连同其失败模式一起对所有人可用。目的不是抹平个人巧思，而是让它可组合——把私人杠杆变成一个对齐的运营模型。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当多个人各自在与 agent 的孤立协作中变得高效，而他们的做法无法被集体评审、移交或改进。</li><li>当一个局部最优的 agent 工作流持续产出偏离团队战略、政策或共享品味的结果。</li><li>当有价值的操作手法只存在于个人头脑或私人配置中——把它们捕获为带有使用指引和失败模式的共享模式。</li><li>当入职缓慢，因为没有共享运营模型可交给新人，只有一堆散落的个人工作流。</li><li>当组织无法跨人看到其 agent 在做什么、花多少——投资共享可观测性与评审规范。</li></ul>
@@ -406,5 +436,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

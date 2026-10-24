@@ -1,0 +1,16 @@
+flowchart TD
+    A["任务反复超时（Repeated timeouts）"] --> B{"调大超时？（Raise the timeout?）"}
+    B -- "不可取：延迟更高、失败更晚、掩盖分解问题" --> C["拆解任务（Decompose instead）"]
+    B -- "例外：任务真原子且不可拆" --> D["记录原因、接受例外、加监控（Document and monitor）"]
+    C --> E["切成原预算内可完成的小单元（Units within the original budget）"]
+    E --> F{"可并行？（Parallelizable?）"}
+    F -- "可" --> G["并行编排（Orchestrate in parallel）"]
+    F -- "不可" --> H["顺序编排＋检查点（Sequential with checkpoints）"]
+    G --> I["在原预算内完成（Done within budget）"]
+    H --> I
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,E,G,H core;
+    class B,F gate;
+    class A,D,I out;

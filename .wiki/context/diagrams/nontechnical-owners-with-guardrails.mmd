@@ -1,0 +1,21 @@
+flowchart TD
+    A["领域专家（Domain expert）：最懂问题的人"] --> B["Agent 代写实现（Agent implements）"]
+    B --> C{"放行线按什么划？（Who may ship?）"}
+    C -- "按头衔放行" --> D["误放：似是而非直接上线（Plausible-but-wrong ships）"]
+    C -- "按爆炸半径与可逆性（Blast radius, reversibility）" --> E["护栏体系（Guardrail system）"]
+    E --> F["脚手架与评审循环（Scaffolds + review loops）"]
+    E --> G["验收证据与回滚路径（Evidence + rollback）"]
+    E --> H["教练辅导与问责规范（Coaching + accountability）"]
+    F --> I["可安全拥有的产出（Safe ownership）"]
+    G --> I
+    H --> I
+    I --> J{"上线后出事？（Incident?）"}
+    J -- "是：回滚并收紧护栏" --> K["回滚 + 补护栏（Roll back, tighten）"]
+    J -- "否" --> L["扩大可拥有范围（Expand ownership）"]
+    K -. "重新划线" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E,F,G,H,I,K,L core;
+    class C,D,J gate;
+    class A out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-taste">品味（taste）</a><span class="sep">›</span><span class="here">自动化简单的事，远离『鬼屋』</span></nav>
-<h1>自动化简单的事，远离『鬼屋』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Automate the Easy, Avoid the Mystery House</p><p class="lede">只自动化你完全理解的部分；永远不要让自动化把你带进一个没人知道它为什么能跑的系统。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>自动化简单的事，远离『鬼屋』</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Automate the Easy, Avoid the Mystery House</p><p class="lede">只自动化你完全理解的部分；永远不要让自动化把你带进一个没人知道它为什么能跑的系统。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;想自动化的流程（Process candidate）&quot;] --&gt; B[&quot;先手写完整逻辑：输入、变换、输出、失败模式（Write the logic out first）&quot;]
+    B --&gt; C{&quot;十分钟能向旁人讲明白吗？（Explainable in 10 minutes?）&quot;}
+    C -- &quot;不能&quot; --&gt; D[&quot;先不自动化：补足理解（Understanding first）&quot;]
+    D -. &quot;理解齐了再来&quot; .-&gt; B
+    C -- &quot;能&quot; --&gt; E[&quot;放心自动化：可靠、快、可检视（Automate confidently）&quot;]
+    E --&gt; F[&quot;自动化诱惑扩展：新情况塞进没人看懂的系统（Extension invites opacity）&quot;]
+    F --&gt; G{&quot;仍能讲清它为何有效吗？（Still explainable?）&quot;}
+    G -- &quot;讲不清&quot; --&gt; H[&quot;神秘屋警报（Mystery house）：无人知其所以然，别再往上盖&quot;]
+    G -- &quot;仍能讲清&quot; -. &quot;继续安全扩展&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,G gate;
+    class A,D,F,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>自动化是理解的乘数。当你完全理解某件事——确切的输入、确切的变换、确切的预期输出、以及全部失败模式——并对它做自动化，你得到的是一个可靠、快速、可检查的流程，其运行成本低于手工对应物。当你对某件事并未完全理解就去做自动化，你造出的是一栋神秘屋（mystery house）：一个通过无人能解释的过程、通常正确地产出结果的系统。神秘屋会随时间生长，因为自动化招致扩展。新的用例被加进一个本就没被理解的系统；自动化照单全收，因为它对什么都『能处理』；没人去查为什么；系统变得更大、更不可理解。在智能体系统中，神秘屋格外危险，因为智能体带着自主性运行——一个神秘屋式的智能体可以长时间运行、产出看似合理的成果，同时以难以诊断的方式悄悄做错事，而这正是因为底层过程不透明。这条纪律是：在你有完整理解的领域激进地自动化，在理解不完整的领域抵制自动化。如果你不能在十分钟内把完整逻辑讲给别人听，你对它的理解还不足以让它自动化。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>考虑自动化任何非平凡流程时：先手动写出完整逻辑；写不出来，就先补齐理解再写自动化。</li><li>既有的自动化系统开始出现意外行为时：修行为之前，先验证你理解修复为何有效；一个你不理解的修复是又一层的神秘。</li><li>智能体在自动化一个工作流时：确保对任何有代表性的输入，你都能追溯它的决策；追不了，自动化就跑到了你的理解前面。</li><li>审阅他人（或某个 AI 智能体）构建的自动化时：在接受它作为依赖之前，问一句『我能完整解释它在做什么吗？』。</li><li>系统运行太久、人们已经忘了某些部分为何能工作时：把它当作待偿的债务，而不是可扩展的特性。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

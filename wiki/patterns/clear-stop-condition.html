@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">带着明确停止条件（Stop Condition）交接</span></nav>
-<h1>带着明确停止条件（Stop Condition）交接</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Hand Off With a Clear Stop Condition</p><p class="lede">没有停止条件的智能体会自己找一个——而那不会是你想要的那个。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>带着明确停止条件（Stop Condition）交接</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Hand Off With a Clear Stop Condition</p><p class="lede">没有停止条件的智能体会自己找一个——而那不会是你想要的那个。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;把任务交出去（Hand off the task）&quot;] --&gt; B[&quot;写明停止条件（Declare the stop）：产出哪个文件、哪个测试过、阈值几何、处理多少条&quot;]
+    B --&gt; C{&quot;停止条件可客观判定吗？（Objectively checkable?）&quot;}
+    C -- &quot;否&quot; --&gt; D[&quot;接收方自定终点：本地『完成』感、预算耗尽、上下文见底（Self-determined stop）&quot;]
+    D --&gt; E[&quot;失控（Open-ended）：工作膨胀填满容量，完成与否无法可靠判定&quot;]
+    E -. &quot;补写停止条件再交&quot; .-&gt; B
+    C -- &quot;是&quot; --&gt; F[&quot;到点即停（Stop at the mark）&quot;]
+    F --&gt; G[&quot;编排者可靠确认完成，接力继续（Reliable detection, clean relay）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class C gate;
+    class A,D,E,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当任务在没有定义停止条件（stop condition）的情况下，交给一个智能体、一个人或下游系统时，接收方会自行确定停止点——基于其本地的『完成』感觉、其预算、其上下文或其默认行为。那个自我决定的停止条件，几乎从不与编排者的意图对齐。清晰的停止条件精确规定什么构成完成：产出一个特定文件、一个测试通过、达到一个阈值、发出一个信号，或处理过某个显式数量的条目。没有它，交接变成开放式，工作膨胀以填满可用产能，而编排者没有可靠的办法在不重查全部输出的情况下探测完成。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>每次把任务委派给子智能体时：把停止条件写进指令，而不只写进任务描述。</li><li>设计智能体循环时：在写任何循环逻辑之前定义终止条件。</li><li>流水线步骤可能在多个点合理停下时：指明对本次调用哪一个是正确的。</li><li>交接涉及 LLM 调用时：如果不提供停止条件，LLM 会补全它自己的，而那将是某种『答案写完了』的本地概念，不是你的编排级定义。</li><li>调试一个跑得太久太远的智能体时：缺失的停止条件是最常见的根因。</li></ul>
@@ -402,5 +423,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

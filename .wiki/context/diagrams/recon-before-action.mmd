@@ -1,0 +1,13 @@
+flowchart TD
+    A["待执行任务（Task）：将修改外部状态"] --> B["只读侦察（Read-only recon）：现状·不变量·可用动作"]
+    B --> C{"地面实况与假设一致？（Ground truth matches assumption?）"}
+    C -- "不一致：更新认知" --> D["修正行动计划（Adjust the plan）"]
+    D --> B
+    C -- "一致" --> E["从已知地面执行动作（Act on known ground）"]
+    E --> F["留痕：侦察输出即审计轨迹（Recon output as audit trace）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,D gate;
+    class A,F out;

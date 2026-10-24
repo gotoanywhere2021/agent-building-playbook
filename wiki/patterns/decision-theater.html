@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">决策剧场（Decision Theater）</span></nav>
-<h1>决策剧场（Decision Theater）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Decision Theater</p><p class="lede">做一个小型交互工件——模型、模拟器、表格或情景浏览器——让干系人改假设而不是辩论抽象；如果他们不同意结论，就必须指出拒绝的是哪条假设。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>决策剧场（Decision Theater）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Decision Theater</p><p class="lede">做一个小型交互工件——模型、模拟器、表格或情景浏览器——让干系人改假设而不是辩论抽象；如果他们不同意结论，就必须指出拒绝的是哪条假设。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;抽象争论陷入僵局（Stalled abstract debate）&quot;] --&gt; B[&quot;搭一次性交互装置（Build a disposable artifact）&quot;]
+    B --&gt; C[&quot;关键假设做成滑杆：市场规模、获客、成本、监管拖累（Assumptions as sliders）&quot;]
+    C --&gt; D[&quot;利益相关方动手改输入（Stakeholders move the inputs）&quot;]
+    D --&gt; E{&quot;仍不同意结论？（Still reject the conclusion?）&quot;}
+    E -- &quot;是&quot; --&gt; F[&quot;必须指认否认哪条假设、换成什么值（Name the rejected assumption）&quot;]
+    F --&gt; C
+    E -- &quot;否&quot; --&gt; G[&quot;分歧的真实来源浮出并消解（Real disagreement surfaced）&quot;]
+    G --&gt; H[&quot;装置即弃，再投入真实构建（Discard, then build for real）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F core;
+    class E gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>决策剧场（decision theater）是一个小型交互式工件——电子表格、模型、模拟器、原型、仪表盘、游戏、模拟界面或情景探索器——它的目的不是成为最终产品，而是让潜在信念显形：让利益相关者操作假设（assumption），而不是辩论抽象概念。机制简单而有力：人们在抽象层面争论时，分歧含糊而无法化解；而当他们拿到一个输入可调的模型时，分歧被迫结构化。一个具体的例子：与其争论一个产品机会值不值得追，不如构建一个假设全是滑杆的工具——市场规模、支付意愿、获客速率、支持成本、监管阻力、实现复杂度、利润率——并邀请利益相关者改动输入；如果他们不同意结论，就不能只是反对，而必须说清他们拒绝哪个假设、打算用什么数值替代。这一步把僵持的争论变成有名有姓、可检视的输入，暴露分歧的真正来源，而且常常就此化解，因为参与者发现自己争的是一个谁都没说出口的数字。同一模式适用于产品设计、内部工具、合规、销售流程与政策——任何由信念在做决定、却没有人把信念写下来的地方。廉价的软件让这一切可行：这个工件是用完即弃的，造出来是为了激起反应，然后丢弃。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个决策在抽象分歧中停滞，没人能指出自己究竟在捍卫哪条具体信念。</li><li>一个做/不做的决断（go/no-go）依赖的是被断言而非被检视的假设（市场规模、成本、风险）。</li><li>你需要利益相关者对数字或情景作出可被追究的承诺，而不只是表达意见。</li><li>工作横跨产品、合规、销售或政策，而分歧其实关乎隐藏的输入。</li><li>你想在投入真正的构建之前，先暴露哪个假设是承重墙。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

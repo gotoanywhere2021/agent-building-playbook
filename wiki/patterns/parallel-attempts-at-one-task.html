@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,28 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">对同一任务的并行尝试</span></nav>
-<h1>对同一任务的并行尝试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Parallel Attempts at One Task</p><p class="lede">模型是非确定性的，一次尝试只是一次掷骰——对困难或质量敏感的任务，从一个检查点并行跑多个实现，然后选最好的或拼接各自最强的部分。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="cost-routing" href="../explore.html#dim-cost-routing">成本路由（cost-routing）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>对同一任务的并行尝试</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Parallel Attempts at One Task</p><p class="lede">模型是非确定性的，一次尝试只是一次掷骰——对困难或质量敏感的任务，从一个检查点并行跑多个实现，然后选最好的或拼接各自最强的部分。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="cost-routing" href="../explore.html#dim-cost-routing">成本路由（cost-routing）</a><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;同一任务 + 已提交检查点（One task, one checkpoint）&quot;] --&gt; B{&quot;单次成功率是否够高？（Single roll enough?）&quot;}
+    B -- &quot;可靠成功&quot; --&gt; C[&quot;单次实现即可（Single attempt）&quot;]
+    B -- &quot;困难或质量敏感&quot; --&gt; D[&quot;分叉隔离工作区（Fork worktrees）&quot;]
+    C -. &quot;若单次反复失败：升级为并行掷骰&quot; .-&gt; D
+    D --&gt; E[&quot;并行实现三到五路（3 to 5 parallel attempts）&quot;]
+    E --&gt; F[&quot;尝试一（Attempt 1）&quot;]
+    E --&gt; G[&quot;尝试二（Attempt 2）&quot;]
+    E --&gt; H[&quot;尝试三（Attempt 3）&quot;]
+    F --&gt; I{&quot;全部评审（Review all）&quot;}
+    G --&gt; I
+    H --&gt; I
+    I -- &quot;有整体最优&quot; --&gt; J[&quot;选最优（Pick best）&quot;]
+    I -- &quot;各有最强部件&quot; --&gt; K[&quot;拼接最强部分（Splice best parts）&quot;]
+    J --&gt; L[&quot;用廉价 token 换昂贵的人力时间（Tokens for human time）&quot;]
+    K --&gt; L
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,J,K core;
+    class B,I gate;
+    class A,C,L out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>模型的输出是一次掷骰子；如果你需要一个三点而第一把很少掷出来，就多掷几颗骰子。并行尝试（parallel attempts）从共享检查点同时把同一任务运行多次——保存计划并提交，分叉到独立的工作目录（git worktree 或等价物），同时启动多个实现，然后逐一评审，要么挑出最好的，要么把各次尝试中最强的部分拼接起来。这是刻意用便宜的 token 去交换不便宜的人类时间和墙钟时间。它服务两种不同模式。作为*失败缓解*：当方法不确定、任何单次尝试都可能失败时，并行跑三到五次意味着你从成功的那次继续前进，而不是把一连串死路逐个调试。作为*解空间探索*：当质量比速度更重要时，几个可工作的版本让你比较真正不同的方法，并把各自最好的部分嫁接到一起——这对 UI、游戏机制、设计这类开放式工作尤其强大，在那里『正确』是一个区间，多样性本身就是目的。要紧的是区分：这不是把相互独立、*彼此不同*的子任务扇出（fan-out）去省墙钟时间——这里的尝试是刻意冗余的，价值在于选择与重组，而不是分工。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当任务很难或正确方法不确定、单次尝试成败各半——并行跑几次，从成功的那次继续。</li><li>当质量比速度重要且解空间宽广（UI、设计、游戏机制、一切创造性工作）——生成多样性并组合最好的部分。</li><li>当调试一次失败尝试的成本超过再启动几次新尝试——重掷（reroll）而不是修理。</li><li>当你能廉价地隔离各次尝试（worktree、分支、独立沙箱），使并行实现互不相撞。</li></ul>
@@ -406,5 +435,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

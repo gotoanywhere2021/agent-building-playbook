@@ -24,6 +24,8 @@
   - 全站中文（关键词括注英文）：中文文案层 `.wiki/context/zh.json`
     （标题/摘要）+ 中文正文层 `.wiki/context/zh-bodies/{slug}.md`
     （详情页中文为主，英文原文折叠保留）；
+  - 每个模式配一张产品经理风格图解（架构图/流程图，Mermaid 手写层
+    `.wiki/context/diagrams/{slug}.mmd`，自托管渲染库、整站离线可用）；
   - `wiki/explore.html` 从原版的旭日轮盘改为目录浏览器（中英双语即输即筛）；
   - 发布器校验导航树与 `patterns/` 的一致性，漂移即失败。
 

@@ -1,0 +1,14 @@
+flowchart TD
+    A["把任务交出去（Hand off the task）"] --> B["写明停止条件（Declare the stop）：产出哪个文件、哪个测试过、阈值几何、处理多少条"]
+    B --> C{"停止条件可客观判定吗？（Objectively checkable?）"}
+    C -- "否" --> D["接收方自定终点：本地『完成』感、预算耗尽、上下文见底（Self-determined stop）"]
+    D --> E["失控（Open-ended）：工作膨胀填满容量，完成与否无法可靠判定"]
+    E -. "补写停止条件再交" .-> B
+    C -- "是" --> F["到点即停（Stop at the mark）"]
+    F --> G["编排者可靠确认完成，接力继续（Reliable detection, clean relay）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class C gate;
+    class A,D,E,G out;

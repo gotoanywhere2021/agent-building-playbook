@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">设计智能体循环（Loop）是核心技能</span></nav>
-<h1>设计智能体循环（Loop）是核心技能</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Designing the Agentic Loop Is the Core Skill</p><p class="lede">智能体系统的质量几乎完全由其循环设计决定——感知、决策、行动，以及进入下一轮之前如何验证。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>设计智能体循环（Loop）是核心技能</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Designing the Agentic Loop Is the Core Skill</p><p class="lede">智能体系统的质量几乎完全由其循环设计决定——感知、决策、行动，以及进入下一轮之前如何验证。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;构建代理系统（Building an agent）&quot;] --&gt; B[&quot;先画循环再写代码（Design the loop before code）&quot;]
+    B --&gt; C[&quot;感知：模型能看见什么（Perceive）&quot;]
+    C --&gt; D[&quot;决策：选下一个动作（Decide）&quot;]
+    D --&gt; E[&quot;行动：调用工具、改变状态（Act）&quot;]
+    E --&gt; F{&quot;验证：结果符合预期？（Verify — the most omitted stage）&quot;}
+    F -- &quot;失败：走恢复路径&quot; --&gt; G[&quot;恢复或修正（Recover）&quot;]
+    F -- &quot;通过&quot; --&gt; H{&quot;达到停止条件？（Stopping condition?）&quot;}
+    G --&gt; C
+    H -- &quot;否&quot; --&gt; C
+    H -- &quot;是&quot; --&gt; I[&quot;可靠收尾（Reliable completion）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,E,G core;
+    class F,H gate;
+    class A,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体系统不是一条提示词——它是一个循环（loop）。这个循环决定智能体能感知什么（能访问哪些工具与上下文）、做什么决策（下一步采取哪个动作）、产生什么效果（调用什么工具、改变什么状态），以及如何在继续之前验证。设计好循环，意味着在写任何代码之前把这四个要素都显式化。设计糟糕的循环以可预测的方式失败：智能体看不见正确决策所需的信息，没有机制发现某个决策错了，也无法在动作产生意外结果时优雅恢复。大多数智能体失败都是循环失败——感知阶段给了错误的信息、缺一个验证步骤、或出错时没有恢复路径。在实现之前显式地设计循环，正是把可靠智能体系统与只在正常路径（happy path）上才成功的系统区分开来的技能。验证步骤是最常被省略的——没有验证的循环会产出这样的智能体：带着未经核实的假设自信前进，直到累积的错误多到肉眼可见地失败。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>实现任何智能体系统之前——在写代码之前，把感知、决策、动作与验证各阶段设计成一张图或书面规格（spec）。智能体在每个决策点有什么信息？验证失败时智能体做什么？</li><li>调试失败的智能体工作流时——把循环显式画出来，识别哪个阶段在产生失败。循环一画出来，大多数失败都能定位到单一阶段。</li><li>给现有智能体添加新能力时——识别新能力属于哪个阶段、它如何与验证阶段交互。不要不更新循环设计就添加工具或动作。</li><li>智能体在简单案例上表现良好、在复杂案例上失败时——循环缺了一个只在输入不平凡时才要紧的阶段或验证。</li><li>把系统移交给新团队时——循环图是最有用的文档工件（artifact），因为它记录的是系统实际在做什么，而不是原本打算做什么。</li></ul>
@@ -402,5 +426,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

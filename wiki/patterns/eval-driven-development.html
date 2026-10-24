@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-verification">验证（verification）</a><span class="sep">›</span><span class="here">评估（Eval）驱动开发</span></nav>
-<h1>评估（Eval）驱动开发</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Eval-Driven Development</p><p class="lede">先建评估再建功能——你无法改进不能度量的东西，也无法信任没有定义度量的改进。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>评估（Eval）驱动开发</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Eval-Driven Development</p><p class="lede">先建评估再建功能——你无法改进不能度量的东西，也无法信任没有定义度量的改进。</p><div class="meta"><span class="chip solid" title="verification">验证（verification）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;能力需求（Capability Idea）&quot;] --&gt; B[&quot;先定义评估（Define the eval）&quot;]
+    B --&gt; C[&quot;构建评估装置（Eval harness）&quot;]
+    C --&gt; D[&quot;实现能力（Implement）&quot;]
+    D --&gt; E{&quot;评估通过？（Pass?）&quot;}
+    E -- &quot;未通过：回到实现&quot; --&gt; D
+    E -- &quot;通过&quot; --&gt; F[&quot;上线（Ship）&quot;]
+    F --&gt; G[&quot;评估常备（Standing capability）：随每次变更重跑&quot;]
+    G -. &quot;回归发现退化&quot; .-&gt; D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E gate;
+    class A,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>评估驱动开发（eval-driven development，EDD）把测试驱动开发（test-driven development）的纪律应用到智能体与基于 LLM 的系统上：先定义评估（eval）标准，再构建按这些标准进行度量的评估装置（eval harness），然后实现该能力直至通过。评估就是可执行的规格说明。没有评估，能力开发只能靠直觉和非正式检查——开发者运行系统，看看输出，然后判定『看起来是对的』。这在演示时可行，规模化时失效，因为『看起来是对的』既无法自动化，也无法可复现地度量，更无法在模型变更、提示词变更或数据分布漂移之下持续跟踪。评估让改进变得可辨：你可以说『这次改动把测试集上的成功率从 71% 提到了 84%』，而且是当真的。评估也让回归可见：破坏了此前已通过评估的改动会立刻显形，而不是等到生产环境才被发现。先写评估迫使开发者具体地定义成功——这与先写测试迫使接口设计具体化是同一种纪律。如果写不出评估，说明你还不知道这个能力究竟要做什么。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在构建任何将由人类判断来衡量的能力之前——先把那个判断转化为自动化评估，再写能力。若无法自动化，至少为人类评估者定义一个结构化评分细则（rubric）。</li><li>当要做一个本应提升质量的提示词改动时——在改动之前、而非之后，写好能检测到该提升的评估。否则你无法区分真实改进与换个方向的退步。</li><li>升级到新模型版本之前——先让现有的评估跑一遍新模型。不要假设升级就是改进；去度量它。</li><li>当某个在开发环境正常的能力在生产环境失效时——先构建一个能复现该失败的评估，再尝试修复。没有复现评估的修复，可能修的是错误的对象。</li><li>当团队对某个改动是否算改进存在分歧时——评估用证据解决分歧。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

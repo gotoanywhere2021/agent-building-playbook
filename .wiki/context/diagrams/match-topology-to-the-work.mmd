@@ -1,0 +1,23 @@
+flowchart TD
+    A["新工作流启动（New workstream）"] --> B{"四项判据（Four criteria）：失败代价 / 意图清晰度 / 工作量 / 可重复性"}
+    B -- "小任务、一次性、探索" --> C["一次性提示（One-shot prompt）"]
+    B -- "目标清晰、中等模糊" --> D["斜杠目标循环（Slash-goal loop）"]
+    B -- "可重复的人形流程" --> E["技能驱动（Skill workflow）"]
+    B -- "多阶段、可分离验证" --> F["图工作流（Graph workflow）"]
+    B -- "大型计划、多子代理长监督" --> G["层级组织 / 工作室（Hierarchy / Studio）"]
+    C --> H{"运行中校验匹配（In-flight check）"}
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    H -- "过重：token 烧穿、装置难养" --> I["降一档（Drop a tier）"]
+    H -- "过轻：似是而非、无状态可查" --> J["加一档结构（Add structure）"]
+    H -- "匹配" --> K["由工作而非习惯选择拓扑（The work picks the topology）"]
+    I -. "重新评估" .-> B
+    J -. "重新评估" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F,G,K core;
+    class B,H,I,J gate;
+    class A out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">只在论证充分时增加自主性（Autonomy）</span></nav>
-<h1>只在论证充分时增加自主性（Autonomy）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Add Autonomy Only When Justified</p><p class="lede">给智能体的每一分自主性都要用相称的监督来支付——只有当成本收益算得清且为正时才加。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>只在论证充分时增加自主性（Autonomy）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Add Autonomy Only When Justified</p><p class="lede">给智能体的每一分自主性都要用相称的监督来支付——只有当成本收益算得清且为正时才加。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;候选自主权限（Candidate autonomy）&quot;] --&gt; B[&quot;默认零自主，逐档申请（Start at zero, add one degree at a time）&quot;]
+    B --&gt; C{&quot;该任务类型有实证可靠记录吗？（Demonstrated reliable?）&quot;}
+    C -- &quot;没有：只是『应该没问题』&quot; --&gt; D[&quot;维持监督（Keep oversight）&quot;]
+    C -- &quot;有实证&quot; --&gt; E{&quot;动作可逆，或监督能拦住错误？（Reversible or guarded?）&quot;}
+    E -- &quot;否&quot; --&gt; F[&quot;不可逆动作一律人工确认（Human confirms the irreversible）&quot;]
+    E -- &quot;是&quot; --&gt; G[&quot;按档授权，持续验证（Grant that degree, keep verifying）&quot;]
+    G -. &quot;例行任务会以非常规方式失败：变更后回撤重验&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,G core;
+    class C,E gate;
+    class A,D,F out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体系统中的自主性（autonomy）不是免费的。你给智能体的每一项免于人类审阅即可行动的能力，都为未审阅的错误开辟出暴露面。你添加的每一处让智能体自行重试的循环，都为失控行为开辟出暴露面。你授予的每一项无需确认即可调用外部 API 或修改状态的权限，都为不可逆错误开辟出暴露面。自主性是一笔成本，必须用经已验证行为挣得的信任、相称的监督（oversight）、以及尽可能可逆的动作来偿付。正确的姿态是：默认不给自主性，当收益被证明、风险被管理时才增量添加。『被证明』意味着智能体在该类任务上表现出过可靠行为，而不是设计者相信它应当可靠。『风险被管理』意味着自主执行的动作要么可逆，要么已就位能在错误复利之前将其捕获的监督机制。最常见的失败模式是『因为技术上可行』『因为看起来高效』『因为任务类型看起来常规』而授予自主性。常规任务会以非常规的方式失败；恰恰是设计者没有预料到的那些情况，自主行为最容易出错。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>某类任务在大量相似输入上表现出过可靠行为、失败模式已被充分刻画且可逆——这才是自主处理有正当理由的情形。</li><li>任务高频、低方差，且人工审阅成本超过预期错误成本——算术站在自主性一边，但前提是方差已被测量，而非假设。</li><li>自主智能体将采取的每个动作都能在短窗口内回退——可逆性把不可逆的错误变成可恢复的错误，大幅降低一次错误决定的代价。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

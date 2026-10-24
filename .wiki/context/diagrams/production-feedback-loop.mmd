@@ -1,0 +1,21 @@
+flowchart TD
+    A["生产信号（Signals）：支持消息 / 事故 / 指标异常 / 用户报告"] --> B["Agent 分诊（Triage）：对照已知问题与近期变更"]
+    B --> C{"可行动？（Actionable?）"}
+    C -- "否：噪音" --> Z["沉淀进知识库（Knowledge base）"]
+    C -- "是" --> E{"风险等级？（Risk level?）"}
+    E -- "高风险" --> F["人工深度判断（Deep human review）"]
+    E -- "低风险" --> G["开分支提出修复（Propose fix on branch）"]
+    G --> H["验证工作流（Validation runs）"]
+    H --> I{"按风险人工审批（Risk-gated approval）"}
+    I -- "拒绝" --> G
+    I -- "批准" --> K["特性开关 / 灰度发布（Flag / staged rollout）"]
+    K --> L{"原信号消失了吗？（Signal cleared?）"}
+    L -- "未消失" --> G
+    L -- "消失" --> Z
+    Z -. "同类问题下次更快识别" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F,G,H,K core;
+    class C,E,I,L gate;
+    class A,Z out;

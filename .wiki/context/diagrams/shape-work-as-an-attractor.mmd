@@ -1,0 +1,15 @@
+flowchart TD
+    A["多阶段智能体工作流（Multi-stage agentic workflow）"] --> B["把期望结果雕成碗底（Carve the bowl）：让正确状态成为稳定平衡点"]
+    B --> C["布设反馈边（Wire feedback edges）：审查退回实现·测试失败触发诊断·矛盾触发修订"]
+    C --> D["模型运行并可能漂移（Model drifts）：产出貌似合理但错误的结果"]
+    D --> E{"有无反馈边把它拉回？（Converge back?）"}
+    E -- "拉回：交还能修复它的阶段" --> D
+    E -- "反复失败" --> F["升级给人或触发复盘（Escalate or postmortem），而非无限重试"]
+    E -- "收敛到接受态" --> G["以收敛论成败（Judge by convergence），不看步骤是否报完成"]
+    D -. "幂等且可续跑：重跑收敛而非滚雪球" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,F gate;
+    class A,G out;

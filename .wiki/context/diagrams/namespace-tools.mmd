@@ -1,0 +1,21 @@
+flowchart TD
+    A["工具集（Tool set）"] --> B{"工具多且名称易混？（Ambiguity risk?）"}
+    B -- "两三个且用途分明" --> C["无需命名空间（Skip namespacing）"]
+    B -- "五个以上或名称含糊" --> D["统一命名空间前缀（Namespace prefix）：file_read / file_write"]
+    D --> E["描述写成契约（Description as contract）"]
+    E --> F["何时调用本工具（When to call）"]
+    E --> G["何时不该调用，改用哪个邻近工具（When NOT, point to alternative）"]
+    E --> H["输出长什么样（Output shape）"]
+    F --> I["模型按名分类、按描述消歧（Reliable selection）"]
+    G --> I
+    H --> I
+    I --> J{"仍出现选错工具的调用？（Wrong calls persist?）"}
+    J -- "是" --> K["以模型视角重读描述，补排除语（Rewrite as the model）"]
+    J -- "否" --> L["可靠的工具选择（Reliable tool use）"]
+    K -. "回到描述打磨" .-> E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H,I,L core;
+    class B,J,K gate;
+    class A,C out;

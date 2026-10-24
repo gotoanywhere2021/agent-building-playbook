@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,23 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-human-factors">人因（human-factors）</a><span class="sep">›</span><span class="here">杠杆（Leverage）优于效率（Efficiency）</span></nav>
-<h1>杠杆（Leverage）优于效率（Efficiency）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Leverage Over Efficiency</p><p class="lede">把 AI 框成效率，问的是『同样的事用更少的人』；框成杠杆，问的是『同样的人如何更大规模地构建、探索与运营』——杠杆才是高阶实践者实际在用的框架。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>杠杆（Leverage）优于效率（Efficiency）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Leverage Over Efficiency</p><p class="lede">把 AI 框成效率，问的是『同样的事用更少的人』；框成杠杆，问的是『同样的人如何更大规模地构建、探索与运营』——杠杆才是高阶实践者实际在用的框架。</p><div class="meta"><span class="chip solid" title="human-factors">人因（human-factors）</span><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;战略提问（Strategy）：Agent 到底为了什么&quot;] --&gt; B{&quot;框架选择（Frame choice）&quot;}
+    B -- &quot;效率（Efficiency）：同样的事用更少的人&quot; --&gt; C[&quot;任务级替代与成本削减（Task replacement）&quot;]
+    B -- &quot;杠杆（Leverage）：同样的人做更大的事&quot; --&gt; D[&quot;构建新运营面（New operating surfaces）&quot;]
+    C -. &quot;边际收益见顶后切换框架&quot; .-&gt; B
+    D --&gt; E[&quot;Agent 管理 Agent、为 Agent 造工具、夜间流水线（Agents for agents, tools, pipelines）&quot;]
+    E --&gt; F[&quot;规模化产出：人力尺度下不可能的新工作（Previously impossible work）&quot;]
+    F --&gt; G{&quot;底层判断与品味是否配得上放大？（Is the steering sound?）&quot;}
+    G -- &quot;否&quot; --&gt; H[&quot;先校准判断，再放大（Calibrate first）&quot;]
+    G -- &quot;是&quot; --&gt; I[&quot;人的角色更重要：每个判断的爆炸半径变大（Judgment matters more）&quot;]
+    H -. &quot;校准后重新放大&quot; .-&gt; E
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,I core;
+    class B,G gate;
+    class A,C,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>关于 agent 的用途存在两个战略框架，选择哪个会塑造此后的一切。效率（efficiency）框架问的是：如何用更少的人做同样的工作？杠杆（leverage）框架问的是：同样的人如何构建更多、探索更多、现代化更多、在更大规模上运转？对任何试图增长、竞争或转型的组织，杠杆框架更有用，而且它更准确地描述了先进实践者已经在做的事情。他们不是在做一比一的任务替换；他们正在创造此前不存在的新运营面（operating surfaces）——管理其他 agent 的 agent、专门为 agent 使用而构建的工具、通宵运行的工作流、从会议转录（transcript）中挖掘知识的系统、语义迁移（semantic-porting）流水线、对抗式评审小队、生产反馈回路。这些没有一样是『同样的工作，更便宜』。它们是此前在人力规模下不可能完成的新工作。其反直觉的推论是：人的角色变得更重要，而不是更不重要——当 agent 吸收了执行工作，每一次人类判断的波及半径（blast radius）都在扩大，因此驾驭这套系统的人的素质，比他们亲手敲实现时更加重要。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>制定 AI 战略时：在『用更少的人做同样的事』与『同样的人做远多于从前的事』之间做刻意选择，并留意你的路线图和指标悄悄预设了哪个框架。</li><li>当实践者的个人吞吐量已经饱和，下一步增益来自构建能在其睡觉时运转的工具、agent 和工作流。</li><li>决定投资方向时：优先构建新的运营面（为 agent 造 agent、通宵流水线、评审小队），而不是从既有任务上抠边际成本。</li><li>论证编制或评判『AI 成熟度』时，把问题从省下的成本重构为解锁的规模、范围与雄心。</li><li>当资深人员是瓶颈时：让他们的判断跨越许多工作流发挥作用，而不是要求他们更快地完成同样数量的工作。</li></ul>
@@ -406,5 +430,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

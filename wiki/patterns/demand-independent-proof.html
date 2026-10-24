@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">要独立证据（Proof），不要状态汇报</span></nav>
-<h1>要独立证据（Proof），不要状态汇报</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Demand Independent Proof, Not a Status Report</p><p class="lede">智能体自称成功只是一个假设——在你持有不再来自该智能体自身的证据之前，把它当假设对待。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>要独立证据（Proof），不要状态汇报</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Demand Independent Proof, Not a Status Report</p><p class="lede">智能体自称成功只是一个假设——在你持有不再来自该智能体自身的证据之前，把它当假设对待。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;代理宣称『已完成』（Agent claims done）&quot;] --&gt; B{&quot;证据来自谁？（Who produced the evidence?）&quot;}
+    B -- &quot;来自代理自述：只是信心不是证据&quot; --&gt; C[&quot;不接受（Not accepted）&quot;]
+    B -- &quot;来自外部源&quot; --&gt; D[&quot;查验证明物（Inspect the proof artifact）&quot;]
+    C --&gt; D
+    D --&gt; E[&quot;测试、视觉 diff、录屏、日志、人工验收（Tests, diffs, video, logs, sign-off）&quot;]
+    E --&gt; F{&quot;证明物持久且可查证？（Durable and inspectable?）&quot;}
+    F -- &quot;否&quot; --&gt; D
+    F -- &quot;是&quot; --&gt; G[&quot;验收成立（Claim established）&quot;]
+    G --&gt; H[&quot;信任可复核，无需重新推导（Institutional memory kept）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E core;
+    class B,F gate;
+    class A,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>当智能体或流水线（pipeline）步骤报告成功时，这份报告是来自最希望显得成功的实体的自证。独立证明（independent proof）意味着成功的证据来自一个不由智能体产出的来源：写到磁盘上、可被另一个进程读取的文件，一次全新调用（invocation）下通过的测试套件，一个消费了输出并予以确认的下游系统，或者一个亲自运行了验证命令的人。这个区分之所以要紧，是因为智能体会幻觉式地宣称完成、误读自己的输出，并把『我尝试了这个动作』与『这个动作成功了』混为一谈。要求独立证明在结构上打破这种混淆——验证路径不再经过声称者本身。</p>
 <p>更深一层的重构是：要证据，不要信心。模型说『这做完了』不是证据——那是信心（confidence），便宜且与真相无关。评审者说『看起来不错』可能也不够，因为一瞥不是检视。智能体系统真正需要的是证明工件（proof artifact）：持久、可检视的对象，能确立关于这项工作的一个具体主张，并在验收时刻之后仍然留存。有用的证明工件，以及各自确立的事实：</p>
 <ul><li><strong>测试结果</strong>——单元、集成、变异（mutation）、属性（property）、回归与端到端行为在全新运行下正确。</li><li><strong>视觉差异对比</strong>（visual diff）——UI 按预期改变了，且在其他地方没有可见的回退。</li><li><strong>前后对比视频</strong>——一个真实用户场景在真实界面上确实能走通。</li><li><strong>浏览器轨迹</strong>（browser trace）——智能体通过用户可见的路径操练了应用，而不只是代码。</li><li><strong>日志分析</strong>——运行时行为在真实执行下符合预期。</li><li><strong>性能报告</strong>——延迟、成本、吞吐或资源占用得到改善或保持在边界内。</li><li><strong>安全扫描输出</strong>——已知政策、漏洞或依赖问题被检查过。</li><li><strong>人工验收说明</strong>——一名有问责关系的相关方批准了一个高风险或含糊的决策。</li><li><strong>灰度发布状态</strong>（rollout status）——功能开关（feature flag）、金丝雀（canary）或分阶段部署在真实曝光下安全推进。</li></ul>
@@ -412,5 +435,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

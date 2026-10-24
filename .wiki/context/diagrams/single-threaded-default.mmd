@@ -1,0 +1,14 @@
+flowchart TD
+    A["新工作流设计（New workflow）"] --> B["默认单线程：一次只跑一步（One task at a time）"]
+    B --> C["步骤一完成再开步骤二，顺序推进（Step one ends, step two begins）"]
+    C --> D["trace 可自上而下读，故障点局部化（Readable trace, localized failure）"]
+    D --> E{"剖析：串行真是瓶颈？（Profile first: serialization the bottleneck?）"}
+    E -- "否：卡在 I/O 或模型响应" --> B
+    E -- "是：任务确证独立且延迟要紧" --> F["有证据才展开并行（Fan out on evidence）"]
+    F -. "并行出错：收回线性隔离故障" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class E gate;
+    class A,D out;

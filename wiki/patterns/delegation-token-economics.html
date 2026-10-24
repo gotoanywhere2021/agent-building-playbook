@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-cost-routing">成本路由（cost-routing）</a><span class="sep">›</span><span class="here">委派就是词元（Token）经济学</span></nav>
-<h1>委派就是词元（Token）经济学</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Delegation Is Token Economics</p><p class="lede">每一次委派决策都是一笔词元投资——生成与简报子智能体花费的词元，必须由『把工作移出编排器上下文预算』换来的价值所正当化。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>委派就是词元（Token）经济学</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Delegation Is Token Economics</p><p class="lede">每一次委派决策都是一笔词元投资——生成与简报子智能体花费的词元，必须由『把工作移出编排器上下文预算』换来的价值所正当化。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;编排器手上的任务（Task at the orchestrator）&quot;] --&gt; B[&quot;先算代价比（Price the decision first）&quot;]
+    B --&gt; C[&quot;委派成本＝简报＋子代理全程＋回读结果（Brief plus run plus ingest）&quot;]
+    B --&gt; D[&quot;内联成本＝自身上下文消耗＋机会成本（Inline cost plus opportunity cost）&quot;]
+    C --&gt; E{&quot;委派更便宜？（Delegation cheaper?）&quot;}
+    D --&gt; E
+    E -- &quot;是：细节繁重、结果可摘要、或可用更便宜模型&quot; --&gt; F[&quot;委派子代理（Delegate）&quot;]
+    E -- &quot;否：任务琐碎或简报过大&quot; --&gt; G[&quot;内联执行（Run inline）&quot;]
+    F --&gt; H[&quot;过程细节不进编排器上下文（Context spared the detail）&quot;]
+    G --&gt; I[&quot;省下纯开销（Overhead avoided）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,F,G core;
+    class E gate;
+    class A,H,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>委派（delegation）不是免费的。当编排器（orchestrator）生成（spawn）一个子智能体（subagent）时，它要花 token 构建简报（briefing），为子智能体的完整执行付费（包括它自己的上下文、推理与输出），然后还要再付一次，把结果消费回编排器的上下文。委派的决策始终是一次 token 支出——问题在于，相对于在编排器自己的上下文里执行这项工作，这笔支出是不是最便宜的完成方式。对短小、机械的任务，委派开销可能超过直接在行内（inline）完成的成本；对冗长、细节繁重的任务，委派几乎总是更便宜，因为它防止编排器的上下文被过程性内容塞满——这些内容在任务完成后就无关紧要了。经济模型是：当（简报成本 + 子智能体执行成本 + 结果摄取成本）&lt;（在编排器上下文中运行任务的成本 + 被消耗上下文 token 的机会成本）时委派。明确理解这个取舍可以避免两种失败模式：过度委派——编排器为琐碎小任务生成子智能体、白付开销没有收益；以及委派不足——编排器把一切都放在行内跑，耗尽上下文，随着窗口塞满无关细节而质量退化。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计多智能体流水线（pipeline）时，为每个委派决策建模其 token 经济：估算简报大小、预期子智能体成本与结果大小，并与行内执行的成本比较。</li><li>当任务的执行会产生编排器并不需要的大量中间细节——日志行、中间推理、冗长的工具输出——而委派能把这些细节完全挡在编排器上下文之外时。</li><li>在三个任务用并行子智能体跑还是按序行内跑之间做选择时——并行选项在墙钟时间（wall-clock）上可能更便宜，但每个子智能体都要付自己的上下文启动成本；先核实经济账，再默认并行委派总是更好。</li><li>当子智能体可以用比编排器更便宜的模型时——模型档位的节省可能抵过委派开销，使得即使本可行内执行的任务，委派在经济上也更优。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

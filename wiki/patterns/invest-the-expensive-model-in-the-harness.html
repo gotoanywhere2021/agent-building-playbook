@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/tooling.html">工具（Tooling）</a><span class="sep">›</span><a href="../families/tooling.html#dim-cost-routing">成本路由（cost-routing）</a><span class="sep">›</span><span class="here">把贵模型投资在护架（Harness）上</span></nav>
-<h1>把贵模型投资在护架（Harness）上</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Invest the Expensive Model in the Harness</p><p class="lede">把最强、最贵的模型花在改进护架本身——然后让便宜的模型跑更好的护架——因为更好的编排是二阶杠杆，能让弱模型更有用。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把贵模型投资在护架（Harness）上</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Invest the Expensive Model in the Harness</p><p class="lede">把最强、最贵的模型花在改进护架本身——然后让便宜的模型跑更好的护架——因为更好的编排是二阶杠杆，能让弱模型更有用。</p><div class="meta"><span class="chip solid" title="cost-routing">成本路由（cost-routing）</span><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;强模型该花在哪？（Where to spend it?）&quot;] --&gt; B{&quot;任务一次性还是反复跑？（One-shot or recurring?）&quot;}
+    B -- &quot;一次性&quot; --&gt; C[&quot;直接用强模型完成任务（Strong model on the task）&quot;]
+    B -- &quot;反复运行&quot; --&gt; D[&quot;把强模型投给装置本身（Invest in the harness）&quot;]
+    D --&gt; E[&quot;打磨提示·编排图·校验·交接工件（Sharpen prompts·graph·checks·artifacts）&quot;]
+    E --&gt; F[&quot;更好的装置（Better harness）&quot;]
+    F --&gt; G[&quot;廉价模型经由装置生产（Cheap models run through it）&quot;]
+    G --&gt; H{&quot;产出达标？（Quality holds?）&quot;}
+    H -- &quot;漂移：结构补不动&quot; --&gt; E
+    H -- &quot;达标&quot; --&gt; I[&quot;此后每次运行都受益（Every future run benefits）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B,H gate;
+    class A,C,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>模型路由（model routing）通常被讨论成一阶的成本权衡：把贵的模型放在难任务上，把便宜的模型放在易任务上，只为用到的能力付费。这个框架漏掉了一步更有力的棋。装置（harness）——编排图（orchestration graph）、提示词、技能、验证器、工件格式——本身就是贵模型能够改进的东西，而改进它会在之后的每一次运行中兑现回报。所以你不是把最强模型直接花在工作上，而是花在产生工作的系统上：让它打磨提示词、重构编排图、设计检查项、收紧交接工件，然后让更便宜的模型经由这套更好的装置去完成实际生产。这是二阶杠杆（second-order leverage）。一阶投资让一个产出变好；装置投资让之后每一个产出都变好，包括更弱模型的产出。更好的编排能让一个便宜模型在当前任务上表现得像贵模型，因为脚手架现在承载了便宜模型原本不得不自己供应的结构。贵模型最高价值的工作往往不是交付物——而是工厂。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>当工作流会运行很多次时：装置改进会摊销到之后每一次运行，所以贵模型的时间最好先花在这里。</li><li>当便宜模型差不多能行、但在结构上会漂移时——把强模型投进能供应结构的脚手架，再让便宜模型往里填。</li><li>当设计许多后续运行都会继承的提示词、技能或图节点时——用你最好的模型去写和打磨它们。</li><li>当 token 预算紧张时：一次昂贵的装置改进可以降低下游每一次运行的成本。</li><li>当你发现自己在每个单独任务上都伸手去拿贵模型时——那是杠杆在上一层的信号，在装置里。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

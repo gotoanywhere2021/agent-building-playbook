@@ -1,0 +1,14 @@
+flowchart TD
+    A["动作已执行（Action taken）"] --> B{"本会话内有证据？（Evidence in hand?）"}
+    B -- "没有" --> C["运行验证命令（Run the verification）"]
+    C --> D["完整读回输出（Read the full output）"]
+    D --> B
+    B -- "有" --> E["基于观察作断言（Assert from observation）"]
+    B -- "无法观测" --> F["标记可观测性缺口（Flag the gap）：不凭假设继续"]
+    E --> G["可信的完成声明（Honest completion claim）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E core;
+    class B gate;
+    class A,F,G out;

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><span class="sep">›</span><span class="here">经常重建（Rebuild）</span></nav>
-<h1>经常重建（Rebuild）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Rebuild Often</p><p class="lede">定期从零重建能抓住被增量修改渐渐『正常化』的累积漂移。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>经常重建（Rebuild）</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Rebuild Often</p><p class="lede">定期从零重建能抓住被增量修改渐渐『正常化』的累积漂移。</p><div class="meta"><span class="chip solid" title="workflow-discipline">工作流纪律（workflow-discipline）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;增量演进（Incremental changes）：补丁与环境累积隐性状态&quot;] --&gt; B[&quot;定时冷启动（Scheduled cold rebuild）：从规范定义从零重建&quot;]
+    B --&gt; C{&quot;重建是否一次通过？（Clean cold pass?）&quot;}
+    C -- &quot;未通过：显式失败&quot; --&gt; D[&quot;暴露隐藏依赖（Hidden dependencies surface）&quot;]
+    D --&gt; E[&quot;修复规范定义（Patch the canonical definition）&quot;]
+    E --&gt; B
+    C -- &quot;通过&quot; --&gt; F[&quot;确认无漂移（Drift caught or absent）&quot;]
+    F --&gt; G[&quot;回到增量工作（Resume incremental work）&quot;]
+    G -. &quot;漂移再次累积&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,E core;
+    class C,D gate;
+    class A,F,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>通过增量修改构建起来的系统会积累不可见的假设。每一次修改都是局部的、孤立来看是正确的；而整体却是一个从未在干净状态下把这些条件一起验证过的系统。经常重建——从头重新执行完整构建、依据定义重新开通（provision）环境、从源重新生成输出——会迫使隐藏的依赖以显式失败的形式浮出水面，而不是无声地坏掉。在 AI 工作流中，这直接适用于提示词流水线、上下文组装与智能体配置：如果系统从未做过冷启动测试，你就不知道它真正依赖什么。重建捕捉的是累积*进*工作流的漂移；与之互补的是修剪工作流由以构成的脚手架。由于模型能力的提升快于工作流习惯的更新，为弥补昨日局限而添加的步骤会在失去用处后继续存在，因此定期消融（ablate）测试装置（harness）——删除节点、缩短提示词、合并步骤，并确认质量仍然保持——是同一种卫生习惯，只是指向系统本身而非其环境。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>在宣告某个工作流稳定之前：从干净状态运行它，而不是从积累了安装历史的温热环境运行。</li><li>在接入新机器、新环境或新智能体时：第一次从零运行会暴露所有未被记录在案的东西。</li><li>在任何一段增量打补丁之后：停下来，从权威定义（canonical definition）重建，看看这些补丁遮蔽了什么。</li><li>作为长期运行系统的定期健康检查：计划性的冷启动运行能在漂移演变为事故之前发现它。</li><li>当工作流在这台机器上正常、在另一台上失败时：差异几乎总是来自正常机器累积却未记录的状态。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/trust.html">信任（Trust）</a><span class="sep">›</span><a href="../families/trust.html#dim-reliability">可靠性（reliability）</a><span class="sep">›</span><span class="here">把合并（Merge）与暴露（Exposure）分开</span></nav>
-<h1>把合并（Merge）与暴露（Exposure）分开</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Separate Merge From Exposure</p><p class="lede">特性开关（feature flag）是控制智能体产出最重要的手段之一，它把『合并代码』与『暴露给用户』解耦——高风险变更默认灰度、显式放量标准、自动回滚，合并不再意味着所有人受影响。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>把合并（Merge）与暴露（Exposure）分开</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Separate Merge From Exposure</p><p class="lede">特性开关（feature flag）是控制智能体产出最重要的手段之一，它把『合并代码』与『暴露给用户』解耦——高风险变更默认灰度、显式放量标准、自动回滚，合并不再意味着所有人受影响。</p><div class="meta"><span class="chip solid" title="reliability">可靠性（reliability）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="orchestration" href="../explore.html#dim-orchestration">编排（orchestration）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;变更合入主干（Change merged）&quot;] --&gt; B[&quot;功能开关隔离（Feature flag）：合并不等于曝光&quot;]
+    B --&gt; C[&quot;分级曝光拨盘（Staged exposure）：内部→犬粮→金丝雀→灰度→客户自选&quot;]
+    C --&gt; D{&quot;该阶段信号守住了吗？（Signals healthy?）&quot;}
+    D -- &quot;错误率或延迟越阈&quot; --&gt; E[&quot;自动回滚曝光（Automated rollback）&quot;]
+    E --&gt; F[&quot;修复后重新起量（Re-stage after fix）&quot;]
+    F --&gt; C
+    D -- &quot;稳固：推进下一队列（准绳由人定）&quot; --&gt; G{&quot;已覆盖全部用户？（Everyone?）&quot;}
+    G -- &quot;否&quot; --&gt; C
+    G -- &quot;是&quot; --&gt; H[&quot;安全完成发布（Safe release）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,F core;
+    class D,E,G gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>特性开关（feature flag）之所以是部署智能体生成工作最重要的控制之一，原因是结构性的：它们打破了『合并代码』与『向用户暴露代码』是同一件事的假设。没有开关，这两个事件被熔合——智能体的变更一落主分支并部署，所有用户立刻受影响，一次错误的爆炸半径是整个用户群。有了开关，合并与暴露解耦，系统得以把有风险的智能体生成变更默认为分阶段暴露，而不是一次性全量发布。分阶段暴露是一个渐进的旋钮：仅内部放量，然后狗粮（dogfood）队列，然后金丝雀（canary）组，然后按百分比放量，然后客户主动加入——每一步只在上一步站稳之后才扩大人群。与这个旋钮绑定的是另外两个把开关从开关变成安全系统的控制：当错误率、延迟或其他信号越过阈值时把暴露收回的自动回滚触发器，以及绑定到该特性的反馈通道，让新暴露到它的人有一条直接路径报告什么坏了。智能体可以协助运营这次发布——转动旋钮、盯着信号、提议下一步——但发布标准本身必须显式且由人类拥有：下一个队列是谁，什么信号推进或回退暴露，什么阈值触发回滚。智能体操作分阶段发布；它无权自作主张判定变更对所有人都安全。结果是『智能体的变更合并了』不再意味着『所有人都受影响了』，而这正是让智能体生成的工作得以大批量安全交付的性质。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>部署任何失败会影响真实用户的智能体生成变更时——默认分阶段暴露，而不是把合并与全量发布熔在一起。</li><li>当智能体生成变更的数量已超出团队在发布前深入评审每一个的能力——开关让已合并未暴露的代码安全地积压在显式门后。</li><li>当你想让智能体协助运营一次发布——让它转旋钮、盯信号，但把推进与回滚标准钉为显式的、人类拥有的规则。</li><li>当一个变更有可能正确但尚未在生产中被证明——内部、狗粮与金丝雀阶段以有界的爆炸半径买到真实世界证据。</li><li>当你需要快速、自动地撤销一个坏变更——把自动回滚触发器绑定到开关，让收回暴露不必等人类发现。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

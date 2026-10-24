@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-meta-principles">元原则（meta-principles）</a><span class="sep">›</span><span class="here">上下文（Context）是有限资源</span></nav>
-<h1>上下文（Context）是有限资源</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Context Is a Finite Resource</p><p class="lede">精心筛选出最小的高信噪比词元（token）集合——每一点噪声都在稀释每一点信号。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>上下文（Context）是有限资源</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Context Is a Finite Resource</p><p class="lede">精心筛选出最小的高信噪比词元（token）集合——每一点噪声都在稀释每一点信号。</p><div class="meta"><span class="chip solid" title="meta-principles">元原则（meta-principles）</span><a class="chip" title="context-engineering" href="../explore.html#dim-context-engineering">上下文工程（context-engineering）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;上下文窗口＝注意力预算（Context is an attention budget）&quot;] --&gt; B{&quot;这段 token 会改变输出吗？（Does it change the output?）&quot;}
+    B -- &quot;会&quot; --&gt; C[&quot;保留高信号内容（Keep high-signal content）&quot;]
+    B -- &quot;不会：样板、重复、陈旧历史&quot; --&gt; D[&quot;剔除噪声（Drop the noise）&quot;]
+    C --&gt; E[&quot;注意力集中到信号上（Attention concentrates on signal）&quot;]
+    D --&gt; E
+    E --&gt; F{&quot;长会话质量下滑？（Quality rotting over time?）&quot;}
+    F -- &quot;是：上下文膨胀&quot; --&gt; G[&quot;收缩、压缩、按相关性再挑选（Curate and compress）&quot;]
+    G -. &quot;重新注入最小高信号集合&quot; .-&gt; C
+    F -- &quot;否&quot; --&gt; H[&quot;维持最小高信号集合（Smallest high-signal set）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,G core;
+    class B,F gate;
+    class A,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>上下文窗口（context window）是一笔预算，不是垃圾场。你放进上下文的每一个 token，都在与所有其他 token 争夺模型的注意力，而这注意力并非均匀分布——低信号内容（样板文字、重复、无关历史）会主动降低模型对待高信号内容的质量。甄选（curation）不是可选项；它是一门纪律：把预算留给最能改变输出的内容。把见过的所有东西都堆进上下文的智能体与编排器（orchestrator）并不是在追求周全——它们在挥霍系统中最有限的资源。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>设计系统提示词（system prompt）、工具响应或记忆注入（memory injection）的内容时：问一问哪些内容删掉也不损害结果。</li><li>当智能体流水线（pipeline）在步骤之间传递完整对话历史时——到下一步运行时，大部分已是噪声。</li><li>长时间运行的智能体产出随时间变差时——上下文膨胀（context bloat）是常见元凶。</li><li>评估检索（retrieval）策略时：为相关性而检索，不为完整性而检索。</li></ul>
@@ -402,5 +425,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,29 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/orchestration.html">编排（Orchestration）</a><span class="sep">›</span><a href="../families/orchestration.html#dim-orchestration">编排（orchestration）</a><span class="sep">›</span><span class="here">让拓扑（Topology）匹配工作</span></nav>
-<h1>让拓扑（Topology）匹配工作</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Match the Topology to the Work</p><p class="lede">按失败代价、意图清晰度、工作量与可重复性，在『单次提示→目标循环→技能→图→层级→工作室』之间刻意选择你的智能体拓扑。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>让拓扑（Topology）匹配工作</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Match the Topology to the Work</p><p class="lede">按失败代价、意图清晰度、工作量与可重复性，在『单次提示→目标循环→技能→图→层级→工作室』之间刻意选择你的智能体拓扑。</p><div class="meta"><span class="chip solid" title="orchestration">编排（orchestration）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;新工作流启动（New workstream）&quot;] --&gt; B{&quot;四项判据（Four criteria）：失败代价 / 意图清晰度 / 工作量 / 可重复性&quot;}
+    B -- &quot;小任务、一次性、探索&quot; --&gt; C[&quot;一次性提示（One-shot prompt）&quot;]
+    B -- &quot;目标清晰、中等模糊&quot; --&gt; D[&quot;斜杠目标循环（Slash-goal loop）&quot;]
+    B -- &quot;可重复的人形流程&quot; --&gt; E[&quot;技能驱动（Skill workflow）&quot;]
+    B -- &quot;多阶段、可分离验证&quot; --&gt; F[&quot;图工作流（Graph workflow）&quot;]
+    B -- &quot;大型计划、多子代理长监督&quot; --&gt; G[&quot;层级组织 / 工作室（Hierarchy / Studio）&quot;]
+    C --&gt; H{&quot;运行中校验匹配（In-flight check）&quot;}
+    D --&gt; H
+    E --&gt; H
+    F --&gt; H
+    G --&gt; H
+    H -- &quot;过重：token 烧穿、装置难养&quot; --&gt; I[&quot;降一档（Drop a tier）&quot;]
+    H -- &quot;过轻：似是而非、无状态可查&quot; --&gt; J[&quot;加一档结构（Add structure）&quot;]
+    H -- &quot;匹配&quot; --&gt; K[&quot;由工作而非习惯选择拓扑（The work picks the topology）&quot;]
+    I -. &quot;重新评估&quot; .-&gt; B
+    J -. &quot;重新评估&quot; .-&gt; B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F,G,K core;
+    class B,H,I,J gate;
+    class A out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>agent 工作流分布在一个从轻量到重量的频谱上，频谱上的每个点对某些工作都是正确答案，对其余工作则是错误答案。一次性提示（one-shot prompt）最适合微小任务、原型、局部修改和点子发散，当你过度信任背后没有任何持久状态的貌似合理的输出时它会失败。slash-goal 或 Ralph 循环适合目标清晰、歧义适中、你只想要一次简单自主推进的场景，它的失败方式是缺少足够检查点地跑得太久。技能驱动（skill-driven）的工作流捕捉可复用的、人类形态的过程——头脑风暴、规划、评审、实现——当技能隐藏了复杂性、或者过时、过宽时它会失败。图（graph）工作流适合规划、执行、验证、反馈可分离的多阶段工作，它的失败方式是要求重型的搭建，最终变成一个以维护测试装置（harness）为业的项目。层级式 agent 组织处理需要众多子 agent、专家角色和长期监督的大型计划，失败于注意力过载、问责不清和过度的 token 消耗。工作室（studio）或生产系统适合复杂、创造性的高混合度工作——每个项目都不同但复用角色与工具——缺乏强有力的人类方向和良好的产物纪律时会失败。选择标准是失败的代价、意图的清晰度、工作的规模和可重复的程度——纪律在于刻意选择，而不是按习惯或时尚。两个失败方向让这条纪律变得具体：显而易见的一个是简单循环就够时伸手去拿重型图；更隐蔽的反面是，团队见识过重型工具之后常常退化成逐个功能的临时提示，因为一次性提示的小奖励是即时的，而结构的回报是延迟的。两者都是缺乏意图性的失败——是工作、而不是多巴胺，来挑选拓扑（topology）。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>任何新工作流开始时，在伸手去拿你上次用的拓扑之前——按四个标准挑选，而不是按肌肉记忆。</li><li>当一个工作流不断超时或烧 token：你可能重了一个档位，应当降到更轻的拓扑。</li><li>当一个轻量循环不断产出错误但貌似合理的输出、且没有任何状态可检查：你轻了一个档位，应当增加结构。</li><li>当工作可重复到值得被编码——把它从临时提示提升为技能（skill）或图。</li><li>为团队方法制定标准时：显式命名拓扑，让人们停止无意识的默认。</li></ul>
@@ -406,5 +436,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

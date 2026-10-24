@@ -1,0 +1,14 @@
+flowchart TD
+    A["搭建评估装置（Build the harness）"] --> B{"失败路径先写还是后补？（Error path first?）"}
+    B -- "先写失败路径" --> C["失败响亮上报（Fail loud）：文件·步骤·原因"]
+    C --> D["代理失败如实可见（Failure visible）"]
+    D --> E["真实的通过率与信号（Truthful signal）"]
+    B -- "吞异常给默认值" --> F["静默兜底（Silent fallback）"]
+    F --> G["通过率虚高，成功是假象（Illusion of success）"]
+    G -. "发现被掩盖的失败" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B,F,G gate;
+    class A,E out;

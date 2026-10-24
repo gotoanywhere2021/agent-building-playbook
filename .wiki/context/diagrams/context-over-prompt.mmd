@@ -1,0 +1,16 @@
+flowchart TD
+    A["输出不稳定或出错（Inconsistent or wrong output）"] --> B{"只改措辞？（Rephrase the prompt first?）"}
+    B -- "是" --> C["提示词是抛光，收益有限（Polish, limited gain）"]
+    B -- "否" --> D["问模型看见了什么、缺了什么（Ask what the model sees）"]
+    C --> D
+    D --> E["构造上下文：取舍、排序、压缩（Select, order, compress）"]
+    E --> F{"事实与状态齐了吗？（Facts and state now present?）"}
+    F -- "否" --> E
+    F -- "是" --> G["指令落在优质上下文之上（Instruction over rich context）"]
+    G --> H["上下文是架构，提示词是修饰（Context is architecture）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,G core;
+    class B,F gate;
+    class A,C,H out;

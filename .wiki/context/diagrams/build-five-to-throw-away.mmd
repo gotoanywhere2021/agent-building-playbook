@@ -1,0 +1,15 @@
+flowchart TD
+    A["说不清『好』长什么样（Can't yet articulate good）"] --> B["选变体生成法（Seed the variants）：指定立场 / 让模型自选 / 同题抽样"]
+    B --> C["并行造五版（Build five in parallel）"]
+    C --> D["并排比较（Compare side by side）"]
+    D --> E{"分歧与共识看清了吗？（Preferences revealed?）"}
+    E -- "还没" --> F["补变体或换探索维度（More variants / new dimension）"]
+    F -. "再来一轮" .-> C
+    E -- "看清了" --> G["萃取规格与偏好（Extract the spec & preferences）"]
+    G --> H["归宿随意：全弃 / 一版转正 / 采石拼装（All die, one graduates, or quarry）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D,G core;
+    class E gate;
+    class A,F,H out;

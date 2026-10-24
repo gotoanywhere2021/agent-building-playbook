@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">先跟随观察（Shadow），再变换转录</span></nav>
-<h1>先跟随观察（Shadow），再变换转录</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Shadow the User, Then Transform the Transcript</p><p class="lede">隐性知识——变通手法、局部惯例、异常路径、机构记忆——活在人们实际工作的方式里；坐到用户身边录下来；智能体工具不会取代观察，它加速的是观察之后的事。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="knowledge" href="../explore.html#dim-knowledge">知识（knowledge）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>先跟随观察（Shadow），再变换转录</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Shadow the User, Then Transform the Transcript</p><p class="lede">隐性知识——变通手法、局部惯例、异常路径、机构记忆——活在人们实际工作的方式里；坐到用户身边录下来；智能体工具不会取代观察，它加速的是观察之后的事。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="knowledge" href="../explore.html#dim-knowledge">知识（knowledge）</a><a class="chip" title="human-factors" href="../explore.html#dim-human-factors">人因（human-factors）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;隐性知识领域（Tacit-knowledge domain）：绕行方案·本地规范·例外路径&quot;] --&gt; B[&quot;影子跟随用户（Shadow the session）：看真实工作·当场提问&quot;]
+    B --&gt; C[&quot;录制会话转录（Capture the transcript）&quot;]
+    C --&gt; D{&quot;趁新鲜转化了吗？（Transform while fresh?）&quot;}
+    D -- &quot;只存档不加工&quot; --&gt; E[&quot;死重（Dead weight）：未加工的转录不是意图&quot;]
+    E -. &quot;补上转化&quot; .-&gt; F
+    D -- &quot;立即转化&quot; --&gt; F[&quot;加速转化管线（Fast transformation）：用户故事·矛盾挖掘·领域术语·工作流建模·验收标准&quot;]
+    F --&gt; G[&quot;结构化意图工件（Intent artifacts）：驱动规格·原型与后续评审&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class D,E gate;
+    class A,C,G out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>许多领域——政府、保险、类医疗的工作流、规划、企业运营——依靠从未出现在任何文档中的默会知识（tacit knowledge）运转：人们搭出来的变通办法、本地规范、例外路径、政治约束、只存在于工作实际做法中的机构记忆。这些知识无法通过提问引出，因为持有它们的人并不把它们体验为知识；那就是事情本来的样子。由智能体也改变不了的人类动作，是坐到用户身边看他们工作——旁听（shadow）会话、当场提问、记录发生的事、拿到记录（transcript）。智能体化工具改变的不是观察本身，而是观察之后的一切：过去把一次原始旁听转化为可用工件是缓慢的手工劳动，如今记录可以被总结为用户故事（user story）、从中挖掘矛盾、解析领域术语、建模为工作流、变成评审未来工作的人格（persona）、立即用来生成原型，以及被阅读以从观察到的行为中导出验收标准。人类的观察仍不可替代——看工作没有替代品——但把观察转化为意图工件的流水线变得足够快，可以在会话记忆仍新鲜时运行。纪律在于真的去转化：一份从未被转化为结构化工件的记录是死重，不是意图。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>领域依靠默会知识运转——变通办法、例外路径、机构记忆——没有文档能捕获、也没有人能随口背出。</li><li>利益相关方描述一个理想化流程，而你怀疑它与他们实际所做的不同。</li><li>你正在进入一个陌生的运营领域，在规定任何东西之前需要地面真值行为。</li><li>你已有旁听或访谈录音，想从中快速提取最大的意图。</li><li>例外路径与边缘情况和 happy path 一样重要，而只有观察才能揭示它们。</li></ul>
@@ -406,5 +427,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

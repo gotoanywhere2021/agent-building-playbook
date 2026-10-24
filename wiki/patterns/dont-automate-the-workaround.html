@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/people.html">人（People）</a><span class="sep">›</span><a href="../families/people.html#dim-intent">意图（intent）</a><span class="sep">›</span><span class="here">别把权宜之计（Workaround）自动化</span></nav>
-<h1>别把权宜之计（Workaround）自动化</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Don&#x27;t Automate the Workaround</p><p class="lede">在遗留与官僚场景里，正式流程往往本身就是另一个坏流程的权宜之计——用智能体把它自动化等于把功能障碍高速固化；先问这个流程还应不应该存在，再谈加速。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>别把权宜之计（Workaround）自动化</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Don&#x27;t Automate the Workaround</p><p class="lede">在遗留与官僚场景里，正式流程往往本身就是另一个坏流程的权宜之计——用智能体把它自动化等于把功能障碍高速固化；先问这个流程还应不应该存在，再谈加速。</p><div class="meta"><span class="chip solid" title="intent">意图（intent）</span><a class="chip" title="workflow-discipline" href="../explore.html#dim-workflow-discipline">工作流纪律（workflow-discipline）</a><a class="chip" title="meta-principles" href="../explore.html#dim-meta-principles">元原则（meta-principles）</a></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;收到自动化请求（Request to automate）&quot;] --&gt; B[&quot;先问流程为何存在（Ask why it exists）&quot;]
+    B --&gt; C{&quot;逐段分辨：真实需要还是历史意外？（Real need or historical accident?）&quot;}
+    C -- &quot;历史意外：约束已消失&quot; --&gt; D[&quot;删除，不复刻进代码（Remove, never encode）&quot;]
+    C -- &quot;真实需要&quot; --&gt; E[&quot;保留并进入自动化（Keep for automation）&quot;]
+    D --&gt; F[&quot;失能不被提速固化（Dysfunction not entrenched at machine speed）&quot;]
+    E --&gt; G{&quot;它在绕开另一个坏流程吗？（Workaround for a broken process?）&quot;}
+    G -- &quot;是&quot; --&gt; H[&quot;停下：修根因或缩小范围（Fix upstream or narrow scope）&quot;]
+    G -- &quot;否：流程本身健全&quot; --&gt; I[&quot;放心加速（Accelerate with confidence）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,D,E,H core;
+    class C,G gate;
+    class A,F,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>在遗留（legacy）与官僚化的领域里，要求你自动化的那个流程常常根本不是一个流程，而是一个绕行方案（workaround）——一叠人们为了绕开某个别的坏掉流程而发明的步骤，在早没人记得原因之后仍被保留下来。把这样的工作流自动化，不只是修不好功能障碍，而是把它焊死；而且由于智能体比容忍这些摩擦的人类执行得更快、更一致，自动化加速的是错误的东西，并移除了让坏流程保持可见、保持改进压力的那种摩擦。这门功夫是在加速任何工作流之前先问：它还应该存在吗——把自动化请求当作检视该工作流存在理由的契机，而不是把它编码成代码的命令。这要求区分服务真实需求的本质行为与仅因无人质疑而存活的历史偶然；那些因为一条早已失效的约束、一套早已退役的系统、或一个早已离开的人才存在的步骤，应当被移除，而不是在代码里复现。智能体会忠实地实现交给它的一切，因此『这个工作流是否值得延续』的判断必须发生在自动化上游的意图层——在那里还有人在问为什么。这是『需求是被伪装的解决方案』（requirements are disguised solutions）最锋利的特例：那个模式处理的是单个被声明的解决方案——一个字段、一条规则、一份报表——而这个模式处理的是整个工作流，其被伪装的目的是粉饰一个它本不该延续的坏流程。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>一个请求要求你自动化现有的手工流程，尤其是在遗留、受监管或官僚化的领域。</li><li>工作流里有谁也无法完全论证其存在理由的步骤，或『一直就是这么做的』的步骤。</li><li>移除手工流程的摩擦，同时也会移除本可能迫使流程改进的那种压力。</li><li>你能区分服务真实需求的步骤与仅作为历史偶然存活的步骤。</li><li>以机器速度焊死功能障碍的代价，高于停下来质疑这个工作流的代价。</li></ul>
@@ -406,5 +428,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

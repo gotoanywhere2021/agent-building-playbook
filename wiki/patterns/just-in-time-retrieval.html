@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,20 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/context.html">上下文（Context）</a><span class="sep">›</span><a href="../families/context.html#dim-context-engineering">上下文工程（context-engineering）</a><span class="sep">›</span><span class="here">即时检索（Just-in-Time）优于预加载</span></nav>
-<h1>即时检索（Just-in-Time）优于预加载</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Just-in-Time Retrieval Over Pre-Loading</p><p class="lede">不要把可能相关的全塞进上下文——在恰好需要的那一刻取回恰好需要的部分，用完即弃。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>即时检索（Just-in-Time）优于预加载</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Just-in-Time Retrieval Over Pre-Loading</p><p class="lede">不要把可能相关的全塞进上下文——在恰好需要的那一刻取回恰好需要的部分，用完即弃。</p><div class="meta"><span class="chip solid" title="context-engineering">上下文工程（context-engineering）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;轻量标识符在手（Paths·URLs·stored queries）&quot;] --&gt; B{&quot;当前步骤需要什么？（Needed now?）&quot;}
+    B -- &quot;只取这一步所需&quot; --&gt; C[&quot;即时检索（Retrieve just that）&quot;]
+    C --&gt; D[&quot;用后即弃（Discard after use）&quot;]
+    D -. &quot;进入下一步，按需再取&quot; .-&gt; B
+    E[&quot;预载一切可能相关（Pre-load everything）&quot;] --&gt; F[&quot;注意力被稀释·预算被挤占（Diluted attention）&quot;]
+    F -. &quot;改为按需检索&quot; .-&gt; B
+    G[&quot;检索器不等于记忆（A retriever is not memory）&quot;] --&gt; H[&quot;补齐选择·衰减·纠错·评估（Selection·decay·correction·evaluation）&quot;]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B gate;
+    class A,E,F,G,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>预加载（pre-loading）是工作开始前就把所有可能相关的文档、工具、历史和参考资料塞进上下文的冲动。成本会复合：庞大的预加载上下文挤占工作记忆，迫使模型在无关内容上分配注意力，并花掉本可用来容纳后期结果的 token。即时检索（just-in-time retrieval）反转了这个模式——开头保持上下文最小，只在需要它的那一步拉取具体内容。代码评审智能体（agent）不需要从第一轮起就把完整 API 文档放进上下文；它在遇到相关函数时才需要相关章节。规划智能体不需要每一次历史对话；它需要上一次决策的摘要。即时检索把信息当作一种应在使用那一刻加载的依赖，而不是在程序顶部预先声明。</p>
 <p>在『记忆（memory）』被明确定义之前，这个词是错的。那个宏大比喻——给智能体一个记忆——会招来预加载，并掩盖真正的设计决策。实际的提问要窄得多：此刻这个智能体应当知道什么，才能改善这个结果？这个问题把问题重新表述为上下文治理（context governance），而不是泛泛的记忆，而即时检索正是逐步回答这个问题。这也是为什么把一个 RAG 管道叫作『记忆』然后止步于此是一种反模式：检索确实有用，但它只是记忆的一个组件。真正的记忆还需要选择（决定拉取什么）、衰减（让陈旧材料过期）、修正（改正错误）和评估（检查检索到的上下文是否真的有帮助）。一个这些都没有的检索器只是查询，不是记忆——把它当成完整方案，难的那部分治理工作就没做。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
@@ -408,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>

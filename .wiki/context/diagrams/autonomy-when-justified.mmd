@@ -1,0 +1,14 @@
+flowchart TD
+    A["候选自主权限（Candidate autonomy）"] --> B["默认零自主，逐档申请（Start at zero, add one degree at a time）"]
+    B --> C{"该任务类型有实证可靠记录吗？（Demonstrated reliable?）"}
+    C -- "没有：只是『应该没问题』" --> D["维持监督（Keep oversight）"]
+    C -- "有实证" --> E{"动作可逆，或监督能拦住错误？（Reversible or guarded?）"}
+    E -- "否" --> F["不可逆动作一律人工确认（Human confirms the irreversible）"]
+    E -- "是" --> G["按档授权，持续验证（Grant that degree, keep verifying）"]
+    G -. "例行任务会以非常规方式失败：变更后回撤重验" .-> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,G core;
+    class C,E gate;
+    class A,D,F out;

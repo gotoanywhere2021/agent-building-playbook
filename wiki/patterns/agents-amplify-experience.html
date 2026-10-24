@@ -138,6 +138,14 @@ ul.rows .rt { font-weight:600; font-size:14px; display:block; }
 ul.rows .ol { display:block; color:var(--muted); font-size:13px; margin-top:2px; }
 ul.rows .chips { display:block; margin-top:6px; }
 
+/* ---- diagram card ---- */
+.diagram { margin:18px 0 6px; max-width:900px; border:1px solid var(--line);
+  border-radius:8px; background:#fff; padding:14px 16px 6px; }
+.diagram h2 { font-size:14px; margin:0 0 6px; color:#33414f; }
+.diagram svg { max-width:100%; height:auto; }
+.diagram .mermaid { display:flex; justify-content:center; }
+.diagram .mermaid svg { width:100%; }
+
 /* ---- related + toc rail ---- */
 .related { margin-top:2.4em; padding-top:1.2em; border-top:1px solid var(--line); max-width:76ch; }
 .related h2 { font-size:15px; margin:.2em 0 .5em; }
@@ -381,7 +389,22 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 <nav class="crumb" aria-label="Breadcrumb"><a href="../index.html">首页（Home）</a><span class="sep">›</span><a href="../families/mindset.html">心智（Mindset）</a><span class="sep">›</span><a href="../families/mindset.html#dim-taste">品味（taste）</a><span class="sep">›</span><span class="here">智能体放大经验</span></nav>
-<h1>智能体放大经验</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Agents Amplify Experience</p><p class="lede">智能体成倍放大使用者的产出——好的判断力被放大成好的结果，差的判断力被放大成规模化的自信错误。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
+<h1>智能体放大经验</h1><p class="ol" style="color:var(--muted);margin:0 0 14px;">Agents Amplify Experience</p><p class="lede">智能体成倍放大使用者的产出——好的判断力被放大成好的结果，差的判断力被放大成规模化的自信错误。</p><div class="meta"><span class="chip solid" title="taste">品味（taste）</span></div><section class="diagram" id="diagram"><h2>模式图解（Diagram）</h2><pre class="mermaid">flowchart TD
+    A[&quot;执行瓶颈被代理移除（Execution bottleneck removed）&quot;] --&gt; B[&quot;暴露真正的瓶颈：判断力（Judgment is the bottleneck）&quot;]
+    B --&gt; C{&quot;输出你能评价吗？（Can you evaluate the output?）&quot;}
+    C -- &quot;能：好判断被放大&quot; --&gt; D[&quot;放大为卓越产出（Amplified excellence）&quot;]
+    C -- &quot;不能：错误被自信放大&quot; --&gt; E[&quot;规模化自信的错误（Confident mistakes at scale）&quot;]
+    D --&gt; F[&quot;评审质量是产出的下限（Your review sets the floor）&quot;]
+    E --&gt; F
+    F --&gt; G[&quot;给经验装代理：清晰验收标准 + 独立验证（Guardrails as experience proxy）&quot;]
+    G --&gt; H[&quot;边用边长出品味（Develop taste alongside use）&quot;]
+    H -. &quot;评价力长成后重判&quot; .-&gt; C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F,G core;
+    class C gate;
+    class A,D,E,H out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
 <p>智能体（agent）是力量的放大器，不是判断力的替代品。当有经验的从业者指挥智能体时，他们的模式识别、对何者要紧的感觉、以及评估产出的能力，会被放大到远超其手工可执行范围的任务之上。当缺乏那种经验的人指挥同样的智能体时，他们得到的只是自己已能产出之物的更多复制——更多的量、更快的速度，但判断质量不变，只是以更高的速度施加出去。这是一种倒置，它让经验在 AI 优先的世界里更重要、而非更不重要：智能体移除了执行瓶颈，暴露出来的是判断瓶颈。对一个领域有深入认知的开发者，可以用智能体把过去要花一个月的活儿在一天内干完——而这一个月的工作量体现的正是这位开发者的判断力。没有领域知识的开发者使用同样的智能体，也会很快产出一个工作量月、看上去像模像样的成果，但其在理解上的局限，与手工干活时产出低劣工作毫无二致。经验与品味并未因智能体而变得不重要——当智能体移除了其余一切约束，它们正是那个限制因素。随着智能体吸收越来越多的执行工作，每个人类判断的波及半径（blast radius）都在扩大：一个决定如今会传导到远超一个人手工所能完成的工作之上，这让好的判断力更值钱，而非更不值钱。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>评估是否把任务委派给智能体时：先问自己是否有足够的经验去评估产出；如果没有，智能体产出的东西你将无法有效地审阅。</li><li>智能体的产出感觉不对、却说不出为什么时：那种不对劲的感觉正是经验在发声；投入去诊断它，而不是接受产出。</li><li>在新领域上手并考虑用智能体提速时：把智能体用于执行已理解的任务；把需要建立理解的任务留给自己动手。</li><li>审阅智能体产出时：你审阅的质量就是这项工作的质量下限；智能体抬高天花板，而下限由你设定。</li><li>设计将由经验较浅的操作者使用的系统时：设计能为经验充当代理的反馈回路与护栏（guardrail）——清晰的成功标准、独立的验证、可读的产出。</li></ul>
@@ -406,5 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <footer class="foot">本站由 <code>patterns/</code> 生成（生成器：<code>.wiki/scripts/publish.sh</code>），请勿手改；
 使用 <code>/wiki-publish</code> 重新生成。&middot; <a href="../index.html">首页</a>
 &middot; <a href="../explore.html">浏览目录</a></footer>
+<script src="../assets/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',securityLevel:'strict',flowchart:{htmlLabels:false},themeVariables:{fontFamily:'-apple-system,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",\"Noto Sans SC\",Helvetica,Arial,sans-serif',fontSize:'14px',primaryColor:'#edf1f7',primaryBorderColor:'#9fb8d8',primaryTextColor:'#182430',lineColor:'#5b6b7b',clusterBkg:'#f5f7fa',clusterBorder:'#c9d6e6'}});</script>
 </body>
 </html>
