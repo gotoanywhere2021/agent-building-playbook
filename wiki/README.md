@@ -27,6 +27,6 @@ bash .wiki/scripts/publish.sh     # 2. 渲染 wiki/（或在 agent 会话里 /wi
 发布器会校验 taxonomy 与 patterns 的一致性，漂移会大声失败。
 然后用浏览器打开 `wiki/index.html`，或把 `wiki/` 部署到 GitHub Pages。
 
-> HTML 构建产物可再生、默认被 git 忽略——本目录只有本 README 被跟踪。
-> 要从本目录走 GitHub Pages，请强制添加渲染产物（`git add -f wiki/`）
-> 或在 CI 里于发布时渲染。
+> HTML 构建产物**随仓库提交**（`.gitignore` 已注明这是刻意为之）：
+> GitHub Pages 通过 Actions（`.github/workflows/deploy-wiki.yml`）把本目录
+> 直接发布到线上，无需本地构建。改了 `patterns/` 后重跑上面两步并提交即可。
