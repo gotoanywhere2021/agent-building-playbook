@@ -1,0 +1,16 @@
+flowchart TD
+    A["学习者 / 受训智能体（Learner）"] --> B{"阶段闸门（Deterministic phase gate）"}
+    B -- "关键主张无证据（claims unevidenced）" --> A
+    B -- "通过（pass）" --> C["下一阶段：发现→定义→方案→挑战→答辩（discovery→framing→design→challenge→pitch）"]
+    A --> D["客户模拟（AI Customer）：信息不完整·有隐藏约束与利益"]
+    A --> E["证据追踪器（Evidence Tracker）：主张-证据-缺口"]
+    C --> F["评分者（Evaluator）：按学习者不可见的标准评分"]
+    D -. "上下文防火墙（context firewall）：隐藏事实 / 评分标准不跨边界，canary 证明" .-> F
+    C --> G["事件日志：可回放·可复盘·聚焦重试（Replayable event log）"]
+    F --> G
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B gate;
+    class A,C out;

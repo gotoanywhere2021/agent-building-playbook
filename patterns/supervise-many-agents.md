@@ -27,6 +27,7 @@ Once a person is running more than a handful of agents — coding sessions, clou
 
 - Zhou, "OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight" (arXiv:2510.24937) — https://arxiv.org/abs/2510.24937 — builds a hierarchical supervision surface over multiple LLM agents: organizes goals hierarchically, monitors task completion, resolves inter-agent conflicts, and visualizes dependency graphs; directly implements the supervision interface this pattern describes
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends checkpoints where agents pause for human feedback; its orchestrator-workers workflow — a central model delegating to parallel workers — is the shape this pattern puts a single supervision surface over
+- Agents Anywhere — https://github.com/anywhere-labs/Agents-Anywhere — control any coding agent on any device: the agent runs headless on an always-on machine while a phone or laptop becomes the supervision surface, so steering and approvals travel to whichever device you're holding
 
 ## Related
 

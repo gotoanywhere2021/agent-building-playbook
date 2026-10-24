@@ -236,10 +236,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Context"><span>上下文</span><span class="n">19</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">21</span></summary>
 <a class="ov" href="../families/context.html">总览（Overview）</a>
 <details class="dim">
-<summary title="context-engineering"><span>上下文工程</span><span class="n">14</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">16</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
@@ -248,10 +248,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
 <a class="leaf" title="Hang Up, Call Back" href="../patterns/hang-up-call-back.html">挂断，重拨</a>
+<a class="leaf" title="Instrument the Context Window" href="../patterns/instrument-the-context-window.html">给上下文窗口装上仪表（Instrument the Context Window）</a>
 <a class="leaf" title="Just-in-Time Retrieval Over Pre-Loading" href="../patterns/just-in-time-retrieval.html">即时检索（Just-in-Time）优于预加载</a>
 <a class="leaf" title="Persist Environment Facts" href="../patterns/persist-environment-facts.html">持久化环境事实</a>
 <a class="leaf" title="Repository Shape Is Cognitive Architecture" href="../patterns/repository-shape-is-cognitive-architecture.html">仓库形状就是认知架构</a>
 <a class="leaf" title="Scope and Expire Memory" href="../patterns/scope-and-expire-memory.html">给记忆划定作用域并让它过期</a>
+<a class="leaf" title="Skills Load on Trigger, Not Always-On" href="../patterns/skills-load-on-trigger.html">技能按触发加载（Skills Load on Trigger），而不是常驻</a>
 <a class="leaf" title="State the Target, Not the Prohibition" href="../patterns/state-the-target.html">陈述目标，而不是禁令</a>
 <a class="leaf" title="Use Sub-Agents as Context Sinks" href="../patterns/subagents-as-context-sinks.html">用子智能体（Sub-agent）当上下文回收站</a>
 </details>
@@ -324,10 +326,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Trust"><span>信任</span><span class="n">25</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">28</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim">
-<summary title="verification"><span>验证</span><span class="n">10</span></summary>
+<summary title="verification"><span>验证</span><span class="n">12</span></summary>
 <a class="leaf" title="Adversarial Parallel Review" href="../patterns/adversarial-parallel-review.html">对抗式并行评审（Adversarial Parallel Review）</a>
 <a class="leaf" title="Designing the Agentic Loop Is the Core Skill" href="../patterns/design-the-loop.html">设计智能体循环（Loop）是核心技能</a>
 <a class="leaf" title="Eval-Driven Development" href="../patterns/eval-driven-development.html">评估（Eval）驱动开发</a>
@@ -335,18 +337,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Evidence Before Assertions" href="../patterns/evidence-before-assertions.html">证据（Evidence）先于断言</a>
 <a class="leaf" title="Give Agents the Ability to Verify Their Own Work" href="../patterns/self-verification.html">给智能体验证自身工作的能力</a>
 <a class="leaf" title="Incremental Validation: The 3-File Rule" href="../patterns/three-file-rule.html">增量验证：三文件规则（3-File Rule）</a>
+<a class="leaf" title="Make Runs Replayable" href="../patterns/make-runs-replayable.html">让运行可回放（Make Runs Replayable）</a>
 <a class="leaf" title="Test What the Product Does, Not How" href="../patterns/test-what-not-how.html">测试产品做什么，而不是怎么做</a>
 <a class="leaf" title="Tests Are Code — Update Them First on API Change" href="../patterns/tests-first-on-api-change.html">API 变更时，先改测试</a>
+<a class="leaf" title="Train Against Simulated Counterparts" href="../patterns/train-against-simulated-counterparts.html">对抗模拟对手训练（Train Against Simulated Counterparts）</a>
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">9</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">10</span></summary>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
 <a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
 <a class="leaf" title="Mark Un-Run Steps Inline for Review" href="../patterns/mark-skipped-steps.html">把未执行的步骤就地标出</a>
+<a class="leaf" title="Register the Unknowns" href="../patterns/register-the-unknowns.html">登记未知（Register the Unknowns）</a>
 <a class="leaf" title="Separate Merge From Exposure" href="../patterns/separate-merge-from-exposure.html">把合并（Merge）与暴露（Exposure）分开</a>
 <a class="leaf" title="Separate the Proposer From the Authority" href="../patterns/proposer-authority-separation.html">把提议方与批准方分开</a>
 <a class="leaf" title="Use a Second Agent as Auditor" href="../patterns/auditor-agent.html">用第二个智能体当审计员（Auditor）</a>
@@ -415,7 +420,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to">慎用场景（When NOT to）</h3>
 <ul><li>当你一次只运行一两个智能体、可以直接盯着它们时——为一支你并不拥有的舰队构建监督界面是过早的基础设施。</li><li>当智能体短命且自包含、在单一可观察上下文内完成时——没有需要监督的舰队。</li><li>当监督工具本身消耗的维护注意力超过它节省的注意力时——从解决实际瓶颈的那一个界面开始（通常是评审队列或仪表盘），而不是整套装备。</li><li>当根本问题是智能体根本不该在运行时——仪表盘让糟糕的工作可见，但不会让它变好。</li></ul>
 <h3 id="exemplars">实例（Exemplars）</h3>
-<ul><li>Zhou，&quot;OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight&quot;（arXiv:2510.24937）— https://arxiv.org/abs/2510.24937 — 在多个 LLM 智能体之上构建分层监督界面：分层组织目标、监控任务完成、解决智能体间冲突、可视化依赖图；直接实现了本模式所描述的监督界面</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议设置智能体暂停以听取人类反馈的检查点；其编排者-工作者（orchestrator-workers）工作流——中央模型委托并行工作者——正是本模式在其上叠加单一监督界面的形态</li></ul>
+<ul><li>Zhou，&quot;OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight&quot;（arXiv:2510.24937）— https://arxiv.org/abs/2510.24937 — 在多个 LLM 智能体之上构建分层监督界面：分层组织目标、监控任务完成、解决智能体间冲突、可视化依赖图；直接实现了本模式所描述的监督界面</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议设置智能体暂停以听取人类反馈的检查点；其编排者-工作者（orchestrator-workers）工作流——中央模型委托并行工作者——正是本模式在其上叠加单一监督界面的形态</li><li>Agents Anywhere — https://github.com/anywhere-labs/Agents-Anywhere — 在任何设备上控制任意编码智能体：智能体在常开机器上无头运行，手机或笔记本成为监督界面，指挥与审批随你手中的设备走</li></ul>
 <h3 id="related">相关模式（Related）</h3>
 <ul><li><a href="awareness-layer.html"><code>patterns/awareness-layer.md</code></a></li><li><a href="emit-events.html"><code>patterns/emit-events.md</code></a></li><li><a href="earn-the-interruption.html"><code>patterns/earn-the-interruption.md</code></a></li><li><a href="attention-is-the-scarce-resource.html"><code>patterns/attention-is-the-scarce-resource.md</code></a></li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
 <p>Once a person is running more than a handful of agents — coding sessions, cloud workflows, review squads, bots, background monitors — the bottleneck stops being machine work and becomes the human&#x27;s ability to see the machine work. Too much output arrives without the right interface: finished sessions pile up unreviewed, status is unclear across sessions, notifications fire at the wrong time, and nobody can tell which agent actually needs help. The supervision surface is the single interface that makes a fleet of agents legible to one human, and it is assembled from a small kit of attention tools. An agent dashboard shows which sessions are running, stuck, done, costly, or waiting for review, so the state of the fleet is visible at a glance. Status exhaust is the stream each agent emits — summaries, artifacts, costs, risks, and proposed next steps — so a session can be understood without re-deriving its history. An attention firewall filters noisy channels and surfaces only relevant changes, so the human is not buried in routine chatter. An interrupt policy governs when agents may ask for help. Session resurrection lets a human resume an old session and hold it accountable to its prior state, rather than losing the thread when context expires. A background auditor watches running agents and summarizes anomalies the operator would otherwise miss. A review queue prioritizes finished outputs by risk, importance, and confidence. And a cost monitor tracks token spend against value produced, so runaway loops are caught by economics, not just by errors. The point is not any single widget; it is that supervising many agents is itself a design problem, and the interface is the product.</p>
@@ -424,7 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>When you run one or two agents at a time and can watch them directly — building a supervision surface for a fleet you do not have is premature infrastructure.</li><li>When the agents are short-lived and self-contained, finishing within a single observable context — there is no fleet to supervise.</li><li>When the supervision tooling would consume more attention to maintain than it saves — start with the one surface that addresses your actual bottleneck (usually the review queue or the dashboard), not the whole kit.</li><li>When the underlying problem is that agents shouldn&#x27;t be running at all — a dashboard makes bad work visible, it does not make it good.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Zhou, &quot;OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight&quot; (arXiv:2510.24937) — https://arxiv.org/abs/2510.24937 — builds a hierarchical supervision surface over multiple LLM agents: organizes goals hierarchically, monitors task completion, resolves inter-agent conflicts, and visualizes dependency graphs; directly implements the supervision interface this pattern describes</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends checkpoints where agents pause for human feedback; its orchestrator-workers workflow — a central model delegating to parallel workers — is the shape this pattern puts a single supervision surface over</li></ul>
+<ul><li>Zhou, &quot;OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight&quot; (arXiv:2510.24937) — https://arxiv.org/abs/2510.24937 — builds a hierarchical supervision surface over multiple LLM agents: organizes goals hierarchically, monitors task completion, resolves inter-agent conflicts, and visualizes dependency graphs; directly implements the supervision interface this pattern describes</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends checkpoints where agents pause for human feedback; its orchestrator-workers workflow — a central model delegating to parallel workers — is the shape this pattern puts a single supervision surface over</li><li>Agents Anywhere — https://github.com/anywhere-labs/Agents-Anywhere — control any coding agent on any device: the agent runs headless on an always-on machine while a phone or laptop becomes the supervision surface, so steering and approvals travel to whichever device you&#x27;re holding</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="awareness-layer.html"><code>patterns/awareness-layer.md</code></a></li><li><a href="emit-events.html"><code>patterns/emit-events.md</code></a></li><li><a href="earn-the-interruption.html"><code>patterns/earn-the-interruption.md</code></a></li><li><a href="attention-is-the-scarce-resource.html"><code>patterns/attention-is-the-scarce-resource.md</code></a></li></ul></article></details>
 </main>

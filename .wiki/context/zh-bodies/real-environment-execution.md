@@ -25,6 +25,7 @@
 - Cindy Sridharan, "Testing in Production: the hard parts" — https://copyconstruct.medium.com/testing-in-production-the-hard-parts-3f06cefaf592 — 把 dev/prod parity 延伸到分布式系统；论证许多失败模式在真实分布式系统之外不可见，而对在真实地方运行真实负载的正确回应是波及半径管理——不是回避。
 - 2389 Research, scenario-testing — https://github.com/2389-research/scenario-testing — 一方实践（first-party）：一个强制执行『在场景通过真实依赖之前，没有任何特性被验证』的插件——对着真实系统的端到端场景位于其真值层级顶端，mock 被直称为虚假信心。
 - 2389 Research, ish — https://github.com/2389-research/ish — 一方实践：一个『第三方 API 的数字孪生』（Google、GitHub、Twilio、Discord 等），带持久状态、请求日志与 webhook 模拟——正是为本模式专门划出的例外（真实服务烧配额或对其测试有破坏性）而建的刻意 mock。
+- AgentBench (ICLR'24) — https://github.com/THUDM/AgentBench — 跨八种不同环境（操作系统、数据库、知识图谱、网页浏览等）评测 LLM 作为智能体的表现，每种环境独立沙箱并带自己的交互协议；『聊天很强、当智能体就垮』的发现，只有在工作负载跑在它们应有的环境里时才会浮现
 
 ## 相关模式（Related）
 

@@ -23,6 +23,7 @@
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议『从简单提示词开始，用全面评估进行优化，只有当更简单的方案不足时才引入多步智能体系统』——评估是每一次复杂度升级的常设仲裁者，而不是发布时的关卡
 - Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — 正式化：建议在 CI/CD 中对每次智能体变更与模型升级运行自动化评估，像对待单元测试一样例行维护，并把套件视为『活的产物』（a living artifact）——其价值远超初始发布关口；发布于 2026 年 1 月
 - Saxena 等，"Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents"（arXiv:2511.10049）— https://arxiv.org/abs/2511.10049 — 实证支持：提出随智能体需求演化而演化的基准基础设施，把评估视为面向生产智能体的、类 CI 的持久工具，而非静态的一次性测量
+- TheAgentCompany — https://github.com/TheAgentCompany/TheAgentCompany — 在模拟软件公司内执行有后果、长时程任务的基准（聊天、GitLab、维基、同事）；作为智能体自主性的常设度量持续维护，其发现——自我验证与求助仍是最弱技能——直接反哺智能体设计
 
 ## 相关模式（Related）
 

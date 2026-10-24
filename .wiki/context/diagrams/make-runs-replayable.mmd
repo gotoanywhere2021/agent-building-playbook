@@ -1,0 +1,17 @@
+flowchart TD
+    A["运行发生（Run happens）"] --> B["只增事件日志（Append-only event log）：类型化·有序·稳定 ID"]
+    B --> C["规范化（Canonicalization）：排序键·归一时间戳·SHA-256 哈希链"]
+    C --> D["状态 = 事件日志的纯函数（State = pure function of events）"]
+    D --> E{"日后有变更？（Change later?）"}
+    E -- "是（yes）" --> F["旧事件跑新逻辑（Replay through new logic）"]
+    F --> G["逐字段对比（Diff against recorded run）"]
+    G --> H{"有差异？（Any diff?）"}
+    H -- "无（none）" --> I["『无差异』是证据（Evidence, not a claim）"]
+    H -- "有（yes）" --> J["定位行为变更（Locate the behavior change）"]
+    A -. "崩溃后精确恢复（Resume exactly after crash）" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,C,D core;
+    class E,H gate;
+    class A,F,G,I,J out;

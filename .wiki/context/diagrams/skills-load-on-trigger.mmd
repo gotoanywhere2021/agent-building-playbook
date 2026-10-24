@@ -1,0 +1,16 @@
+flowchart TD
+    A["会话开始（Session starts）"] --> B["常驻索引（Always-loaded index）：技能名 + 触发条件（name + trigger）"]
+    B --> C{"任务边界：触发条件命中？（Trigger fires?）"}
+    C -- "未命中（no）" --> D["正常执行，零额外成本（Proceed, no skill loaded）"]
+    C -- "命中（yes）" --> E["加载技能全文（Load skill body into context）"]
+    E --> F["阶段闸门（Phase gate）：不过闸不得前进（cannot cross without the skill）"]
+    F --> G["按纪律执行（Follow the discipline）"]
+    G --> H["用完即弃（Skill falls away）"]
+    H --> B
+    D --> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F core;
+    class C gate;
+    class A,B,D,G,H out;

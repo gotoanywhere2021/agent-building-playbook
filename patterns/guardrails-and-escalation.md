@@ -29,6 +29,7 @@ Two refinements sharpen how these layers are deployed. First, human escalation i
 - Amplifier — https://github.com/microsoft/amplifier — the recipe system's staged execution model provides structured guardrail points: each stage can require explicit human approval before the next stage proceeds, creating a natural escalation architecture for high-stakes workflows
 - OpenAI — https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/ — A Practical Guide to Building Agents: devotes a chapter to guardrails as a layered defense (relevance and safety classifiers, moderation, rules-based protections, output validation) and recommends human intervention for sensitive, irreversible, or high-stakes actions and for agents exceeding failure thresholds
 - Rebedea et al., "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications with Programmable Rails" (arXiv:2310.10501) — https://arxiv.org/abs/2310.10501 — formalizes: programmable rails that are "user-defined, independent of the underlying LLM, and interpretable" — controlling harmful topics, predefined dialogue paths, and language style — a guardrail layer added around the model rather than trained into it
+- nanoMuse — https://github.com/nano-muse/nanoMuse — a personal agent governed by "asks before anything you cannot undo": it pauses for confirmation before deleting, sending, or paying, hands logins and CAPTCHAs back to the human, and routes the approval to whichever device you're holding
 
 ## Related
 

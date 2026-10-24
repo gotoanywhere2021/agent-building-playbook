@@ -23,6 +23,7 @@
 - Amplifier — https://github.com/microsoft/amplifier — 配方（recipe）系统的分阶段执行模型提供了结构化的护栏点：每个阶段可以要求在下个阶段继续之前获得显式的人类批准，为高风险工作流形成天然的升级架构
 - OpenAI — https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/ — A Practical Guide to Building Agents：用一整章讲护栏作为分层防御（相关性与安全分类器、审核、基于规则的保护、输出验证），并建议对敏感、不可逆或高风险动作以及超出失败阈值的智能体引入人工干预
 - Rebedea et al., "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications with Programmable Rails" (arXiv:2310.10501) — https://arxiv.org/abs/2310.10501 — 形式化：可编程护栏（programmable rails）是『用户定义的、独立于底层 LLM 的、可解释的』——控制有害话题、预定义对话路径和语言风格——是在模型外围绕其添加的护栏层，而非训练进模型
+- nanoMuse — https://github.com/nano-muse/nanoMuse — 一个受『凡是不可撤销的事，先问再做』治理的个人智能体：删除、发送、支付之前暂停等待确认，把登录与验证码交还给人类，并把审批路由回你正拿着的那台设备
 
 ## 相关模式（Related）
 

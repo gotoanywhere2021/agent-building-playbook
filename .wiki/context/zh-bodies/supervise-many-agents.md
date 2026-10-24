@@ -21,6 +21,7 @@
 
 - Zhou，"OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight"（arXiv:2510.24937）— https://arxiv.org/abs/2510.24937 — 在多个 LLM 智能体之上构建分层监督界面：分层组织目标、监控任务完成、解决智能体间冲突、可视化依赖图；直接实现了本模式所描述的监督界面
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议设置智能体暂停以听取人类反馈的检查点；其编排者-工作者（orchestrator-workers）工作流——中央模型委托并行工作者——正是本模式在其上叠加单一监督界面的形态
+- Agents Anywhere — https://github.com/anywhere-labs/Agents-Anywhere — 在任何设备上控制任意编码智能体：智能体在常开机器上无头运行，手机或笔记本成为监督界面，指挥与审批随你手中的设备走
 
 ## 相关模式（Related）
 

@@ -236,10 +236,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Context"><span>上下文</span><span class="n">19</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">21</span></summary>
 <a class="ov" href="../families/context.html">总览（Overview）</a>
 <details class="dim">
-<summary title="context-engineering"><span>上下文工程</span><span class="n">14</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">16</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
@@ -248,10 +248,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
 <a class="leaf" title="Hang Up, Call Back" href="../patterns/hang-up-call-back.html">挂断，重拨</a>
+<a class="leaf" title="Instrument the Context Window" href="../patterns/instrument-the-context-window.html">给上下文窗口装上仪表（Instrument the Context Window）</a>
 <a class="leaf" title="Just-in-Time Retrieval Over Pre-Loading" href="../patterns/just-in-time-retrieval.html">即时检索（Just-in-Time）优于预加载</a>
 <a class="leaf" title="Persist Environment Facts" href="../patterns/persist-environment-facts.html">持久化环境事实</a>
 <a class="leaf" title="Repository Shape Is Cognitive Architecture" href="../patterns/repository-shape-is-cognitive-architecture.html">仓库形状就是认知架构</a>
 <a class="leaf" title="Scope and Expire Memory" href="../patterns/scope-and-expire-memory.html">给记忆划定作用域并让它过期</a>
+<a class="leaf" title="Skills Load on Trigger, Not Always-On" href="../patterns/skills-load-on-trigger.html">技能按触发加载（Skills Load on Trigger），而不是常驻</a>
 <a class="leaf" title="State the Target, Not the Prohibition" href="../patterns/state-the-target.html">陈述目标，而不是禁令</a>
 <a class="leaf" title="Use Sub-Agents as Context Sinks" href="../patterns/subagents-as-context-sinks.html">用子智能体（Sub-agent）当上下文回收站</a>
 </details>
@@ -324,10 +326,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Trust"><span>信任</span><span class="n">25</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">28</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim" open>
-<summary title="verification"><span>验证</span><span class="n">10</span></summary>
+<summary title="verification"><span>验证</span><span class="n">12</span></summary>
 <a class="leaf" title="Adversarial Parallel Review" href="../patterns/adversarial-parallel-review.html">对抗式并行评审（Adversarial Parallel Review）</a>
 <a class="leaf" title="Designing the Agentic Loop Is the Core Skill" href="../patterns/design-the-loop.html">设计智能体循环（Loop）是核心技能</a>
 <a class="leaf" title="Eval-Driven Development" href="../patterns/eval-driven-development.html">评估（Eval）驱动开发</a>
@@ -335,18 +337,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Evidence Before Assertions" href="../patterns/evidence-before-assertions.html">证据（Evidence）先于断言</a>
 <a class="leaf" title="Give Agents the Ability to Verify Their Own Work" href="../patterns/self-verification.html">给智能体验证自身工作的能力</a>
 <a class="leaf" title="Incremental Validation: The 3-File Rule" href="../patterns/three-file-rule.html">增量验证：三文件规则（3-File Rule）</a>
+<a class="leaf" title="Make Runs Replayable" href="../patterns/make-runs-replayable.html">让运行可回放（Make Runs Replayable）</a>
 <a class="leaf" title="Test What the Product Does, Not How" href="../patterns/test-what-not-how.html">测试产品做什么，而不是怎么做</a>
 <a class="leaf" title="Tests Are Code — Update Them First on API Change" href="../patterns/tests-first-on-api-change.html">API 变更时，先改测试</a>
+<a class="leaf" title="Train Against Simulated Counterparts" href="../patterns/train-against-simulated-counterparts.html">对抗模拟对手训练（Train Against Simulated Counterparts）</a>
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">9</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">10</span></summary>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
 <a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
 <a class="leaf" title="Mark Un-Run Steps Inline for Review" href="../patterns/mark-skipped-steps.html">把未执行的步骤就地标出</a>
+<a class="leaf" title="Register the Unknowns" href="../patterns/register-the-unknowns.html">登记未知（Register the Unknowns）</a>
 <a class="leaf" title="Separate Merge From Exposure" href="../patterns/separate-merge-from-exposure.html">把合并（Merge）与暴露（Exposure）分开</a>
 <a class="leaf" title="Separate the Proposer From the Authority" href="../patterns/proposer-authority-separation.html">把提议方与批准方分开</a>
 <a class="leaf" title="Use a Second Agent as Auditor" href="../patterns/auditor-agent.html">用第二个智能体当审计员（Auditor）</a>
@@ -416,7 +421,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to">慎用场景（When NOT to）</h3>
 <ul><li>当评估套件需要昂贵的外部资源（人工标注、慢速 API、大规模 GPU 运行），无法为日常 CI 轻量化时——在这种情形下，为日常检查维护一个快速轻量版本，把完整套件留给发布关口。</li><li>当系统变化太快、评估用例几天内就会过时——在早期探索阶段，轻量的人工检查可能比维护正式套件有更好的投资回报；待系统稳定后再建立常备能力。</li><li>当评估结果并未被用于决策——如果团队运行了评估却无视结果，问题在流程而非工具；先修流程，再投资更多评估基础设施。</li></ul>
 <h3 id="exemplars">实例（Exemplars）</h3>
-<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议『从简单提示词开始，用全面评估进行优化，只有当更简单的方案不足时才引入多步智能体系统』——评估是每一次复杂度升级的常设仲裁者，而不是发布时的关卡</li><li>Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — 正式化：建议在 CI/CD 中对每次智能体变更与模型升级运行自动化评估，像对待单元测试一样例行维护，并把套件视为『活的产物』（a living artifact）——其价值远超初始发布关口；发布于 2026 年 1 月</li><li>Saxena 等，&quot;Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents&quot;（arXiv:2511.10049）— https://arxiv.org/abs/2511.10049 — 实证支持：提出随智能体需求演化而演化的基准基础设施，把评估视为面向生产智能体的、类 CI 的持久工具，而非静态的一次性测量</li></ul>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：建议『从简单提示词开始，用全面评估进行优化，只有当更简单的方案不足时才引入多步智能体系统』——评估是每一次复杂度升级的常设仲裁者，而不是发布时的关卡</li><li>Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — 正式化：建议在 CI/CD 中对每次智能体变更与模型升级运行自动化评估，像对待单元测试一样例行维护，并把套件视为『活的产物』（a living artifact）——其价值远超初始发布关口；发布于 2026 年 1 月</li><li>Saxena 等，&quot;Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents&quot;（arXiv:2511.10049）— https://arxiv.org/abs/2511.10049 — 实证支持：提出随智能体需求演化而演化的基准基础设施，把评估视为面向生产智能体的、类 CI 的持久工具，而非静态的一次性测量</li><li>TheAgentCompany — https://github.com/TheAgentCompany/TheAgentCompany — 在模拟软件公司内执行有后果、长时程任务的基准（聊天、GitLab、维基、同事）；作为智能体自主性的常设度量持续维护，其发现——自我验证与求助仍是最弱技能——直接反哺智能体设计</li></ul>
 <h3 id="related">相关模式（Related）</h3>
 <ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="prove-on-small-sample.html"><code>patterns/prove-on-small-sample.md</code></a></li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
 <p>Evals are most valuable not at initial launch but over time, when models change, prompts drift, data distributions shift, and the system evolves. A standing eval capability means the eval suite can be run at any time by any team member, produces the same measurement protocol each time, and produces results that are comparable across runs — so that changes in performance over time are detectable and attributable. This requires more than writing eval scripts: it requires that the eval suite is checked in to source control alongside the system it evaluates, that it runs in CI (or can be triggered on demand), that results are stored and compared rather than just printed, and that the team has a norm of running evals before shipping changes that might affect quality. An eval that cannot be run cheaply on demand will not be run when it would be most valuable — just before a change goes out. An eval whose results are not stored cannot be compared to prior runs. An eval that is not in version control becomes stale faster than the system it was meant to measure.</p>
@@ -426,7 +431,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>When the eval suite requires expensive external resources (human labelers, slow APIs, large GPU runs) that cannot be made lightweight for routine CI use — in those cases, maintain a fast lightweight version for routine checks and reserve the full suite for release gates.</li><li>When the system is changing so rapidly that eval cases become stale within days — in early exploratory phases, lightweight human inspection may have better return on investment than maintaining a formal suite; commit to the standing capability once the system stabilizes.</li><li>When eval results are not being used to make decisions — if the team runs evals but ignores the results, the problem is process, not tooling; fix the process before investing in more eval infrastructure.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends &quot;Start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when simpler solutions fall short&quot; — evaluation as the standing arbiter of every escalation in complexity, not a launch-time gate</li><li>Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — formalizes: recommends running automated evals in CI/CD on each agent change and model upgrade, maintaining them as routinely as unit tests, and treating the suite as &#x27;a living artifact&#x27; — value that extends well past the initial launch gate; published Jan 2026</li><li>Saxena et al., &quot;Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents&quot; (arXiv:2511.10049) — https://arxiv.org/abs/2511.10049 — empirical support: proposes benchmark infrastructure that evolves as agent requirements change, treating evaluation as durable CI-like tooling for production agents rather than static one-time measurement</li></ul>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends &quot;Start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when simpler solutions fall short&quot; — evaluation as the standing arbiter of every escalation in complexity, not a launch-time gate</li><li>Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — formalizes: recommends running automated evals in CI/CD on each agent change and model upgrade, maintaining them as routinely as unit tests, and treating the suite as &#x27;a living artifact&#x27; — value that extends well past the initial launch gate; published Jan 2026</li><li>Saxena et al., &quot;Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents&quot; (arXiv:2511.10049) — https://arxiv.org/abs/2511.10049 — empirical support: proposes benchmark infrastructure that evolves as agent requirements change, treating evaluation as durable CI-like tooling for production agents rather than static one-time measurement</li><li>TheAgentCompany — https://github.com/TheAgentCompany/TheAgentCompany — a benchmark of consequential, long-horizon tasks inside a simulated software company (chat, GitLab, wikis, colleagues); maintained as a standing measurement of agentic autonomy, and its findings — self-verification and asking for help remain the weakest skills — feed directly back into agent design</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="prove-on-small-sample.html"><code>patterns/prove-on-small-sample.md</code></a></li></ul></article></details>
 </main>

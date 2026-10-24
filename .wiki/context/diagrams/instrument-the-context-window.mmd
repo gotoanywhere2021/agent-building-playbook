@@ -1,0 +1,17 @@
+flowchart TD
+    A["运行中的智能体（Agent at work）"] --> B["上下文仪表盘（Context dashboard）"]
+    B --> C["构成（Composition）：系统提示·工具定义·检索内容·历史各自占多少"]
+    B --> D["拆分（Breakdown）：哪个文件·哪条消息·哪个工具"]
+    B --> E["演变（Evolution）：逐轮增长·压缩后的断崖（compaction cliff）"]
+    C --> F{"哪个组件先越过预算？（What crossed the budget first?）"}
+    D --> F
+    E --> F
+    F --> G["针对性优化（Targeted fix）：裁剪·压缩·即时检索（JIT）"]
+    G --> H["再测量（Re-measure）"]
+    H --> B
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B core;
+    class F gate;
+    class A,C,D,E,G,H out;

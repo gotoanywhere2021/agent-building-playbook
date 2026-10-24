@@ -23,6 +23,7 @@
 - Gamma, Helm, Johnson, Vlissides, *Design Patterns: Elements of Reusable Object-Oriented Software* (1994) — https://en.wikipedia.org/wiki/Design_Patterns — 经典先声：以 23 个命名、分类的模式把软件模式目录形式化，证明了有文档的实践能在从业者之间传播而不强制共享实现。
 - Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — 形式化：Voyager 不断生长的技能库是一个面向 LLM 智能体的可查询模式注册表，积累离散的、经过测试的行为，使能力跨会话复利而不要求智能体重新发现它们。
 - 2389 Research, skills.2389.ai — https://skills.2389.ai — 一方实践：本 playbook 的姊妹注册表——一个可浏览的 Claude Code 插件与 MCP 服务器市场（『这些是我们每天都在用的工具』），每一条都能用一条命令装进任意智能体；本模式的包管理器隐喻的具象化。
+- Voyager — https://github.com/voyager-crew/voyager — 一个浏览器增强套件，其提示词管理器把提示词当作可移植库：一次整理、按名索引、在任意网站上跨 Gemini、Claude、ChatGPT 与 DeepSeek 调用——把注册表与任何单一聊天应用解耦
 
 ## 相关模式（Related）
 

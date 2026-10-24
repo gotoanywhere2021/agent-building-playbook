@@ -1,12 +1,30 @@
 {
   "_comment": "人工维护的中文文案层（不是生成物）。publish.sh 渲染 wiki/ 时套用；缺某条则回退英文。family 键与 dimension 键须与 wheel/taxonomy.yaml 中的英文名一致；pattern 键为文件名 slug。",
   "families": {
-    "Mindset": { "name": "心智", "gloss": "动手构建之前，如何思考、看重什么。" },
-    "Context": { "name": "上下文", "gloss": "模型看到什么、记住什么。" },
-    "Tooling": { "name": "工具", "gloss": "模型的双手，以及这双手的代价。" },
-    "Orchestration": { "name": "编排", "gloss": "工作如何被塑形、分解与执行。" },
-    "Trust": { "name": "信任", "gloss": "让结果正确、可靠、可观察。" },
-    "People": { "name": "人", "gloss": "人的意图、注意力与杠杆。" }
+    "Mindset": {
+      "name": "心智",
+      "gloss": "动手构建之前，如何思考、看重什么。"
+    },
+    "Context": {
+      "name": "上下文",
+      "gloss": "模型看到什么、记住什么。"
+    },
+    "Tooling": {
+      "name": "工具",
+      "gloss": "模型的双手，以及这双手的代价。"
+    },
+    "Orchestration": {
+      "name": "编排",
+      "gloss": "工作如何被塑形、分解与执行。"
+    },
+    "Trust": {
+      "name": "信任",
+      "gloss": "让结果正确、可靠、可观察。"
+    },
+    "People": {
+      "name": "人",
+      "gloss": "人的意图、注意力与杠杆。"
+    }
   },
   "dimensions": {
     "meta-principles": "元原则",
@@ -475,6 +493,26 @@
     "simulated-review-squad": {
       "title": "模拟评审团（Simulated Review Squad）",
       "one_liner": "在作品到达真实用户之前，先过一遍由模拟视角组成的陪审团——专家与新手用户、合规、客服、高管发起人、怀疑的工程师、无障碍、安全——基于真实转录与工单构建，又早又便宜地翻出反对意见。"
+    },
+    "skills-load-on-trigger": {
+      "title": "技能按触发加载（Skills Load on Trigger），而不是常驻",
+      "one_liner": "把方法论做成技能库：常驻上下文的只有『名字+触发条件』的索引，完整流程文档只在触发条件命中时进入上下文——再用闸门让『必须用』成为纪律，而不是建议。"
+    },
+    "instrument-the-context-window": {
+      "title": "给上下文窗口装上仪表（Instrument the Context Window）",
+      "one_liner": "看不见的上下文无法治理：在优化提示词、记忆或检索之前，先测量窗口里实际装了什么——构成、来源拆分、逐轮演变。"
+    },
+    "register-the-unknowns": {
+      "title": "登记未知（Register the Unknowns）",
+      "one_liner": "未解决的问题不是失败——未登记的才是。给每个悬而未决的问题一张一等公民记录：严重度、范围、以及什么证据能解决它；随认知加深只增不改。"
+    },
+    "make-runs-replayable": {
+      "title": "让运行可回放（Make Runs Replayable）",
+      "one_liner": "把一次运行捕获成只增、规范化的事件日志，让相同事件总能重建相同状态——此后任何变更都是与已记录运行的对比（diff），而不是一次新的信仰之跃。"
+    },
+    "train-against-simulated-counterparts": {
+      "title": "对抗模拟对手训练（Train Against Simulated Counterparts）",
+      "one_liner": "把对手方——客户、评审、评分者——做成跑在上下文防火墙后面、带确定性阶段闸门的 AI，练习因此可评分、可回放、且答案不会泄漏。"
     }
   }
 }

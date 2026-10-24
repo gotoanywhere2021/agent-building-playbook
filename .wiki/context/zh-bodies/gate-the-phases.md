@@ -21,3 +21,4 @@
 - Amplifier 的 superpowers 工作流显式地结构化各阶段：头脑风暴 → 人类批准 → 计划 → 人类批准 → 实现 → 验证。每个箭头都是一道门。
 - 分阶段部署管道在构建、测试、预发布（staging）与生产之间设门——纪律完全相同，只是应用于基础设施而非开发工作流。
 - Robert G. Cooper, "Stage-Gate Systems: A New Tool for Managing New Products" (*Business Horizons*, 1990) — https://ideas.repec.org/a/eee/bushor/v33y1990i3p44-54.html — 经典先例（链接为 IDEAS/RePEc 书目元数据；1990 年原文没有稳定的开放获取主页）：提出阶段-门（stage-gate）体系，以正式检查点要求显式的 go/kill 决策，工作才能进入下一阶段
+- Superpowers — https://github.com/obra/superpowers — 『强制工作流，不是建议』：管道在实现前先闸设计文档、写码前先闸失败的测试，智能体不调用对应技能就无法越过阶段边界

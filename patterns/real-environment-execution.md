@@ -31,6 +31,7 @@ An agent that tests a deployment by running it against a mock, a stub, or a redu
 - Cindy Sridharan, "Testing in Production: the hard parts" — https://copyconstruct.medium.com/testing-in-production-the-hard-parts-3f06cefaf592 — extends dev/prod parity to distributed systems; argues that many failure modes are invisible outside real distributed systems, and that blast radius management — not avoidance — is the right response to running real workloads in real places
 - 2389 Research, scenario-testing — https://github.com/2389-research/scenario-testing — first-party: a plugin that enforces "NO FEATURE IS VALIDATED UNTIL A SCENARIO PASSES WITH REAL DEPENDENCIES" — end-to-end scenarios against real systems sit at the top of its truth hierarchy, and mocks are named as false confidence
 - 2389 Research, ish — https://github.com/2389-research/ish — first-party: a "digital twin of third party APIs" (Google, GitHub, Twilio, Discord, and more) with persistent state, request logging, and webhook simulation — the deliberate mock built for the exception this pattern carves out, when the real service is quota-burning or destructive to test against
+- AgentBench (ICLR'24) — https://github.com/THUDM/AgentBench — evaluates LLMs as agents across eight distinct environments (operating system, database, knowledge graph, web browsing and more), each sandboxed with its own interaction protocol; the finding that models strong in chat fall apart as agents emerges only when workloads run in their proper environments
 
 ## Related
 

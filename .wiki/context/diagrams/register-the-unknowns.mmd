@@ -1,0 +1,20 @@
+flowchart TD
+    A["分析 / 执行中（Analysis in progress）"] --> B{"有未决问题？（Open question?）"}
+    B -- "无（no）" --> C["结论 + 证据（Conclusion with evidence）"]
+    B -- "有（yes）" --> D["登记未知（Register unknown）：编号·问题·严重度·领域"]
+    D --> E["绑定证据（Attach supporting / contradicting evidence）"]
+    E --> F["声明解决所需的证据类型（Declare resolving evidence class）"]
+    C --> G["运行结束（Run ends）"]
+    F --> G
+    G --> H{"后来有了新证据？（New evidence later?）"}
+    H -- "是（yes）" --> I["追加修订，不改写（Append-only revision）"]
+    I --> J{"已解决？（Resolved?）"}
+    J -- "是（yes）" --> K["关闭：附解决证据（Close with evidence）"]
+    J -- "否（no）" --> H
+    H -- "否（no）" --> L["保持开放：阻塞依赖它的结论（Stays open; blocks dependent claims）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,F,I core;
+    class B,H,J gate;
+    class A,C,E,G,K,L out;

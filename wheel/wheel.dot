@@ -55,6 +55,8 @@ digraph wheel {
   "context-engineering" -> "embed-guidance-in-tool-output";
   "hang-up-call-back" [label="Hang Up, Call Back", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "hang-up-call-back";
+  "instrument-the-context-window" [label="Instrument the Context Window", fillcolor="#bedaed", fontsize=9];
+  "context-engineering" -> "instrument-the-context-window";
   "just-in-time-retrieval" [label="Just-in-Time Retrieval Over Pre-Loading", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "just-in-time-retrieval";
   "persist-environment-facts" [label="Persist Environment Facts", fillcolor="#bedaed", fontsize=9];
@@ -63,6 +65,8 @@ digraph wheel {
   "context-engineering" -> "repository-shape-is-cognitive-architecture";
   "scope-and-expire-memory" [label="Scope and Expire Memory", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "scope-and-expire-memory";
+  "skills-load-on-trigger" [label="Skills Load on Trigger, Not Always-On", fillcolor="#bedaed", fontsize=9];
+  "context-engineering" -> "skills-load-on-trigger";
   "state-the-target" [label="State the Target, Not the Prohibition", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "state-the-target";
   "subagents-as-context-sinks" [label="Use Sub-Agents as Context Sinks", fillcolor="#bedaed", fontsize=9];
@@ -187,10 +191,14 @@ digraph wheel {
   "verification" -> "self-verification";
   "three-file-rule" [label="Incremental Validation: The 3-File Rule", fillcolor="#edbec4", fontsize=9];
   "verification" -> "three-file-rule";
+  "make-runs-replayable" [label="Make Runs Replayable", fillcolor="#edbec4", fontsize=9];
+  "verification" -> "make-runs-replayable";
   "test-what-not-how" [label="Test What the Product Does, Not How", fillcolor="#edbec4", fontsize=9];
   "verification" -> "test-what-not-how";
   "tests-first-on-api-change" [label="Tests Are Code — Update Them First on API Change", fillcolor="#edbec4", fontsize=9];
   "verification" -> "tests-first-on-api-change";
+  "train-against-simulated-counterparts" [label="Train Against Simulated Counterparts", fillcolor="#edbec4", fontsize=9];
+  "verification" -> "train-against-simulated-counterparts";
   "video-driven-development" [label="Video-Driven Development", fillcolor="#edbec4", fontsize=9];
   "verification" -> "video-driven-development";
   "reliability" [fillcolor="#ce6d7a"];
@@ -207,6 +215,8 @@ digraph wheel {
   "reliability" -> "auditable-artifacts";
   "mark-skipped-steps" [label="Mark Un-Run Steps Inline for Review", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "mark-skipped-steps";
+  "register-the-unknowns" [label="Register the Unknowns", fillcolor="#edbec4", fontsize=9];
+  "reliability" -> "register-the-unknowns";
   "separate-merge-from-exposure" [label="Separate Merge From Exposure", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "separate-merge-from-exposure";
   "proposer-authority-separation" [label="Separate the Proposer From the Authority", fillcolor="#edbec4", fontsize=9];

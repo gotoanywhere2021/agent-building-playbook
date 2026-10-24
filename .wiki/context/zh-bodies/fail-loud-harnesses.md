@@ -18,3 +18,4 @@
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents：讨论了工具设计质量，包括让工具误用在结构上更难的防错（poka-yoke）惯例，以及把工具调用结果当作真值（ground truth）——本模式将这一设计心态延伸到错误处理
 - Jim Shore, "Fail Fast" (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — 经典先例：『软件应当在出错时立即、可见地失败，而不是静默地绕过错误』这一原则的奠基性表述，由此得到更稳健、复合失败更少的系统
+- ai-deals-aggregator — https://github.com/buguoshixc/ai-deals-aggregator — 每次发布前运行 53 步冻结验证闸门（数据校验、历史回放、翻译、SEO、自测、字节级可复现、真实浏览器验收）；移除任何一步都会触发一致性检查，且守卫本身经过变异测试（mutation-tested）以证明它们真的会咬人

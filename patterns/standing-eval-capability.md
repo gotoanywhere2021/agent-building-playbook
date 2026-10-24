@@ -29,6 +29,7 @@ A standing capability should also evaluate the harness separately from the model
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends "Start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when simpler solutions fall short" — evaluation as the standing arbiter of every escalation in complexity, not a launch-time gate
 - Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — formalizes: recommends running automated evals in CI/CD on each agent change and model upgrade, maintaining them as routinely as unit tests, and treating the suite as 'a living artifact' — value that extends well past the initial launch gate; published Jan 2026
 - Saxena et al., "Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents" (arXiv:2511.10049) — https://arxiv.org/abs/2511.10049 — empirical support: proposes benchmark infrastructure that evolves as agent requirements change, treating evaluation as durable CI-like tooling for production agents rather than static one-time measurement
+- TheAgentCompany — https://github.com/TheAgentCompany/TheAgentCompany — a benchmark of consequential, long-horizon tasks inside a simulated software company (chat, GitLab, wikis, colleagues); maintained as a standing measurement of agentic autonomy, and its findings — self-verification and asking for help remain the weakest skills — feed directly back into agent design
 
 ## Related
 

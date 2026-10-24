@@ -236,10 +236,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Context"><span>上下文</span><span class="n">19</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">21</span></summary>
 <a class="ov" href="../families/context.html">总览（Overview）</a>
 <details class="dim">
-<summary title="context-engineering"><span>上下文工程</span><span class="n">14</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">16</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
@@ -248,10 +248,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
 <a class="leaf" title="Hang Up, Call Back" href="../patterns/hang-up-call-back.html">挂断，重拨</a>
+<a class="leaf" title="Instrument the Context Window" href="../patterns/instrument-the-context-window.html">给上下文窗口装上仪表（Instrument the Context Window）</a>
 <a class="leaf" title="Just-in-Time Retrieval Over Pre-Loading" href="../patterns/just-in-time-retrieval.html">即时检索（Just-in-Time）优于预加载</a>
 <a class="leaf" title="Persist Environment Facts" href="../patterns/persist-environment-facts.html">持久化环境事实</a>
 <a class="leaf" title="Repository Shape Is Cognitive Architecture" href="../patterns/repository-shape-is-cognitive-architecture.html">仓库形状就是认知架构</a>
 <a class="leaf" title="Scope and Expire Memory" href="../patterns/scope-and-expire-memory.html">给记忆划定作用域并让它过期</a>
+<a class="leaf" title="Skills Load on Trigger, Not Always-On" href="../patterns/skills-load-on-trigger.html">技能按触发加载（Skills Load on Trigger），而不是常驻</a>
 <a class="leaf" title="State the Target, Not the Prohibition" href="../patterns/state-the-target.html">陈述目标，而不是禁令</a>
 <a class="leaf" title="Use Sub-Agents as Context Sinks" href="../patterns/subagents-as-context-sinks.html">用子智能体（Sub-agent）当上下文回收站</a>
 </details>
@@ -324,10 +326,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Trust"><span>信任</span><span class="n">25</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">28</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim">
-<summary title="verification"><span>验证</span><span class="n">10</span></summary>
+<summary title="verification"><span>验证</span><span class="n">12</span></summary>
 <a class="leaf" title="Adversarial Parallel Review" href="../patterns/adversarial-parallel-review.html">对抗式并行评审（Adversarial Parallel Review）</a>
 <a class="leaf" title="Designing the Agentic Loop Is the Core Skill" href="../patterns/design-the-loop.html">设计智能体循环（Loop）是核心技能</a>
 <a class="leaf" title="Eval-Driven Development" href="../patterns/eval-driven-development.html">评估（Eval）驱动开发</a>
@@ -335,18 +337,21 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Evidence Before Assertions" href="../patterns/evidence-before-assertions.html">证据（Evidence）先于断言</a>
 <a class="leaf" title="Give Agents the Ability to Verify Their Own Work" href="../patterns/self-verification.html">给智能体验证自身工作的能力</a>
 <a class="leaf" title="Incremental Validation: The 3-File Rule" href="../patterns/three-file-rule.html">增量验证：三文件规则（3-File Rule）</a>
+<a class="leaf" title="Make Runs Replayable" href="../patterns/make-runs-replayable.html">让运行可回放（Make Runs Replayable）</a>
 <a class="leaf" title="Test What the Product Does, Not How" href="../patterns/test-what-not-how.html">测试产品做什么，而不是怎么做</a>
 <a class="leaf" title="Tests Are Code — Update Them First on API Change" href="../patterns/tests-first-on-api-change.html">API 变更时，先改测试</a>
+<a class="leaf" title="Train Against Simulated Counterparts" href="../patterns/train-against-simulated-counterparts.html">对抗模拟对手训练（Train Against Simulated Counterparts）</a>
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">9</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">10</span></summary>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
 <a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
 <a class="leaf" title="Mark Un-Run Steps Inline for Review" href="../patterns/mark-skipped-steps.html">把未执行的步骤就地标出</a>
+<a class="leaf" title="Register the Unknowns" href="../patterns/register-the-unknowns.html">登记未知（Register the Unknowns）</a>
 <a class="leaf" title="Separate Merge From Exposure" href="../patterns/separate-merge-from-exposure.html">把合并（Merge）与暴露（Exposure）分开</a>
 <a class="leaf" title="Separate the Proposer From the Authority" href="../patterns/proposer-authority-separation.html">把提议方与批准方分开</a>
 <a class="leaf" title="Use a Second Agent as Auditor" href="../patterns/auditor-agent.html">用第二个智能体当审计员（Auditor）</a>
@@ -412,14 +417,14 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to">慎用场景（When NOT to）</h3>
 <ul><li>面向用户的产品中，静默降级（一个合理的回退）比暴露给终端用户的错误面更好——但即便如此，内部也要响亮地记录日志。</li><li>当装置本身就是安全网、受控回退是有意为之且已记录在案时——但这是产品决策，不是评估决策。</li></ul>
 <h3 id="exemplars">实例（Exemplars）</h3>
-<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents：讨论了工具设计质量，包括让工具误用在结构上更难的防错（poka-yoke）惯例，以及把工具调用结果当作真值（ground truth）——本模式将这一设计心态延伸到错误处理</li><li>Jim Shore, &quot;Fail Fast&quot; (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — 经典先例：『软件应当在出错时立即、可见地失败，而不是静默地绕过错误』这一原则的奠基性表述，由此得到更稳健、复合失败更少的系统</li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents：讨论了工具设计质量，包括让工具误用在结构上更难的防错（poka-yoke）惯例，以及把工具调用结果当作真值（ground truth）——本模式将这一设计心态延伸到错误处理</li><li>Jim Shore, &quot;Fail Fast&quot; (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — 经典先例：『软件应当在出错时立即、可见地失败，而不是静默地绕过错误』这一原则的奠基性表述，由此得到更稳健、复合失败更少的系统</li><li>ai-deals-aggregator — https://github.com/buguoshixc/ai-deals-aggregator — 每次发布前运行 53 步冻结验证闸门（数据校验、历史回放、翻译、SEO、自测、字节级可复现、真实浏览器验收）；移除任何一步都会触发一致性检查，且守卫本身经过变异测试（mutation-tested）以证明它们真的会咬人</li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
 <p>A test harness that handles agent failures &quot;helpfully&quot; — by falling back to a default answer, swallowing exceptions, or completing the task itself when the agent cannot — teaches you nothing about the agent. Worse, it creates the illusion of success where none exists. Fail-loud harnesses are designed with the opposite instinct: when an agent step fails, the harness surfaces that failure immediately and loudly, naming the file, the step, and the reason, rather than papering over it.</p>
 <h3 id="when-to-reach-for-it-2">When to reach for it</h3>
 <ul><li>Any eval or test harness that wraps an LLM or agent call: make the failure path loud before the happy path clean.</li><li>When a silent failure mode exists in your harness (e.g., a <code>try/except</code> that swallows errors and returns a default).</li><li>When you discover that a harness has been masking failures — your pass rate looks high but the agent outputs are wrong.</li><li>When integrating a new tool call: write the error path first, before the success path.</li></ul>
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>User-facing products where silent degradation (a sensible fallback) is preferable to an error surface visible to the end user — but even then, log loudly internally.</li><li>When the harness is a safety net and controlled fallback is intentional and documented — but this is a product decision, not an evaluation one.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses tool design quality, including poka-yoke conventions that make tool misuse structurally harder and the use of tool call results as ground truth — the design mindset this pattern extends to error handling</li><li>Jim Shore, &quot;Fail Fast&quot; (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — classic antecedent: the foundational statement of the principle that software should fail immediately and visibly on errors rather than silently working around them, producing more robust systems with fewer compounding failures</li></ul></article></details><section class="related"><h2>相关模式（Related patterns）</h2><ul class="rows"><li><a class="rt" href="critic-applications.html">批评者应用（Critic Application）</a><span class="ol">构建一个确定性工具——二进制、解析器、校验器或 CLI——在智能体眼中它就是法律：无法讨价还价、只能满足；它把复杂意图压缩成可校验的约束，并补足模型的短板。</span></li><li><a class="rt" href="finishing-is-the-bottleneck.html">瓶颈在收尾（Finishing），不在起跑</a><span class="ol">模型让起步变得容易——说得过去的 80% 很快出现——但说得过去不等于完成，最后 20% 吃掉大部分注意力与风险；真正的指标是收敛：可靠抵达『已验收、已上线、被观察』。</span></li><li><a class="rt" href="reliability-before-features.html">先修可靠性（Reliability），再谈功能</a><span class="ol">真正的敌人是不稳定而不是能力不足——『时灵时不灵』的系统比『稳定地失败』的系统更难改进。</span></li><li><a class="rt" href="gene-transfer.html">基因迁移——移植行为，而不是代码</a><span class="ol">系统间可复用的单元很少是整个工具，而是一个性状（trait）——一段评审提示词、一个校验循环、一种上下文文件结构、一个 CLI 交互设计——把表现型从生物体中分离，移植有价值的部分。</span></li><li><a class="rt" href="deterministic-rails.html">给模型判断装上确定性护栏</a><span class="ol">最强的智能体工作流让确定性步骤与模型介导步骤交替——模型把意图翻译成可校验状态，脚本、测试与校验器兜住漂移；两层都不必完美。</span></li></ul></section>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses tool design quality, including poka-yoke conventions that make tool misuse structurally harder and the use of tool call results as ground truth — the design mindset this pattern extends to error handling</li><li>Jim Shore, &quot;Fail Fast&quot; (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — classic antecedent: the foundational statement of the principle that software should fail immediately and visibly on errors rather than silently working around them, producing more robust systems with fewer compounding failures</li><li>ai-deals-aggregator — https://github.com/buguoshixc/ai-deals-aggregator — a 53-step frozen validation gate runs before every publish (data validation, history replay, translation, SEO, self-tests, byte-reproducibility, real-browser acceptance); removing any step trips a consistency check, and the guards themselves are mutation-tested to prove they bite</li></ul></article></details><section class="related"><h2>相关模式（Related patterns）</h2><ul class="rows"><li><a class="rt" href="critic-applications.html">批评者应用（Critic Application）</a><span class="ol">构建一个确定性工具——二进制、解析器、校验器或 CLI——在智能体眼中它就是法律：无法讨价还价、只能满足；它把复杂意图压缩成可校验的约束，并补足模型的短板。</span></li><li><a class="rt" href="finishing-is-the-bottleneck.html">瓶颈在收尾（Finishing），不在起跑</a><span class="ol">模型让起步变得容易——说得过去的 80% 很快出现——但说得过去不等于完成，最后 20% 吃掉大部分注意力与风险；真正的指标是收敛：可靠抵达『已验收、已上线、被观察』。</span></li><li><a class="rt" href="reliability-before-features.html">先修可靠性（Reliability），再谈功能</a><span class="ol">真正的敌人是不稳定而不是能力不足——『时灵时不灵』的系统比『稳定地失败』的系统更难改进。</span></li><li><a class="rt" href="gene-transfer.html">基因迁移——移植行为，而不是代码</a><span class="ol">系统间可复用的单元很少是整个工具，而是一个性状（trait）——一段评审提示词、一个校验循环、一种上下文文件结构、一个 CLI 交互设计——把表现型从生物体中分离，移植有价值的部分。</span></li><li><a class="rt" href="deterministic-rails.html">给模型判断装上确定性护栏</a><span class="ol">最强的智能体工作流让确定性步骤与模型介导步骤交替——模型把意图翻译成可校验状态，脚本、测试与校验器兜住漂移；两层都不必完美。</span></li></ul></section>
 </main>
 <aside class="toc"><div class="toc-label">本页内容（On this page）</div><ul><li class="l3"><a href="#what-it-is">这是什么（What it is）</a></li><li class="l3"><a href="#when-to-reach-for-it">适用场景（When to reach for it）</a></li><li class="l3"><a href="#when-not-to">慎用场景（When NOT to）</a></li><li class="l3"><a href="#exemplars">实例（Exemplars）</a></li></ul></aside>
 </div>
