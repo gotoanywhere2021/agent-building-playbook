@@ -181,6 +181,9 @@ article.body th { background:var(--wash); }
 .btn { display:inline-block; padding:8px 16px; background:var(--blue);
   color:#fff; border-radius:6px; font-weight:600; font-size:14px; }
 .btn:hover { background:var(--blue-d); color:#fff; text-decoration:none; }
+.insp { color:var(--muted); font-size:13px; margin-top:16px; line-height:1.8; }
+.insp b { color:var(--ink); }
+.insp a { color:var(--blue); }
 .btn.ghost { background:#fff; color:var(--blue); border:1px solid var(--line); }
 .btn.ghost:hover { border-color:var(--blue); background:var(--wash); }
 .fam-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
@@ -815,6 +818,16 @@ def main():
         '<a class="btn" href="explore.html">浏览目录（Browse）</a>'
         '<a class="btn ghost" href="https://github.com/ramparte/agent-building-playbook">'
         "到 GitHub 贡献（Contribute）↗</a></div>"
+        '<p class="insp">思想源流（Inspirations）：<b>Sam Schillace</b>'
+        "（Google Docs 联合发明者、Microsoft 副首席技术官）——"
+        '📕 <a href="https://book.douban.com/subject/37129755/">《No Prize for Pessimism》</a>'
+        '（乐观是一种工程姿态）&middot; '
+        '✉️ <a href="https://sundaylettersfromsam.substack.com/">Sunday Letters</a>'
+        '（像程序员一样思考）&middot; '
+        '🗂️ <a href="https://www.antoinebuteau.com/lessons-from-sam-schillace/">'
+        "Lessons from Sam Schillace</a>（三十年经验总结）——"
+        "本手册相当一部分模式，可视为这些思想的操作化落地，"
+        '<a href="https://github.com/gotoanywhere2021/agent-building-playbook#思想源流sam-schillaceinspirations">详见导读 ↗</a></p>'
         "</section>"
         "<h2>家族（Families）</h2>"
         '<p class="lede">六个家族（family）组织起整个目录；每个家族展开为若干维度'
