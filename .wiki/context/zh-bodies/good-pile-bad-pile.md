@@ -20,6 +20,7 @@
 ## 实例（Exemplars）
 
 - Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — 经典先例：奠基性的哲学论证『我们能知道的比我们能说出的多』——专家能可靠地为他们无法化约为可陈述规则的案例分类，这正是收集带标签例子胜过索要抽象规则的原因。
+- Li, Ruan & Geng, "Safe Reinforcement Learning with Preference-based Constraint Inference" (PbCRL, ICML 2026) — https://arxiv.org/abs/2603.23565 — 当安全约束复杂或主观到无法写下来时，从人类对轨迹的偏好中推断约束函数；其死区机制的存在，是因为朴素偏好模型会系统性低估重尾安全风险——带标签的样本对承载意图，但标注模型必须拟合代价本身的分布
 
 ## 相关模式（Related）
 

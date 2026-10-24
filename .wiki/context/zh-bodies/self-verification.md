@@ -22,6 +22,7 @@
 - Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — superpowers 的 verify 模式：要求在任何完成声明之前运行验证命令并阅读其输出——『“应该”不是证据』；智能体自我验证，而不是基于『执行过操作』就声称成功
 - Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet"（arXiv:2310.01798）— https://arxiv.org/abs/2310.01798 — 局限：证明内在自我修正（同一模型被重新提示）会让推理精度不升反降——验证必须使用独立信息源，而不是换措辞问同一个模型同一个问题
 - Wang et al., "Self-Consistency Improves Chain of Thought Reasoning in Language Models"（arXiv:2203.11171）— https://arxiv.org/abs/2203.11171 — 形式化：采样多条独立推理路径并选择最一致的答案，相比贪心解码减少错误，确立了基于集成的验证是实证有效的技术
+- Wang et al., "World Models for Robotic Manipulation: A Survey" (arXiv:2606.00113) — https://arxiv.org/abs/2606.00113 — 把结果验证（outcome verification）与候选过滤刻画为预测模型的基础设施角色：先在环境的习得模型里推演动作、验证预测结果、然后才提交——并把幻觉控制列为开放难题
 
 ## 相关模式（Related）
 

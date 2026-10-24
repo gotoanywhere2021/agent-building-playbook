@@ -21,6 +21,7 @@ agent 工作流分布在一个从轻量到重量的频谱上，频谱上的每�
 - Hadfield et al. / Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — How we built our multi-agent research system：区分受益于多 agent 并行（广度优先研究）的任务与需要共享顺序上下文的任务（大多数编码工作），让拓扑与工作的匹配变得具体且有实证支撑。
 - Walden Yan / Cognition — https://cognition.com/blog/dont-build-multi-agents — Don't Build Multi-Agents：论证并行子 agent 在相互依赖的工作上会失败，因为行动携带隐式决策，冲突的决策导致糟糕结果；主张对这类负载使用拥有完整上下文的单个顺序 agent。
 - Cemri et al., "Why Do Multi-Agent LLM Systems Fail?" (arXiv:2503.13657) — https://arxiv.org/abs/2503.13657 — 对 7 个多 agent 系统框架中 14 种失败模式的实证分类；许多失败可追溯到拓扑与任务的错配（系统设计问题与 agent 间失配两类）。
+- Yarmohammadtoosky & Xie, "LLM-Powered Multi-Agent Systems: A Survey of Collaboration and Learning Strategies" (ICAIDS '26) — https://dl.acm.org/doi/10.1145/3806262.3806263 — 形式化：把协作结构（分层式、集中式、去中心化、定制）与任务匹配的分类学，交互策略（合作、竞争、辩论、混合）与学习方法（人在回路、强化学习、自我改进、微调、迭代交互）构成另外两条轴
 
 ## 相关模式（Related）
 

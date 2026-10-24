@@ -26,6 +26,8 @@ A productive agentic workflow is rarely "all AI." The strongest systems alternat
 ## Exemplars
 
 - Dex Horthy, "12-Factor Agents" — https://github.com/humanlayer/12-factor-agents — formalizes: the guide describes successful agents as "mostly deterministic code, with LLM steps sprinkled in at just the right points", and Factor 8 ("Own Your Control Flow") supplies the oversight payoff — owning control flow lets a workflow pause between the moment of tool selection and the moment of tool invocation
+- Safe RL using Ideas from Model Predictive Control (Eurocast 2026) — https://arxiv.org/abs/2607.07252 — the control-theoretic form of this pattern: offline MPC computations precompute a feasible state-action space from the dynamics model, and a safety filter projects every learned-policy action onto that set during both training and deployment
+- Yun, Li & Azizan, "Provably Safe, Yet Scalable Reinforcement Learning" (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL scales the idea: instead of synthesizing explicit certificate functions (which blow up with state dimension), a learned backup policy constructs the safe set implicitly and a differentiable projection layer strictly enforces it during policy training
 
 ## Related
 

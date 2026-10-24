@@ -217,6 +217,8 @@ digraph wheel {
   "reliability" -> "mark-skipped-steps";
   "register-the-unknowns" [label="Register the Unknowns", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "register-the-unknowns";
+  "safety-guarantees-dont-transfer" [label="Safety Guarantees Don't Transfer", fillcolor="#edbec4", fontsize=9];
+  "reliability" -> "safety-guarantees-dont-transfer";
   "separate-merge-from-exposure" [label="Separate Merge From Exposure", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "separate-merge-from-exposure";
   "proposer-authority-separation" [label="Separate the Proposer From the Authority", fillcolor="#edbec4", fontsize=9];

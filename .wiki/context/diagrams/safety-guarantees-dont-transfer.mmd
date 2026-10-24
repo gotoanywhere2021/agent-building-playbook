@@ -1,0 +1,15 @@
+flowchart TD
+    A["训练/模拟环境（Training or simulation）"] --> B["训练期约束满足 ✓（Constraints met in training）"]
+    B --> C{"部署分布相同？（Same distribution at deployment?）"}
+    C -- "是（yes）" --> D["仅作为分布内证据（In-distribution evidence only）"]
+    C -- "否：新用户·新站点·新环境（shift）" --> E["安全泛化差距（Safety generalization gap）：约束被无声作废"]
+    E --> F["在偏移下重新评测约束（Re-evaluate constraint under shift）"]
+    E --> G["运行时屏蔽（Runtime shield）：独立滤波器按约束过滤每个动作"]
+    F --> H["安全恢复：跨算法·跨人群（Safety restored across algorithms and populations）"]
+    G --> H
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,G core;
+    class C gate;
+    class A,B,D,F,H out;

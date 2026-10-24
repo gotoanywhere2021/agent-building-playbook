@@ -326,7 +326,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Trust"><span>信任</span><span class="n">28</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">29</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim">
 <summary title="verification"><span>验证</span><span class="n">12</span></summary>
@@ -344,7 +344,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">10</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">11</span></summary>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
@@ -352,6 +352,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
 <a class="leaf" title="Mark Un-Run Steps Inline for Review" href="../patterns/mark-skipped-steps.html">把未执行的步骤就地标出</a>
 <a class="leaf" title="Register the Unknowns" href="../patterns/register-the-unknowns.html">登记未知（Register the Unknowns）</a>
+<a class="leaf" title="Safety Guarantees Don&#x27;t Transfer" href="../patterns/safety-guarantees-dont-transfer.html">安全保证不随分布迁移（Safety Guarantees Don&#x27;t Transfer）</a>
 <a class="leaf" title="Separate Merge From Exposure" href="../patterns/separate-merge-from-exposure.html">把合并（Merge）与暴露（Exposure）分开</a>
 <a class="leaf" title="Separate the Proposer From the Authority" href="../patterns/proposer-authority-separation.html">把提议方与批准方分开</a>
 <a class="leaf" title="Use a Second Agent as Auditor" href="../patterns/auditor-agent.html">用第二个智能体当审计员（Auditor）</a>
@@ -419,7 +420,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to">慎用场景（When NOT to）</h3>
 <ul><li>没有可检查成功条件的开放性创作或探索性工作——没有确定性轨道可建，强造一个会虚假地约束工作。</li><li>当一个便宜的确定性检查只是重复边界上已有的更强检查时——在漂移真正逃逸的地方加轨道，而不是处处加。</li><li>当检查的维护成本高于它捕捉的失败的代价时——一个比模型更常坏掉的脆弱校验器是负杠杆。</li><li>在工作稳定到能知道『可检查状态』究竟意味着什么之前——轨道编码的是已被理解的契约，不是猜测。</li></ul>
 <h3 id="exemplars">实例（Exemplars）</h3>
-<ul><li>Dex Horthy，《12-Factor Agents》— https://github.com/humanlayer/12-factor-agents — 形式化：该指南把成功的智能体描述为『大体上是确定性代码，只在恰到好处的几个点上撒入 LLM 步骤』；因素 8（『Own Your Control Flow』，掌控你的控制流）提供了监督上的回报——掌控控制流让工作流可以在选择工具的时刻与调用工具的时刻之间暂停</li></ul>
+<ul><li>Dex Horthy，《12-Factor Agents》— https://github.com/humanlayer/12-factor-agents — 形式化：该指南把成功的智能体描述为『大体上是确定性代码，只在恰到好处的几个点上撒入 LLM 步骤』；因素 8（『Own Your Control Flow』，掌控你的控制流）提供了监督上的回报——掌控控制流让工作流可以在选择工具的时刻与调用工具的时刻之间暂停</li><li>Safe RL using Ideas from Model Predictive Control (Eurocast 2026) — https://arxiv.org/abs/2607.07252 — 本模式的控制论形态：离线 MPC 计算依据动力学模型预计算出可行的状态-动作空间，安全滤波器在训练与部署期间把学习策略的每个动作投影到该集合上</li><li>Yun, Li &amp; Azizan, &quot;Provably Safe, Yet Scalable Reinforcement Learning&quot; (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL 把这个想法推向可扩展：不再合成显式证书函数（随状态维度爆炸），而是让学习到的 backup policy 隐式构造安全集，再用可微投影层在策略训练期间严格执行</li></ul>
 <h3 id="related">相关模式（Related）</h3>
 <ul><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li></ul></article><details class="original"><summary>英文原文（Original English）</summary><article><h3 id="what-it-is-2">What it is</h3>
 <p>A productive agentic workflow is rarely &quot;all AI.&quot; The strongest systems alternate between nondeterministic model judgment and deterministic computation, pairing each model step with a check it cannot talk its way past. A model writes a plan; a script verifies that every file it references actually exists. A model implements a sprint; the test suite deterministically passes or fails. A model reviews a diff; a linter enforces style and types underneath it. A model judges whether a user story is satisfied; browser automation records the evidence. A human approves a compliance-sensitive step; a workflow runner logs the decision immutably. A model summarizes production logs; a time-series system supplies the raw telemetry it is summarizing. This hybrid structure is powerful precisely because it reduces the burden on any single layer: the model need not be perfect, because the surrounding graph catches its drift, and the deterministic systems need not understand intent, because the model nodes translate intent into checkable state for them. The interleaving is the design — model where ambiguity, synthesis, diagnosis, and language understanding are required; deterministic rails everywhere a fact can simply be checked. Building the individual check the agent cannot argue with — the unyielding validator itself — is its own discipline; this pattern is about the interleaving, about which steps are model and which are rail (see Critic Applications).</p>
@@ -428,7 +429,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>Open-ended creative or exploratory work with no checkable success condition — there is no deterministic rail to build, and forcing one constrains the work falsely.</li><li>When a cheap deterministic check would simply duplicate a stronger one already on the edge — add rails where drift actually escapes, not everywhere.</li><li>When the check is harder to maintain than the failure it catches is costly — a brittle validator that breaks more often than the model does is negative leverage.</li><li>Before the work is stable enough to know what &quot;checkable state&quot; even means — rails encode an understood contract, not a guess.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Dex Horthy, &quot;12-Factor Agents&quot; — https://github.com/humanlayer/12-factor-agents — formalizes: the guide describes successful agents as &quot;mostly deterministic code, with LLM steps sprinkled in at just the right points&quot;, and Factor 8 (&quot;Own Your Control Flow&quot;) supplies the oversight payoff — owning control flow lets a workflow pause between the moment of tool selection and the moment of tool invocation</li></ul>
+<ul><li>Dex Horthy, &quot;12-Factor Agents&quot; — https://github.com/humanlayer/12-factor-agents — formalizes: the guide describes successful agents as &quot;mostly deterministic code, with LLM steps sprinkled in at just the right points&quot;, and Factor 8 (&quot;Own Your Control Flow&quot;) supplies the oversight payoff — owning control flow lets a workflow pause between the moment of tool selection and the moment of tool invocation</li><li>Safe RL using Ideas from Model Predictive Control (Eurocast 2026) — https://arxiv.org/abs/2607.07252 — the control-theoretic form of this pattern: offline MPC computations precompute a feasible state-action space from the dynamics model, and a safety filter projects every learned-policy action onto that set during both training and deployment</li><li>Yun, Li &amp; Azizan, &quot;Provably Safe, Yet Scalable Reinforcement Learning&quot; (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL scales the idea: instead of synthesizing explicit certificate functions (which blow up with state dimension), a learned backup policy constructs the safe set implicitly and a differentiable projection layer strictly enforces it during policy training</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li></ul></article></details>
 </main>

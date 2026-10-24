@@ -28,6 +28,7 @@ An agent without verification capability is a single-pass system: it produces ou
 - Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers verify mode: requires running verification commands and reading their output before any completion claim — "'Should' is not evidence"; the agent self-verifies rather than claiming success based on having performed the action
 - Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet" (arXiv:2310.01798) — https://arxiv.org/abs/2310.01798 — limits: demonstrates that intrinsic self-correction (same model re-prompted) degrades rather than improves reasoning accuracy — verification must use an independent information source, not ask the same model the same question in different phrasing
 - Wang et al., "Self-Consistency Improves Chain of Thought Reasoning in Language Models" (arXiv:2203.11171) — https://arxiv.org/abs/2203.11171 — formalizes: sampling multiple independent reasoning paths and selecting the most consistent answer reduces errors compared to greedy decoding, establishing ensemble-based verification as an empirically effective technique
+- Wang et al., "World Models for Robotic Manipulation: A Survey" (arXiv:2606.00113) — https://arxiv.org/abs/2606.00113 — characterizes outcome verification and candidate filtering as infrastructure roles of predictive models: roll an action out in a learned model of the environment, verify the predicted outcome, only then commit — while naming hallucination control as the open problem
 
 ## Related
 

@@ -513,6 +513,10 @@
     "train-against-simulated-counterparts": {
       "title": "对抗模拟对手训练（Train Against Simulated Counterparts）",
       "one_liner": "把对手方——客户、评审、评分者——做成跑在上下文防火墙后面、带确定性阶段闸门的 AI，练习因此可评分、可回放、且答案不会泄漏。"
+    },
+    "safety-guarantees-dont-transfer": {
+      "title": "安全保证不随分布迁移（Safety Guarantees Don't Transfer）",
+      "one_liner": "训练环境里满足的约束不等于部署环境里的约束——分布偏移会无声作废安全保证；要在偏移下重新验证安全，并保留运行时屏蔽（shield）作为最后一道防线。"
     }
   }
 }

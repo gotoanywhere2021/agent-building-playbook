@@ -26,6 +26,7 @@ In many domains the honest answer to "what is the rule?" is "it depends," and th
 ## Exemplars
 
 - Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — classic antecedent: the foundational philosophical argument that "we can know more than we can tell" — experts reliably classify cases they cannot reduce to a stateable rule, which is exactly why collecting labeled examples beats demanding abstract rules.
+- Li, Ruan & Geng, "Safe Reinforcement Learning with Preference-based Constraint Inference" (PbCRL, ICML 2026) — https://arxiv.org/abs/2603.23565 — when safety constraints are too complex or subjective to write down, infer the constraint function from human preferences over trajectories; its dead-zone mechanism exists because naive preference models systematically underestimate heavy-tailed safety risk — labeled pairs carry the intent, but the label model must fit the cost's distribution
 
 ## Related
 

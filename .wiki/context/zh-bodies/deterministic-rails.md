@@ -20,6 +20,8 @@
 ## 实例（Exemplars）
 
 - Dex Horthy，《12-Factor Agents》— https://github.com/humanlayer/12-factor-agents — 形式化：该指南把成功的智能体描述为『大体上是确定性代码，只在恰到好处的几个点上撒入 LLM 步骤』；因素 8（『Own Your Control Flow』，掌控你的控制流）提供了监督上的回报——掌控控制流让工作流可以在选择工具的时刻与调用工具的时刻之间暂停
+- Safe RL using Ideas from Model Predictive Control (Eurocast 2026) — https://arxiv.org/abs/2607.07252 — 本模式的控制论形态：离线 MPC 计算依据动力学模型预计算出可行的状态-动作空间，安全滤波器在训练与部署期间把学习策略的每个动作投影到该集合上
+- Yun, Li & Azizan, "Provably Safe, Yet Scalable Reinforcement Learning" (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL 把这个想法推向可扩展：不再合成显式证书函数（随状态维度爆炸），而是让学习到的 backup policy 隐式构造安全集，再用可微投影层在策略训练期间严格执行
 
 ## 相关模式（Related）
 

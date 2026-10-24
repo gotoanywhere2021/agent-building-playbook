@@ -20,6 +20,7 @@
 - Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — 其 recipe YAML 格式暴露了可组合原语（顺序步骤、foreach 循环、requires_approval 门禁），让复杂工作流能以组合的方式声明式表达
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — 《Building Effective Agents》：点名五种工作流原语（提示词链（prompt chaining）、路由（routing）、并行化（parallelization）、编排者-工作者（orchestrator-workers）、评估器-优化器（evaluator-optimizer））作为可组合的构建块，生产级智能体系统由它们组装而成
 - Huang 与 Zhou，《A Two-Dimensional Framework for AI Agent Design Patterns: Cognitive Function and Execution Topology》（arXiv:2605.13850）— https://arxiv.org/abs/2605.13850 — 形式化：定义了六种执行拓扑原型（链（Chain）、路由（Route）、并行（Parallel）、编排（Orchestrate）、循环（Loop）、层级（Hierarchy）），与本模式所述的可组合编排原语直接对应；并提出将拓扑与认知功能组合而成的 7×6 矩阵，得到 28 个命名模式
+- Yarmohammadtoosky & Xie, "LLM-Powered Multi-Agent Systems" (ICAIDS '26) — https://dl.acm.org/doi/10.1145/3806262.3806263 — 记录了交互策略词汇表：合作、竞争、辩论与混合模式可叠加在任何协作结构之上，并按领域评估各自效果
 
 ## 相关模式（Related）
 

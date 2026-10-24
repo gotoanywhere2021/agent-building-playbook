@@ -21,6 +21,7 @@
 - Amplifier — https://github.com/microsoft/amplifier-foundation — foundation:explorer 智能体是专职侦察角色：对代码与文档做广度优先探索、产出可直接引用的摘要，在调度修改型智能体之前为编排者收集地面真值
 - Anthropic — https://code.claude.com/docs/en/best-practices — Claude Code 最佳实践：定义了显式的四阶段 Explore → Plan → Implement → Commit 工作流，第一阶段严格只读；该指南把这一点称为防止解决错误问题的首要防线
 - Xia et al., "Agentless: Demystifying LLM-based Software Engineering Agents"（arXiv:2407.01489）— https://arxiv.org/abs/2407.01489 — 实证支持：凭借『定位、修复、补丁验证这一简单三阶段流程，不让 LLM 决定后续行动』在 SWE-bench Lite 上取得开源方法中的顶级成绩——定位先于任何补丁生成，侦察在结构上先于行动
+- Hou et al., "World Model for Robot Learning: A Comprehensive Survey" (arXiv:2605.00080) — https://arxiv.org/abs/2605.00080 — 本模式的具身形态：世界模型是『环境在动作下如何演化』的预测性表示，用于在真实执行之前（或代替真实执行）做规划、评测与数据生成
 
 ## 相关模式（Related）
 
