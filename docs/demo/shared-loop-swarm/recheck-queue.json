@@ -1,0 +1,547 @@
+{
+ "https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/canary-in-the-code-mine.md": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "agent-struggle-is-a-signal.md"
+  ]
+ },
+ "https://github.com/microsoft/amplifier-foundation": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "architect-then-builder.md"
+  ]
+ },
+ "https://www.anthropic.com/research/building-effective-agents": {
+  "codes": [
+   "RATE_LIMITED_SKIP",
+   "TIMEOUT"
+  ],
+  "paths": [
+   "architect-then-builder.md",
+   "autonomy-when-justified.md",
+   "decompose-on-timeout.md"
+  ]
+ },
+ "https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "architect-then-builder.md"
+  ]
+ },
+ "https://github.com/microsoft/amplifier": {
+  "codes": [
+   "RATE_LIMITED_SKIP",
+   "TIMEOUT"
+  ],
+  "paths": [
+   "autonomy-when-justified.md",
+   "evidence-before-assertions.md",
+   "register-the-unknowns",
+   "skills-load-on-trigger",
+   "subagents-as-context-sinks",
+   "thin-pointers",
+   "three-file-rule.md"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/The_Mythical_Man-Month": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "build-five-to-throw-away.md"
+  ]
+ },
+ "https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "build-five-to-throw-away.md"
+  ]
+ },
+ "https://github.com/2389-research/test-kitchen": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "build-five-to-throw-away.md"
+  ]
+ },
+ "https://github.com/2389-research/jam": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "build-five-to-throw-away.md",
+   "parallel-attempts-at-one-task.md"
+  ]
+ },
+ "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "context-over-prompt.md",
+   "long-horizon-memory.md",
+   "scope-and-expire-memory.md"
+  ]
+ },
+ "https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/contextual-prompts.md": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "embed-guidance-in-tool-output.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV15sJ263Ex9": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "lexical-first-retrieval.md"
+  ]
+ },
+ "https://github.com/2389-research/thrifty": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "match-model-to-stage.md"
+  ]
+ },
+ "https://sre.google/sre-book/embracing-risk/": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "reliability-before-features.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1XoNm6TE5F": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "sandbox-by-default.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1cyn26HEAX": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "self-verification.md"
+  ]
+ },
+ "https://github.com/TheAgentCompany/TheAgentCompany": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "standing-eval-capability.md",
+   "train-against-simulated-counterparts"
+  ]
+ },
+ "https://github.com/anywhere-labs/Agents-Anywhere": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "supervise-many-agents.md"
+  ]
+ },
+ "https://arxiv.org/abs/2310.01798": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "verify-independently.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1dzg66PE6m": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "zero-standing-credentials.md"
+  ]
+ },
+ "https://archive.org/details/attentioneconomy00thom": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "attention-is-the-scarce-resource.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1win26oEyU": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "calibrate-the-judge.md"
+  ]
+ },
+ "https://www.anthropic.com/engineering/multi-agent-research-system": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "clean-slate-delegation.md",
+   "delegation-token-economics.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1Mdpu6KE9T": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "hill-climb-dont-rewrite.md"
+  ]
+ },
+ "https://arxiv.org/html/2609.26781v1": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "match-topology-to-the-work.md",
+   "single-threaded-default.md"
+  ]
+ },
+ "https://arxiv.org/abs/2411.13768": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "production-feedback-loop.md"
+  ]
+ },
+ "https://github.com/humanlayer/12-factor-agents": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "recipe-not-conversation.md"
+  ]
+ },
+ "https://arxiv.org/abs/2512.05470": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "repository-shape-is-cognitive-architecture.md"
+  ]
+ },
+ "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/": {
+  "codes": [
+   "403"
+  ],
+  "paths": [
+   "three-primitives.md"
+  ]
+ },
+ "https://www.anthropic.com/news/developing-computer-use": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "video-driven-development.md"
+  ]
+ },
+ "https://www.anthropic.com/engineering/writing-tools-for-agents": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "agents-optimize-tools.md"
+  ]
+ },
+ "https://github.com/2389-research/fresh-eyes-review": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "auditor-agent.md"
+  ]
+ },
+ "https://arxiv.org/abs/2310.06770": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "brownfield-is-the-real-test.md"
+  ]
+ },
+ "https://dl.acm.org/doi/10.1145/3806262.3806263": {
+  "codes": [
+   "403"
+  ],
+  "paths": [
+   "composable-patterns.md"
+  ]
+ },
+ "https://sre.google/sre-book/postmortem-culture/": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "fix-the-root-cause.md"
+  ]
+ },
+ "https://github.com/nano-muse/nanoMuse": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "guardrails-and-escalation.md"
+  ]
+ },
+ "https://github.com/2389-research/documentation-audit": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "keep-specs-in-sync.md"
+  ]
+ },
+ "https://github.com/2389-research/summarize-meetings": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "mine-transcripts.md"
+  ]
+ },
+ "https://arxiv.org/abs/2406.18665": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "role-based-routing.md"
+  ]
+ },
+ "https://arxiv.org/abs/2604.25850": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "self-ablating-harness.md"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/Tacit_knowledge": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "shadow-then-transform.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1RMbz63EmJ": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "structured-surface-over-screen.md"
+  ]
+ },
+ "https://www.bilibili.com/video/BV1oTgq6bEDx": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "traces-into-simulations.md"
+  ]
+ },
+ "https://github.com/2389-research/simmer": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "adversarial-parallel-review"
+  ]
+ },
+ "https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/semantic-anchors.md": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "anchor-on-canonical-names"
+  ]
+ },
+ "https://llm-coding.github.io/Semantic-Anchors/": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "anchor-on-canonical-names"
+  ]
+ },
+ "https://github.com/microsoft/amplifier-bundle-recipes": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "automate-but-avoid-mystery-house"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/A_Pattern_Language": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "build-a-pattern-registry"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/Design_Patterns": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "build-a-pattern-registry"
+  ]
+ },
+ "https://github.com/voyager-crew/voyager": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "build-a-pattern-registry"
+  ]
+ },
+ "https://ics.uci.edu/~gmark/chi08-mark.pdf": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "earn-the-interruption"
+  ]
+ },
+ "https://github.com/buguoshixc/ai-deals-aggregator": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "fail-loud-harnesses"
+  ]
+ },
+ "https://github.com/obra/superpowers": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "gate-the-phases",
+   "skills-load-on-trigger"
+  ]
+ },
+ "https://github.com/bowenliang123/dsh-context": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "instrument-the-context-window"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/Intentional_stance": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "match-agent-metaphor-to-layer"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/The_Media_Equation": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "match-agent-metaphor-to-layer"
+  ]
+ },
+ "https://github.com/microsoft/amplifier-bundle-digital-twin-universe": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "real-environment-execution"
+  ]
+ },
+ "https://copyconstruct.medium.com/testing-in-production-the-hard-parts-3f06cefaf592": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "real-environment-execution"
+  ]
+ },
+ "https://github.com/2389-research/scenario-testing": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "real-environment-execution"
+  ]
+ },
+ "https://github.com/2389-research/ish": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "real-environment-execution"
+  ]
+ },
+ "https://github.com/THUDM/AgentBench": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "real-environment-execution"
+  ]
+ },
+ "https://github.com/morluto/rea": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "register-the-unknowns"
+  ]
+ },
+ "https://www.lesswrong.com/posts/rvbjZMp6aEDn2jiyp/mapping-llm-attractor-states": {
+  "codes": [
+   "429"
+  ],
+  "paths": [
+   "shape-work-as-an-attractor"
+  ]
+ },
+ "https://github.com/flingjie/FDE-Gym": {
+  "codes": [
+   "RATE_LIMITED_SKIP"
+  ],
+  "paths": [
+   "train-against-simulated-counterparts"
+  ]
+ },
+ "https://en.wikipedia.org/wiki/Theory_of_constraints": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "finishing-is-the-bottleneck"
+  ]
+ },
+ "https://www.cs.virginia.edu/~evans/cs551/saltzer/": {
+  "codes": [
+   "TIMEOUT"
+  ],
+  "paths": [
+   "proposer-authority-separation"
+  ]
+ }
+}

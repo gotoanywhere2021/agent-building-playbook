@@ -20,3 +20,4 @@
 
 # NOTE: wiki/ rendered HTML IS committed on purpose — GitHub Pages serves the
 # site straight from the /wiki folder, no CI build required.
+swarm-run/
