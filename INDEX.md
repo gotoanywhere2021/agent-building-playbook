@@ -79,6 +79,7 @@
 - [Shadow the User, Then Transform the Transcript](patterns/shadow-then-transform.md) — Tacit knowledge — workarounds, local norms, exception paths, institutional memory — lives in how people actually work, so sit with users and record them; agentic tooling doesn't remove the observation, it accelerates what happens after it.
 
 ## meta-principles
+- [A Shared Loop, Not a Supervisor](patterns/shared-loop-not-supervisor.md) — Coordination capacity, not model capability, is what caps agent-team size — replace the central orchestrator with one identical collaboration loop per agent plus shared artifacts (repo, board, chat), and let members claim, negotiate, and merge work themselves.
 - [Ablate the Harness as Models Improve](patterns/self-ablating-harness.md) — Periodically have a stronger model inspect your workflow and delete steps that are no longer needed, shorten prompts, and merge nodes — because model capability changes faster than workflow habits, and yesterday's scaffolding becomes today's tax.
 - [Agents Are Distributed Systems](patterns/agents-are-distributed-systems.md) — A multi-step agent is a distributed system — partial failure, lost responses, retries, and drift are normal — so apply the classic discipline: idempotency, timeouts, scoped permissions, checkpoints, and observability, instead of agent magic.
 - [Anchor on Canonical Names](patterns/anchor-on-canonical-names.md) — A single well-known domain term — "TDD, London School", "arc42" — activates a whole coherent methodology the model already learned in training, far more reliably than a paragraph paraphrasing the same idea, so name the concept instead of describing it.
@@ -128,6 +129,7 @@
 
 ## orchestration
 - ["Thin Pointers, Zero Poisoning"](patterns/thin-pointers.md) — Pass file paths and references between agents instead of full content — let each agent pull only what it needs, only when it needs it.
+- [A Shared Loop, Not a Supervisor](patterns/shared-loop-not-supervisor.md) — Coordination capacity, not model capability, is what caps agent-team size — replace the central orchestrator with one identical collaboration loop per agent plus shared artifacts (repo, board, chat), and let members claim, negotiate, and merge work themselves.
 - [Add Autonomy Only When Justified](patterns/autonomy-when-justified.md) — Every degree of autonomy you give an agent must be paid for with oversight proportional to the risk — add it only when the cost-benefit calculation is explicit and positive.
 - [Adversarial Parallel Review](patterns/adversarial-parallel-review.md) — Run several reviewers with different models or roles and little shared context, reward significant findings over volume, then have a meta-reviewer rank what matters — because an implementer shares the blind spots that produced its own bugs.
 - [Agents Are Distributed Systems](patterns/agents-are-distributed-systems.md) — A multi-step agent is a distributed system — partial failure, lost responses, retries, and drift are normal — so apply the classic discipline: idempotency, timeouts, scoped permissions, checkpoints, and observability, instead of agent magic.

@@ -292,10 +292,11 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Orchestration"><span>编排</span><span class="n">29</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">30</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim" open>
-<summary title="orchestration"><span>编排</span><span class="n">16</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">17</span></summary>
+<a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
 <a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
@@ -442,7 +443,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>When you have a set of tasks that are demonstrably independent (same inputs, no shared state, no ordering dependency) and the wall-clock latency of serial execution materially affects the outcome or user experience — that is the genuine case for parallelism.</li><li>When the tasks are embarrassingly parallel and identical in structure (e.g., running the same analysis on fifty documents) — fan-out is the right model here, and the orchestration pattern for it is well-understood.</li><li>When external I/O operations dominate (multiple API calls, file fetches, or search queries) and the model is idle waiting for results — concurrency here is often cheap to implement and high-value in latency savings.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends beginning with the simplest architecture that could work and adding orchestration complexity only when evidence demands it</li><li>Amplifier — https://github.com/microsoft/amplifier — the framework&#x27;s recipe system defaults to sequential step execution; fan-out and parallel tracks are explicit opt-ins, not the baseline</li><li>Walden Yan, &quot;Don&#x27;t Build Multi-Agents&quot; (Cognition, June 2025) — https://cognition.com/blog/dont-build-multi-agents — explicitly advocates single-threaded linear agents as the default architecture: the simplest way to follow the context-sharing and implicit-decisions principles, and one that &#x27;will get you very far&#x27;</li></ul>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends beginning with the simplest architecture that could work and adding orchestration complexity only when evidence demands it</li><li>Amplifier — https://github.com/microsoft/amplifier — the framework&#x27;s recipe system defaults to sequential step execution; fan-out and parallel tracks are explicit opt-ins, not the baseline</li><li>Walden Yan, &quot;Don&#x27;t Build Multi-Agents&quot; (Cognition, June 2025) — https://cognition.com/blog/dont-build-multi-agents — explicitly advocates single-threaded linear agents as the default architecture: the simplest way to follow the context-sharing and implicit-decisions principles, and one that &#x27;will get you very far&#x27;</li><li>Zhan et al., &quot;Agensh&quot; (Microsoft Research, arXiv:2609.26781) — https://arxiv.org/html/2609.26781v1 — the far end of the &quot;concrete reason&quot; boundary: fan-out to 1,024 bossless agents paid off only on massively decomposable rebuild work with hidden-test acceptance (33.89% → 55.06%) — and even there, 128 → 1,024 agents bought just +4.12 points, quantifying how expensive escaping the linear default is</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="parallel-independent-tracks.html"><code>patterns/parallel-independent-tracks.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li><li><a href="autonomy-when-justified.html"><code>patterns/autonomy-when-justified.md</code></a></li></ul></article></details>
 </main>

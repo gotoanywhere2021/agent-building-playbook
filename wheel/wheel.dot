@@ -123,6 +123,8 @@ digraph wheel {
   root -> "Orchestration";
   "orchestration" [fillcolor="#cea66d"];
   "Orchestration" -> "orchestration";
+  "shared-loop-not-supervisor" [label="A Shared Loop, Not a Supervisor", fillcolor="#eddabe", fontsize=9];
+  "orchestration" -> "shared-loop-not-supervisor";
   "autonomy-when-justified" [label="Add Autonomy Only When Justified", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "autonomy-when-justified";
   "three-primitives" [label="Build From Three Primitives", fillcolor="#eddabe", fontsize=9];
