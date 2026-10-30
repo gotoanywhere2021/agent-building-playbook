@@ -26,6 +26,7 @@ An agent that holds a standing API key, database password, or OAuth token is one
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1MBJ26aEAq — "How AI Agents Leak Secrets, and How to Stop It": concrete exfiltration paths for over-credentialed agents and mitigations
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1dzg66PE6m — "Better Agent Auth": identity and delegation patterns designed for agents rather than reused human login flows
 
+- milind-soni/OpenMausBot — https://github.com/milind-soni/OpenMausBot — least-privilege control surface: the headless MCP server deliberately exposes a bounded plane (read transcripts, create bots, send work, switch models) and "does not expose approval grants, deletion, arbitrary settings, credentials, or computer lifecycle"; shareable team packages strip secrets and arrive with skills off
 ## Related
 
 - `patterns/sandbox-by-default.md`

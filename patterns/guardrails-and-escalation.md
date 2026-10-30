@@ -31,6 +31,7 @@ Two refinements sharpen how these layers are deployed. First, human escalation i
 - Rebedea et al., "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications with Programmable Rails" (arXiv:2310.10501) — https://arxiv.org/abs/2310.10501 — formalizes: programmable rails that are "user-defined, independent of the underlying LLM, and interpretable" — controlling harmful topics, predefined dialogue paths, and language style — a guardrail layer added around the model rather than trained into it
 - nanoMuse — https://github.com/nano-muse/nanoMuse — a personal agent governed by "asks before anything you cannot undo": it pauses for confirmation before deleting, sending, or paying, hands logins and CAPTCHAs back to the human, and routes the approval to whichever device you're holding
 
+- milind-soni/OpenMausBot — https://github.com/milind-soni/OpenMausBot — a permission broker that "turns every risky action into a decision you make": shell commands, file edits, and questions surface as inline Allow/Deny cards in the chat, with secrets write-only (the UI sees only "configured" flags)
 ## Related
 
 - `patterns/autonomy-when-justified.md`

@@ -1,0 +1,18 @@
+flowchart TD
+    A["跨会话连续性（Cross-session continuity）"] --> B{"记忆靠什么产生？（How is memory written?）"}
+    B -- "指望记得去保存" --> C["会话戛然而止 / 压缩吃掉中段 / 崩溃丢尾巴"]
+    B -- "生命周期钩子" --> D["SessionStart · ToolUse · SessionEnd 自动写入"]
+    D --> E["观察进持久存储（SQLite + 向量库）"]
+    E --> F["新会话开始自动重注入相关上下文"]
+    F --> G["分层检索按 token 计价：索引 → 时间线 → 全文"]
+    G --> H["先过滤后取详 ≈ 10 倍节省（Filter before fetch）"]
+    D --> I{"隐私排除设计？（Exclusion channel?）"}
+    I -- "无" --> J["自动捕获 = 留存负债（Retention liability）"]
+    I -- "private 标签" --> K["敏感内容进不了存储"]
+    C -. "改成钩子捕获" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G,H core;
+    class B,I gate;
+    class A,C,J,K out;

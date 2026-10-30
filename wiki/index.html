@@ -238,14 +238,15 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Context"><span>上下文</span><span class="n">23</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">24</span></summary>
 <a class="ov" href="families/context.html">总览（Overview）</a>
 <details class="dim">
-<summary title="context-engineering"><span>上下文工程</span><span class="n">17</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">18</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
 <a class="leaf" title="Anchor on Canonical Names" href="patterns/anchor-on-canonical-names.html">锚定在规范名称（Canonical Name）上</a>
+<a class="leaf" title="Capture Memory in Hooks, Not in Hopes" href="patterns/memory-in-hooks-not-hopes.html">记忆写进钩子，而不是指望记住</a>
 <a class="leaf" title="Checkpoint to a Handoff File, Then Restart Clean" href="patterns/checkpoint-handoff-file.html">先写交接（Handoff）文件，再干净重启</a>
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
@@ -271,11 +272,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Tooling"><span>工具</span><span class="n">11</span></summary>
+<summary title="Tooling"><span>工具</span><span class="n">12</span></summary>
 <a class="ov" href="families/tooling.html">总览（Overview）</a>
 <details class="dim">
-<summary title="tool-design"><span>工具设计</span><span class="n">7</span></summary>
+<summary title="tool-design"><span>工具设计</span><span class="n">8</span></summary>
 <a class="leaf" title="Code Execution Beats Loading Hundreds of Tool Defs" href="patterns/code-execution-tools.html">一次代码执行胜过上百个工具定义</a>
+<a class="leaf" title="Compile Taste Into Detectors" href="patterns/compile-taste-into-detectors.html">把品味编译成检测器</a>
 <a class="leaf" title="Critic Applications" href="patterns/critic-applications.html">批评者应用（Critic Application）</a>
 <a class="leaf" title="Design Tools for Agents, Not Humans" href="patterns/tools-for-agents.html">为智能体设计工具，而不是为人</a>
 <a class="leaf" title="Drive the Structured Surface, Not the Screen" href="patterns/structured-surface-over-screen.html">驱动结构化界面，而不是屏幕</a>
@@ -292,7 +294,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">31</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
 <a class="ov" href="families/orchestration.html">总览（Overview）</a>
 <details class="dim">
 <summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
@@ -316,7 +318,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
 </details>
 <details class="dim">
-<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">13</span></summary>
+<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
 <a class="leaf" title="Ablate the Harness as Models Improve" href="patterns/self-ablating-harness.html">随模型进步给护架做减法（Ablate）</a>
 <a class="leaf" title="Bite-Sized Tasks" href="patterns/bite-sized-tasks.html">一口大小（Bite-sized）的任务</a>
 <a class="leaf" title="Brownfield Is the Real Test" href="patterns/brownfield-is-the-real-test.html">棕地（Brownfield）才是真正的考验</a>
@@ -327,6 +329,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Hand Off With a Clear Stop Condition" href="patterns/clear-stop-condition.html">带着明确停止条件（Stop Condition）交接</a>
 <a class="leaf" title="Implement to Learn" href="patterns/implement-to-learn.html">用实现来学习（Implement to Learn）</a>
 <a class="leaf" title="Keep Specs in Sync" href="patterns/keep-specs-in-sync.html">让规格（Spec）与实现同步</a>
+<a class="leaf" title="One Worktree per Parallel Session" href="patterns/worktree-per-parallel-session.html">每个并行会话一个工作树</a>
 <a class="leaf" title="Prove the Pipeline on 2 Before 20" href="patterns/prove-on-small-sample.html">先在 2 个上验证，再上 20 个</a>
 <a class="leaf" title="Rebuild Often" href="patterns/rebuild-often.html">经常重建（Rebuild）</a>
 <a class="leaf" title="Work Backward From the Shipping Dock" href="patterns/work-backward-from-the-shipping-dock.html">从发货码头倒推工作</a>
@@ -415,7 +418,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </aside>
 <main class="main">
 
-<section class="hero"><div class="kicker">模式目录（Pattern Catalog）</div><h1>智能体构建手册</h1><p class="lede">面向智能体（agentic）时代的构建方法手册（Agent-Building Playbook）——每个模式（pattern）都是一篇凝练的『珍珠』短文，按 家族（Family）› 维度（Dimension）的树形结构浏览。</p><p class="stats"><b>133</b> 个模式（pattern）&middot; <b>6</b> 个家族（family）&middot; <b>14</b> 个维度（dimension）</p><div class="cta"><a class="btn" href="explore.html">浏览目录（Browse）</a><a class="btn ghost" href="https://github.com/ramparte/agent-building-playbook">到 GitHub 贡献（Contribute）↗</a></div><p class="insp">思想源流（Inspirations）：<b>Sam Schillace</b>（Google Docs 联合发明者、Microsoft 副首席技术官）——📕 <a href="https://book.douban.com/subject/37129755/">《No Prize for Pessimism》</a>（乐观是一种工程姿态）&middot; ✉️ <a href="https://sundaylettersfromsam.substack.com/">Sunday Letters</a>（像程序员一样思考）&middot; 🗂️ <a href="https://www.antoinebuteau.com/lessons-from-sam-schillace/">Lessons from Sam Schillace</a>（三十年经验总结）——本手册相当一部分模式，可视为这些思想的操作化落地，<a href="https://github.com/gotoanywhere2021/agent-building-playbook#思想源流sam-schillaceinspirations">详见导读 ↗</a></p></section><h2>家族（Families）</h2><p class="lede">六个家族（family）组织起整个目录；每个家族展开为若干维度（dimension），维度下是具体的模式（pattern）。</p><div class="fam-grid"><a class="famcard" href="families/mindset.html"><span class="fc-head"><span class="fc-name">心智（Mindset）</span><span class="fc-count">15 个模式</span></span><span class="fc-gloss">动手构建之前，如何思考、看重什么。</span><span class="fc-dims"><span class="chip" title="meta-principles">元原则</span><span class="chip" title="taste">品味</span></span></a><a class="famcard" href="families/context.html"><span class="fc-head"><span class="fc-name">上下文（Context）</span><span class="fc-count">23 个模式</span></span><span class="fc-gloss">模型看到什么、记住什么。</span><span class="fc-dims"><span class="chip" title="context-engineering">上下文工程</span><span class="chip" title="knowledge">知识</span></span></a><a class="famcard" href="families/tooling.html"><span class="fc-head"><span class="fc-name">工具（Tooling）</span><span class="fc-count">11 个模式</span></span><span class="fc-gloss">模型的双手，以及这双手的代价。</span><span class="fc-dims"><span class="chip" title="tool-design">工具设计</span><span class="chip" title="cost-routing">成本路由</span></span></a><a class="famcard" href="families/orchestration.html"><span class="fc-head"><span class="fc-name">编排（Orchestration）</span><span class="fc-count">31 个模式</span></span><span class="fc-gloss">工作如何被塑形、分解与执行。</span><span class="fc-dims"><span class="chip" title="orchestration">编排</span><span class="chip" title="workflow-discipline">工作流纪律</span></span></a><a class="famcard" href="families/trust.html"><span class="fc-head"><span class="fc-name">信任（Trust）</span><span class="fc-count">35 个模式</span></span><span class="fc-gloss">让结果正确、可靠、可观察。</span><span class="fc-dims"><span class="chip" title="verification">验证</span><span class="chip" title="reliability">可靠性</span><span class="chip" title="observability">可观测性</span><span class="chip" title="security">安全</span></span></a><a class="famcard" href="families/people.html"><span class="fc-head"><span class="fc-name">人（People）</span><span class="fc-count">18 个模式</span></span><span class="fc-gloss">人的意图、注意力与杠杆。</span><span class="fc-dims"><span class="chip" title="human-factors">人因</span><span class="chip" title="intent">意图</span></span></a></div>
+<section class="hero"><div class="kicker">模式目录（Pattern Catalog）</div><h1>智能体构建手册</h1><p class="lede">面向智能体（agentic）时代的构建方法手册（Agent-Building Playbook）——每个模式（pattern）都是一篇凝练的『珍珠』短文，按 家族（Family）› 维度（Dimension）的树形结构浏览。</p><p class="stats"><b>136</b> 个模式（pattern）&middot; <b>6</b> 个家族（family）&middot; <b>14</b> 个维度（dimension）</p><div class="cta"><a class="btn" href="explore.html">浏览目录（Browse）</a><a class="btn ghost" href="https://github.com/ramparte/agent-building-playbook">到 GitHub 贡献（Contribute）↗</a></div><p class="insp">思想源流（Inspirations）：<b>Sam Schillace</b>（Google Docs 联合发明者、Microsoft 副首席技术官）——📕 <a href="https://book.douban.com/subject/37129755/">《No Prize for Pessimism》</a>（乐观是一种工程姿态）&middot; ✉️ <a href="https://sundaylettersfromsam.substack.com/">Sunday Letters</a>（像程序员一样思考）&middot; 🗂️ <a href="https://www.antoinebuteau.com/lessons-from-sam-schillace/">Lessons from Sam Schillace</a>（三十年经验总结）——本手册相当一部分模式，可视为这些思想的操作化落地，<a href="https://github.com/gotoanywhere2021/agent-building-playbook#思想源流sam-schillaceinspirations">详见导读 ↗</a></p></section><h2>家族（Families）</h2><p class="lede">六个家族（family）组织起整个目录；每个家族展开为若干维度（dimension），维度下是具体的模式（pattern）。</p><div class="fam-grid"><a class="famcard" href="families/mindset.html"><span class="fc-head"><span class="fc-name">心智（Mindset）</span><span class="fc-count">15 个模式</span></span><span class="fc-gloss">动手构建之前，如何思考、看重什么。</span><span class="fc-dims"><span class="chip" title="meta-principles">元原则</span><span class="chip" title="taste">品味</span></span></a><a class="famcard" href="families/context.html"><span class="fc-head"><span class="fc-name">上下文（Context）</span><span class="fc-count">24 个模式</span></span><span class="fc-gloss">模型看到什么、记住什么。</span><span class="fc-dims"><span class="chip" title="context-engineering">上下文工程</span><span class="chip" title="knowledge">知识</span></span></a><a class="famcard" href="families/tooling.html"><span class="fc-head"><span class="fc-name">工具（Tooling）</span><span class="fc-count">12 个模式</span></span><span class="fc-gloss">模型的双手，以及这双手的代价。</span><span class="fc-dims"><span class="chip" title="tool-design">工具设计</span><span class="chip" title="cost-routing">成本路由</span></span></a><a class="famcard" href="families/orchestration.html"><span class="fc-head"><span class="fc-name">编排（Orchestration）</span><span class="fc-count">32 个模式</span></span><span class="fc-gloss">工作如何被塑形、分解与执行。</span><span class="fc-dims"><span class="chip" title="orchestration">编排</span><span class="chip" title="workflow-discipline">工作流纪律</span></span></a><a class="famcard" href="families/trust.html"><span class="fc-head"><span class="fc-name">信任（Trust）</span><span class="fc-count">35 个模式</span></span><span class="fc-gloss">让结果正确、可靠、可观察。</span><span class="fc-dims"><span class="chip" title="verification">验证</span><span class="chip" title="reliability">可靠性</span><span class="chip" title="observability">可观测性</span><span class="chip" title="security">安全</span></span></a><a class="famcard" href="families/people.html"><span class="fc-head"><span class="fc-name">人（People）</span><span class="fc-count">18 个模式</span></span><span class="fc-gloss">人的意图、注意力与杠杆。</span><span class="fc-dims"><span class="chip" title="human-factors">人因</span><span class="chip" title="intent">意图</span></span></a></div>
 </main>
 
 </div>

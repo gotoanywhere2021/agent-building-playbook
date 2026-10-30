@@ -1,0 +1,16 @@
+flowchart TD
+    A["要求智能体做得有品味（Ask for taste）"] --> B{"靠什么保证？（Enforced by?）"}
+    B -- "模型判断" --> C["回归分布：米色页 · 万物 Inter · 渐变卡"]
+    C --> D["评审反复抓同样毛病（Same nits forever）"]
+    B -- "品味编译成检测器" --> E["破相点 → 确定性规则（62 tells, no LLM）"]
+    E --> F["挂编辑钩子：改完即扫，未清不许说完成"]
+    F --> G["判断力留给肯定面：构图 · 概念 · 大胆一击"]
+    D -. "把毛病逐条写成规则" .-> E
+    E --> H{"规则会冻成教条？（Rules turn dogma?）"}
+    H -- "会" --> I["allow/ignore 通道 + 定期修订（Keep amendable）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G core;
+    class B,H gate;
+    class A,C,D,I out;

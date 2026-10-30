@@ -23,7 +23,7 @@ A team's process knowledge — how to brainstorm a spec, how to write a plan, ho
 
 ## Exemplars
 
-- Superpowers — https://github.com/obra/superpowers — first-party of the pattern: Jesse Vincent's agentic skills framework (Claude Code, Codex, Cursor, Gemini CLI and more); every skill is a name, a trigger description, and a full methodology body; a bootstrap skill makes the agent check the index before any task, and the pipeline's gates — design doc before implementation, failing test before code — make loading mandatory, not advisory: "mandatory workflows, not suggestions"
+- Superpowers (obra) — https://github.com/obra/superpowers — first-party of the pattern at 300k-star scale: every skill is a name, a trigger description, and a full methodology body; a bootstrap skill makes the agent check the index before any task, gates make loading mandatory ("mandatory workflows, not suggestions"), and the library survives compaction — a SessionStart hook re-injects the bootstrap, and one source ships across ~17 harnesses; skills themselves are TDD-tested via the writing-skills skill
 - Anthropic — https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills — formalizes: Agent Skills are folders of instructions discovered by their descriptions and loaded into context only when relevant, with optional executable scripts attached
 - Amplifier — https://github.com/microsoft/amplifier — the recipe system pairs each recipe with an invocation trigger; per the Amplifier team's white papers the always-loaded surface stays minimal while recipes enter context on demand
 

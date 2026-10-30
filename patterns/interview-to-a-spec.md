@@ -30,6 +30,7 @@ Before any code is written, intent should pass through a dialogue whose job is t
 - Rob Fitzpatrick, *The Mom Test* (2013) — https://www.momtestbook.com/ — classic antecedent: practical discipline for extracting honest needs by asking about the customer's real life and problems rather than seeking validation of a proposed solution — directly parallels "ask why before how."
 - Korn et al., "LLMREI: Automating Requirements Elicitation Interviews with LLMs" (arXiv:2507.02564) — https://arxiv.org/abs/2507.02564 — formalizes: empirical study finding LLM chatbots match human interviewer error rates and successfully extract requirements through context-sensitive iterative questioning across 33 simulated stakeholder interviews.
 
+- obra/superpowers — https://github.com/obra/superpowers — the brainstorming skill as a gate: on seeing a build request, step back and ask what the user is really trying to do, then present the spec "in chunks short enough to actually read" before any code
 ## Related
 
 - `patterns/document-intent.md`

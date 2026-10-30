@@ -30,6 +30,7 @@ Pre-loading is the impulse to front-load context with all potentially relevant d
 - Liu et al., "Lost in the Middle: How Language Models Use Long Contexts" (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: performance degrades when relevant information is buried in a pre-loaded long context; supports the case for selective, per-step retrieval over front-loading
 - Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): formalizes: describes maintaining lightweight identifiers (file paths, URLs, stored queries) and loading content at runtime as the canonical JIT implementation
 
+- thedotmack/claude-mem — https://github.com/thedotmack/claude-mem — layered retrieval priced in tokens: a compact search index (~50–100 tokens/result), a chronological timeline, then full details (~500–1,000 tokens) only for chosen IDs — "~10x token savings by filtering before fetching details"
 ## Related
 
 - `patterns/context-is-finite.md`

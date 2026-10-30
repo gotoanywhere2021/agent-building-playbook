@@ -30,6 +30,7 @@ Agentic workflows sit on a spectrum from lightweight to heavyweight, and each po
 - Yarmohammadtoosky & Xie, "LLM-Powered Multi-Agent Systems: A Survey of Collaboration and Learning Strategies" (ICAIDS '26) — https://dl.acm.org/doi/10.1145/3806262.3806263 — formalizes: a taxonomy that matches collaboration structure (hierarchical, centralized, decentralized, custom) to the task, with interaction strategies (cooperation, competition, debate, hybrid) and learning methods (human-in-the-loop, RL, self-improvement, fine-tuning, iterative interaction) as the other two axes
 - Zhan et al., "Agensh" (Microsoft Research, arXiv:2609.26781) — https://arxiv.org/html/2609.26781v1 — populates the decentralized end of the spectrum with data: a bossless 1,024-agent swarm with one shared loop and shared artifacts, and the task properties (massively decomposable rebuilds, verifiable acceptance) that select for it
 
+- Donchitos/Claude-Code-Game-Studios — https://github.com/Donchitos/Claude-Code-Game-Studios — the studio topology made concrete inside one session: 49 role agents in three tiers (directors guard vision, leads own domains, specialists execute), 74 phase skills and 62 templates, with model seniority per role and escalation paths — structure as configuration, not processes
 ## Related
 
 - `patterns/recipe-not-conversation.md`

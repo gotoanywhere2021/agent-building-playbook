@@ -238,14 +238,15 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Context"><span>上下文</span><span class="n">23</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">24</span></summary>
 <a class="ov" href="../families/context.html">总览（Overview）</a>
 <details class="dim" open>
-<summary title="context-engineering"><span>上下文工程</span><span class="n">17</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">18</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
 <a class="leaf" title="Anchor on Canonical Names" href="../patterns/anchor-on-canonical-names.html">锚定在规范名称（Canonical Name）上</a>
+<a class="leaf" title="Capture Memory in Hooks, Not in Hopes" href="../patterns/memory-in-hooks-not-hopes.html">记忆写进钩子，而不是指望记住</a>
 <a class="leaf" title="Checkpoint to a Handoff File, Then Restart Clean" href="../patterns/checkpoint-handoff-file.html">先写交接（Handoff）文件，再干净重启</a>
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
@@ -271,11 +272,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Tooling"><span>工具</span><span class="n">11</span></summary>
+<summary title="Tooling"><span>工具</span><span class="n">12</span></summary>
 <a class="ov" href="../families/tooling.html">总览（Overview）</a>
 <details class="dim">
-<summary title="tool-design"><span>工具设计</span><span class="n">7</span></summary>
+<summary title="tool-design"><span>工具设计</span><span class="n">8</span></summary>
 <a class="leaf" title="Code Execution Beats Loading Hundreds of Tool Defs" href="../patterns/code-execution-tools.html">一次代码执行胜过上百个工具定义</a>
+<a class="leaf" title="Compile Taste Into Detectors" href="../patterns/compile-taste-into-detectors.html">把品味编译成检测器</a>
 <a class="leaf" title="Critic Applications" href="../patterns/critic-applications.html">批评者应用（Critic Application）</a>
 <a class="leaf" title="Design Tools for Agents, Not Humans" href="../patterns/tools-for-agents.html">为智能体设计工具，而不是为人</a>
 <a class="leaf" title="Drive the Structured Surface, Not the Screen" href="../patterns/structured-surface-over-screen.html">驱动结构化界面，而不是屏幕</a>
@@ -292,7 +294,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">31</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
 <summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
@@ -316,7 +318,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
 </details>
 <details class="dim">
-<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">13</span></summary>
+<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
 <a class="leaf" title="Ablate the Harness as Models Improve" href="../patterns/self-ablating-harness.html">随模型进步给护架做减法（Ablate）</a>
 <a class="leaf" title="Bite-Sized Tasks" href="../patterns/bite-sized-tasks.html">一口大小（Bite-sized）的任务</a>
 <a class="leaf" title="Brownfield Is the Real Test" href="../patterns/brownfield-is-the-real-test.html">棕地（Brownfield）才是真正的考验</a>
@@ -327,6 +329,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Hand Off With a Clear Stop Condition" href="../patterns/clear-stop-condition.html">带着明确停止条件（Stop Condition）交接</a>
 <a class="leaf" title="Implement to Learn" href="../patterns/implement-to-learn.html">用实现来学习（Implement to Learn）</a>
 <a class="leaf" title="Keep Specs in Sync" href="../patterns/keep-specs-in-sync.html">让规格（Spec）与实现同步</a>
+<a class="leaf" title="One Worktree per Parallel Session" href="../patterns/worktree-per-parallel-session.html">每个并行会话一个工作树</a>
 <a class="leaf" title="Prove the Pipeline on 2 Before 20" href="../patterns/prove-on-small-sample.html">先在 2 个上验证，再上 20 个</a>
 <a class="leaf" title="Rebuild Often" href="../patterns/rebuild-often.html">经常重建（Rebuild）</a>
 <a class="leaf" title="Work Backward From the Shipping Dock" href="../patterns/work-backward-from-the-shipping-dock.html">从发货码头倒推工作</a>
@@ -447,6 +450,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>Tasks where the full corpus must be visible simultaneously to reason correctly — a document comparison task where the model must hold both documents in mind while generating cannot defer retrieval without breaking the task structure.</li><li>When the retrieval system itself is slow or expensive and the same content will be needed at every step — a single pre-load may be cheaper than repeated retrievals of the same material.</li><li>Exploratory or creative tasks where the model benefits from broad context to generate associations that span the retrieved material — selective just-in-time retrieval can artificially narrow the space.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: empirical support: an indexing-time technique — prepending chunk-specific explanatory context before embedding and BM25 indexing — that improves the accuracy of per-query retrieval, the retrieval quality just-in-time loading depends on</li><li>Lewis et al., &quot;Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks&quot; (arXiv:2005.11401) — https://arxiv.org/abs/2005.11401 — classic antecedent: the original RAG paper (NeurIPS 2020) established retrieve-at-inference-time as the foundational model for injecting external knowledge only when needed, rather than baking it into weights</li><li>Liu et al., &quot;Lost in the Middle: How Language Models Use Long Contexts&quot; (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: performance degrades when relevant information is buried in a pre-loaded long context; supports the case for selective, per-step retrieval over front-loading</li><li>Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): formalizes: describes maintaining lightweight identifiers (file paths, URLs, stored queries) and loading content at runtime as the canonical JIT implementation</li></ul>
+<ul><li>thedotmack/claude-mem — https://github.com/thedotmack/claude-mem — layered retrieval priced in tokens: a compact search index (~50–100 tokens/result), a chronological timeline, then full details (~500–1,000 tokens) only for chosen IDs — &quot;~10x token savings by filtering before fetching details&quot;</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="context-over-prompt.html"><code>patterns/context-over-prompt.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li></ul></article></details>
 </main>

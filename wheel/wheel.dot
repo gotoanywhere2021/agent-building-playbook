@@ -51,6 +51,8 @@ digraph wheel {
   "context-engineering" -> "thin-pointers";
   "anchor-on-canonical-names" [label="Anchor on Canonical Names", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "anchor-on-canonical-names";
+  "memory-in-hooks-not-hopes" [label="Capture Memory in Hooks, Not in Hopes", fillcolor="#bedaed", fontsize=9];
+  "context-engineering" -> "memory-in-hooks-not-hopes";
   "checkpoint-handoff-file" [label="Checkpoint to a Handoff File, Then Restart Clean", fillcolor="#bedaed", fontsize=9];
   "context-engineering" -> "checkpoint-handoff-file";
   "context-over-prompt" [label="Context Engineering Over Prompt Engineering", fillcolor="#bedaed", fontsize=9];
@@ -97,6 +99,8 @@ digraph wheel {
   "Tooling" -> "tool-design";
   "code-execution-tools" [label="Code Execution Beats Loading Hundreds of Tool Defs", fillcolor="#beedd2", fontsize=9];
   "tool-design" -> "code-execution-tools";
+  "compile-taste-into-detectors" [label="Compile Taste Into Detectors", fillcolor="#beedd2", fontsize=9];
+  "tool-design" -> "compile-taste-into-detectors";
   "critic-applications" [label="Critic Applications", fillcolor="#beedd2", fontsize=9];
   "tool-design" -> "critic-applications";
   "tools-for-agents" [label="Design Tools for Agents, Not Humans", fillcolor="#beedd2", fontsize=9];
@@ -181,6 +185,8 @@ digraph wheel {
   "workflow-discipline" -> "implement-to-learn";
   "keep-specs-in-sync" [label="Keep Specs in Sync", fillcolor="#eddabe", fontsize=9];
   "workflow-discipline" -> "keep-specs-in-sync";
+  "worktree-per-parallel-session" [label="One Worktree per Parallel Session", fillcolor="#eddabe", fontsize=9];
+  "workflow-discipline" -> "worktree-per-parallel-session";
   "prove-on-small-sample" [label="Prove the Pipeline on 2 Before 20", fillcolor="#eddabe", fontsize=9];
   "workflow-discipline" -> "prove-on-small-sample";
   "rebuild-often" [label="Rebuild Often", fillcolor="#eddabe", fontsize=9];

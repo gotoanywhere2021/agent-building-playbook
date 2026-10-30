@@ -238,14 +238,15 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Context"><span>上下文</span><span class="n">23</span></summary>
+<summary title="Context"><span>上下文</span><span class="n">24</span></summary>
 <a class="ov" href="../families/context.html">总览（Overview）</a>
 <details class="dim">
-<summary title="context-engineering"><span>上下文工程</span><span class="n">17</span></summary>
+<summary title="context-engineering"><span>上下文工程</span><span class="n">18</span></summary>
 <a class="leaf" title="&quot;Four Moves: Write, Select, Compress, Isolate&quot;" href="../patterns/write-select-compress-isolate.html">四个动作：写出、选取、压缩、隔离</a>
 <a class="leaf" title="&quot;Long-Horizon Memory: Compaction, Notes, Isolation&quot;" href="../patterns/long-horizon-memory.html">长时程记忆：压缩、笔记、隔离</a>
 <a class="leaf" title="&quot;Thin Pointers, Zero Poisoning&quot;" href="../patterns/thin-pointers.html">薄指针（Thin Pointers），零污染</a>
 <a class="leaf" title="Anchor on Canonical Names" href="../patterns/anchor-on-canonical-names.html">锚定在规范名称（Canonical Name）上</a>
+<a class="leaf" title="Capture Memory in Hooks, Not in Hopes" href="../patterns/memory-in-hooks-not-hopes.html">记忆写进钩子，而不是指望记住</a>
 <a class="leaf" title="Checkpoint to a Handoff File, Then Restart Clean" href="../patterns/checkpoint-handoff-file.html">先写交接（Handoff）文件，再干净重启</a>
 <a class="leaf" title="Context Engineering Over Prompt Engineering" href="../patterns/context-over-prompt.html">上下文工程优先于提示词工程</a>
 <a class="leaf" title="Embed Guidance in Tool Output" href="../patterns/embed-guidance-in-tool-output.html">把指引嵌进工具输出</a>
@@ -271,11 +272,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Tooling"><span>工具</span><span class="n">11</span></summary>
+<summary title="Tooling"><span>工具</span><span class="n">12</span></summary>
 <a class="ov" href="../families/tooling.html">总览（Overview）</a>
 <details class="dim">
-<summary title="tool-design"><span>工具设计</span><span class="n">7</span></summary>
+<summary title="tool-design"><span>工具设计</span><span class="n">8</span></summary>
 <a class="leaf" title="Code Execution Beats Loading Hundreds of Tool Defs" href="../patterns/code-execution-tools.html">一次代码执行胜过上百个工具定义</a>
+<a class="leaf" title="Compile Taste Into Detectors" href="../patterns/compile-taste-into-detectors.html">把品味编译成检测器</a>
 <a class="leaf" title="Critic Applications" href="../patterns/critic-applications.html">批评者应用（Critic Application）</a>
 <a class="leaf" title="Design Tools for Agents, Not Humans" href="../patterns/tools-for-agents.html">为智能体设计工具，而不是为人</a>
 <a class="leaf" title="Drive the Structured Surface, Not the Screen" href="../patterns/structured-surface-over-screen.html">驱动结构化界面，而不是屏幕</a>
@@ -292,7 +294,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Orchestration"><span>编排</span><span class="n">31</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
 <summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
@@ -316,7 +318,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
 </details>
 <details class="dim" open>
-<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">13</span></summary>
+<summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
 <a class="leaf" title="Ablate the Harness as Models Improve" href="../patterns/self-ablating-harness.html">随模型进步给护架做减法（Ablate）</a>
 <a class="leaf" title="Bite-Sized Tasks" href="../patterns/bite-sized-tasks.html">一口大小（Bite-sized）的任务</a>
 <a class="leaf" title="Brownfield Is the Real Test" href="../patterns/brownfield-is-the-real-test.html">棕地（Brownfield）才是真正的考验</a>
@@ -327,6 +329,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf on" title="Hand Off With a Clear Stop Condition" href="../patterns/clear-stop-condition.html">带着明确停止条件（Stop Condition）交接</a>
 <a class="leaf" title="Implement to Learn" href="../patterns/implement-to-learn.html">用实现来学习（Implement to Learn）</a>
 <a class="leaf" title="Keep Specs in Sync" href="../patterns/keep-specs-in-sync.html">让规格（Spec）与实现同步</a>
+<a class="leaf" title="One Worktree per Parallel Session" href="../patterns/worktree-per-parallel-session.html">每个并行会话一个工作树</a>
 <a class="leaf" title="Prove the Pipeline on 2 Before 20" href="../patterns/prove-on-small-sample.html">先在 2 个上验证，再上 20 个</a>
 <a class="leaf" title="Rebuild Often" href="../patterns/rebuild-often.html">经常重建（Rebuild）</a>
 <a class="leaf" title="Work Backward From the Shipping Dock" href="../patterns/work-backward-from-the-shipping-dock.html">从发货码头倒推工作</a>
@@ -442,7 +445,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <h3 id="when-not-to-2">When NOT to</h3>
 <ul><li>Tasks so small and atomic that the stop condition is identical to the task description itself — &quot;return the count&quot; has an inherent stop condition.</li><li>Exploratory agentic tasks where the stop condition is explicitly &quot;stop when you have formed a judgment&quot; and that judgment is the output — but even here, specify a time or cost budget as a practical bound.</li><li>When the downstream system enforces its own stop condition correctly and you have verified it — don&#x27;t duplicate a constraint that is already reliably enforced.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
-<ul><li>Amplifier delegate() calls include an instruction that specifies what the agent should return and when it should stop — agents without that instruction will continue until context is exhausted (per the Amplifier team&#x27;s white papers; the delegate() API is not visible in the current public repos).</li><li>Loop termination in formal specification languages (TLA+, Alloy) is defined before the loop body — the discipline of specifying stop conditions before behavior is the same principle applied to formal verification.</li><li>Anthropic, &quot;Building Effective Agents&quot; — https://www.anthropic.com/research/building-effective-agents — formalizes: recommends including explicit stopping conditions (such as a maximum number of iterations) in agent loops so orchestrators maintain control rather than relying on the agent&#x27;s own sense of done</li></ul></article></details><section class="related"><h2>相关模式（Related patterns）</h2><ul class="rows"><li><a class="rt" href="production-feedback-loop.html">把生产闭环回到修复</a><span class="ol">收尾不止于部署——把支持消息、事故、指标与用户反馈接入分诊循环：提议修复、验证、在开关后面发布、观察信号是否消失；这是智能体版的丰田生产方式。</span></li><li><a class="rt" href="decompose-on-timeout.html">超时就分解（Decompose）重试</a><span class="ol">当任务超时，答案几乎从不是把时限调大——而是把任务拆小。</span></li><li><a class="rt" href="earn-the-interruption.html">挣得这次打断（Interruption）</a><span class="ol">人的注意力稀缺，智能体不该因为撞上常规检查点就打断——只在人的判断此刻是瓶颈时打断；把人插在特定边界上（高风险发布、意图不明、高成本循环、合规例外、反复不收敛）。</span></li><li><a class="rt" href="match-topology-to-the-work.html">让拓扑（Topology）匹配工作</a><span class="ol">按失败代价、意图清晰度、工作量与可重复性，在『单次提示→目标循环→技能→图→层级→工作室』之间刻意选择你的智能体拓扑。</span></li><li><a class="rt" href="parallel-attempts-at-one-task.html">对同一任务的并行尝试</a><span class="ol">模型是非确定性的，一次尝试只是一次掷骰——对困难或质量敏感的任务，从一个检查点并行跑多个实现，然后选最好的或拼接各自最强的部分。</span></li></ul></section>
+<ul><li>Amplifier delegate() calls include an instruction that specifies what the agent should return and when it should stop — agents without that instruction will continue until context is exhausted (per the Amplifier team&#x27;s white papers; the delegate() API is not visible in the current public repos).</li><li>Loop termination in formal specification languages (TLA+, Alloy) is defined before the loop body — the discipline of specifying stop conditions before behavior is the same principle applied to formal verification.</li><li>Anthropic, &quot;Building Effective Agents&quot; — https://www.anthropic.com/research/building-effective-agents — formalizes: recommends including explicit stopping conditions (such as a maximum number of iterations) in agent loops so orchestrators maintain control rather than relying on the agent&#x27;s own sense of done</li></ul></article></details><section class="related"><h2>相关模式（Related patterns）</h2><ul class="rows"><li><a class="rt" href="production-feedback-loop.html">把生产闭环回到修复</a><span class="ol">收尾不止于部署——把支持消息、事故、指标与用户反馈接入分诊循环：提议修复、验证、在开关后面发布、观察信号是否消失；这是智能体版的丰田生产方式。</span></li><li><a class="rt" href="decompose-on-timeout.html">超时就分解（Decompose）重试</a><span class="ol">当任务超时，答案几乎从不是把时限调大——而是把任务拆小。</span></li><li><a class="rt" href="earn-the-interruption.html">挣得这次打断（Interruption）</a><span class="ol">人的注意力稀缺，智能体不该因为撞上常规检查点就打断——只在人的判断此刻是瓶颈时打断；把人插在特定边界上（高风险发布、意图不明、高成本循环、合规例外、反复不收敛）。</span></li><li><a class="rt" href="match-topology-to-the-work.html">让拓扑（Topology）匹配工作</a><span class="ol">按失败代价、意图清晰度、工作量与可重复性，在『单次提示→目标循环→技能→图→层级→工作室』之间刻意选择你的智能体拓扑。</span></li><li><a class="rt" href="worktree-per-parallel-session.html">每个并行会话一个工作树</a><span class="ol">并行的智能体会话需要文件系统隔离，而不只是上下文隔离——一任务一分支一 git 工作树，开工前先在树里验证干净的测试基线，把合并作为唯一的集成点。</span></li></ul></section>
 </main>
 <aside class="toc"><div class="toc-label">本页内容（On this page）</div><ul><li class="l3"><a href="#what-it-is">这是什么（What it is）</a></li><li class="l3"><a href="#when-to-reach-for-it">适用场景（When to reach for it）</a></li><li class="l3"><a href="#when-not-to">慎用场景（When NOT to）</a></li><li class="l3"><a href="#exemplars">实例（Exemplars）</a></li></ul></aside>
 </div>
