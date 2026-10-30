@@ -1,0 +1,17 @@
+flowchart TD
+    A["智能体改文件系统（Agent mutates files）"] --> B{"状态怎么记账？（How is state recorded?）"}
+    B -- "指望它 git commit" --> C["可恢复单位 = 它碰巧留下的东西"]
+    C --> D["回滚靠考古 · 审计靠口供"]
+    B -- "工作区下垫版本化基底" --> E["CoW 视图挂已提交历史"]
+    E --> F["每次工具调用自动提交增量（内容寻址 + 去重）"]
+    F --> G["每步皆检查点 → 回滚免费"]
+    F --> H["分叉便宜 · 同文件冲突拒绝（LWW 需显式）"]
+    F --> I["存储只增不改 → 审计是一次 diff"]
+    B --> J{"当唯一副本？（Sole copy?）"}
+    J -- "存储无崩溃耐久" --> K["真备份放外面（Back up outside）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G,H,I core;
+    class B,J gate;
+    class A,C,D,K out;

@@ -336,7 +336,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Trust"><span>信任</span><span class="n">35</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">36</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim">
 <summary title="verification"><span>验证</span><span class="n">15</span></summary>
@@ -357,10 +357,11 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">12</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">13</span></summary>
 <a class="leaf" title="Blame the Harness Before the Model" href="../patterns/harness-before-model.html">先怀疑装置，再怀疑模型</a>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
+<a class="leaf" title="Every Step a Checkpoint; the Workspace Stays Ephemeral" href="../patterns/every-step-a-checkpoint.html">每步皆检查点，工作区用完即弃</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
 <a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
@@ -448,6 +449,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>Read-only analysis over non-sensitive data with a human confirming every step.</li><li>Long-lived shared infrastructure whose entire purpose is mutable state — there, isolate the agent&#x27;s workspace and scope its credentials (see <a href="zero-standing-credentials.html"><code>patterns/zero-standing-credentials.md</code></a>) instead of pretending the world can be contained.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1HgJ26DEdc — &quot;Sandboxing Is Not Optional&quot;: surveys four practical isolation approaches for coding agents and argues isolation should be the default, not an afterthought</li><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1VYpG6UEmh — &quot;How I Learned to Stop Worrying and Love the Sandbox&quot;: practitioner account of moving agent execution into sandboxes end to end</li><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1oaH96iEio — &quot;YOLO Mode Safety: MicroVM Sandboxes for Any Agent&quot; (Docker): making unattended agent execution safe with MicroVM-grade isolation</li><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1XoNm6TE5F — &quot;From Fork to Fleet: Designing an Agent Sandbox Cloud&quot;: what it takes to run fleets of isolated agent environments as a service</li></ul>
+<ul><li>Ephemeral-AI-Lab/layerfs — https://github.com/Ephemeral-AI-Lab/layerfs — isolation taken to the filesystem: each agent gets an ephemeral copy-on-write FUSE workspace over shared committed history, compute &quot;exists only while a command runs,&quot; and unmounting discards the overlay — never the history</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="zero-standing-credentials.html"><code>patterns/zero-standing-credentials.md</code></a></li><li><a href="deterministic-rails.html"><code>patterns/deterministic-rails.md</code></a></li><li><a href="autonomy-when-justified.html"><code>patterns/autonomy-when-justified.md</code></a></li><li><a href="real-environment-execution.html"><code>patterns/real-environment-execution.md</code></a></li></ul></article></details>
 </main>

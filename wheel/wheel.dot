@@ -235,6 +235,8 @@ digraph wheel {
   "reliability" -> "demand-independent-proof";
   "recipe-not-conversation" [label="Encode Multi-Step Work as a Recipe", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "recipe-not-conversation";
+  "every-step-a-checkpoint" [label="Every Step a Checkpoint; the Workspace Stays Ephemeral", fillcolor="#edbec4", fontsize=9];
+  "reliability" -> "every-step-a-checkpoint";
   "fail-loud-over-fallbacks" [label="Fail Loud Over Fallbacks", fillcolor="#edbec4", fontsize=9];
   "reliability" -> "fail-loud-over-fallbacks";
   "fix-the-root-cause" [label="Fix the Root Cause, Demand a Diagnosis", fillcolor="#edbec4", fontsize=9];

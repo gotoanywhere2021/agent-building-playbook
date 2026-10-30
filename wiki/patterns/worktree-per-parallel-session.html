@@ -336,7 +336,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Trust"><span>信任</span><span class="n">35</span></summary>
+<summary title="Trust"><span>信任</span><span class="n">36</span></summary>
 <a class="ov" href="../families/trust.html">总览（Overview）</a>
 <details class="dim">
 <summary title="verification"><span>验证</span><span class="n">15</span></summary>
@@ -357,10 +357,11 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Video-Driven Development" href="../patterns/video-driven-development.html">视频驱动开发（Video-Driven Development）</a>
 </details>
 <details class="dim">
-<summary title="reliability"><span>可靠性</span><span class="n">12</span></summary>
+<summary title="reliability"><span>可靠性</span><span class="n">13</span></summary>
 <a class="leaf" title="Blame the Harness Before the Model" href="../patterns/harness-before-model.html">先怀疑装置，再怀疑模型</a>
 <a class="leaf" title="Demand Independent Proof, Not a Status Report" href="../patterns/demand-independent-proof.html">要独立证据（Proof），不要状态汇报</a>
 <a class="leaf" title="Encode Multi-Step Work as a Recipe" href="../patterns/recipe-not-conversation.html">把多步工作编码成菜谱（Recipe）</a>
+<a class="leaf" title="Every Step a Checkpoint; the Workspace Stays Ephemeral" href="../patterns/every-step-a-checkpoint.html">每步皆检查点，工作区用完即弃</a>
 <a class="leaf" title="Fail Loud Over Fallbacks" href="../patterns/fail-loud-over-fallbacks.html">大声失败优于静默兜底（Fallback）</a>
 <a class="leaf" title="Fix the Root Cause, Demand a Diagnosis" href="../patterns/fix-the-root-cause.html">修根因（Root Cause），要诊断</a>
 <a class="leaf" title="Make Every Stage Produce an Auditable Artifact" href="../patterns/auditable-artifacts.html">让每个阶段产出可审计工件（Artifact）</a>
@@ -449,6 +450,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>A single sequential session — a worktree is ceremony with no payoff (<a href="single-threaded-default.html"><code>patterns/single-threaded-default.md</code></a>).</li><li>Tasks sharing mutable state outside git — databases, deployed services, external APIs. Worktrees isolate files only; pair with data isolation or run serially (<a href="agents-are-distributed-systems.html"><code>patterns/agents-are-distributed-systems.md</code></a>).</li><li>Steps with ordering dependencies — if task B consumes task A&#x27;s output, they are one pipeline, not two worktrees.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>obra/superpowers — https://github.com/obra/superpowers — the <code>using-git-worktrees</code> skill: creates an isolated branch workspace and verifies a clean test baseline before starting any parallel work; part of a 300k-star skills framework</li><li>Git documentation — https://git-scm.com/docs/git-worktree — the primitive itself: multiple working trees attached to one repository, each on its own branch</li></ul>
+<ul><li>Ephemeral-AI-Lab/layerfs — https://github.com/Ephemeral-AI-Lab/layerfs — the deeper primitive beneath worktrees: session-level branches replaced by per-tool-call checkpoints with cheap forking from any commit and refusal of same-file conflicts unless an explicit last-write-wins policy applies</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="parallel-independent-tracks.html"><code>patterns/parallel-independent-tracks.md</code></a></li><li><a href="parallel-attempts-at-one-task.html"><code>patterns/parallel-attempts-at-one-task.md</code></a></li><li><a href="build-five-to-throw-away.html"><code>patterns/build-five-to-throw-away.md</code></a></li><li><a href="clean-slate-delegation.html"><code>patterns/clean-slate-delegation.md</code></a></li></ul></article></details>
 </main>

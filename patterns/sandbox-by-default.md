@@ -27,6 +27,7 @@ Agents execute shell commands, write files, and call networks with imperfect jud
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1oaH96iEio — "YOLO Mode Safety: MicroVM Sandboxes for Any Agent" (Docker): making unattended agent execution safe with MicroVM-grade isolation
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1XoNm6TE5F — "From Fork to Fleet: Designing an Agent Sandbox Cloud": what it takes to run fleets of isolated agent environments as a service
 
+- Ephemeral-AI-Lab/layerfs — https://github.com/Ephemeral-AI-Lab/layerfs — isolation taken to the filesystem: each agent gets an ephemeral copy-on-write FUSE workspace over shared committed history, compute "exists only while a command runs," and unmounting discards the overlay — never the history
 ## Related
 
 - `patterns/zero-standing-credentials.md`

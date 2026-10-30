@@ -26,6 +26,7 @@ Two agents sharing one checkout collide in ways context isolation cannot fix: in
 - obra/superpowers — https://github.com/obra/superpowers — the `using-git-worktrees` skill: creates an isolated branch workspace and verifies a clean test baseline before starting any parallel work; part of a 300k-star skills framework
 - Git documentation — https://git-scm.com/docs/git-worktree — the primitive itself: multiple working trees attached to one repository, each on its own branch
 
+- Ephemeral-AI-Lab/layerfs — https://github.com/Ephemeral-AI-Lab/layerfs — the deeper primitive beneath worktrees: session-level branches replaced by per-tool-call checkpoints with cheap forking from any commit and refusal of same-file conflicts unless an explicit last-write-wins policy applies
 ## Related
 
 - `patterns/parallel-independent-tracks.md`
