@@ -292,10 +292,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">30</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">31</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
-<summary title="orchestration"><span>编排</span><span class="n">17</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
@@ -312,6 +312,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Run Independent Agents in Parallel" href="../patterns/parallel-independent-tracks.html">并行运行独立的智能体</a>
 <a class="leaf" title="Shape the Workflow as an Attractor" href="../patterns/shape-work-as-an-attractor.html">把工作流塑造成吸引子（Attractor）</a>
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
+<a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
 </details>
 <details class="dim">
@@ -446,6 +447,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>When the knowledge is needed on every turn — core identity, output format, hard constraints: those belong in the always-loaded context; skills are for episodic process, not standing policy.</li><li>When triggers cannot be stated observably: &quot;when the work is complex&quot; loads everywhere; &quot;when about to implement a multi-file change without an approved plan&quot; loads exactly once.</li><li>When the body is so short it fits in the description — a two-line checklist does not need a loading mechanism; the loading overhead exceeds the content.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Superpowers — https://github.com/obra/superpowers — first-party of the pattern: Jesse Vincent&#x27;s agentic skills framework (Claude Code, Codex, Cursor, Gemini CLI and more); every skill is a name, a trigger description, and a full methodology body; a bootstrap skill makes the agent check the index before any task, and the pipeline&#x27;s gates — design doc before implementation, failing test before code — make loading mandatory, not advisory: &quot;mandatory workflows, not suggestions&quot;</li><li>Anthropic — https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills — formalizes: Agent Skills are folders of instructions discovered by their descriptions and loaded into context only when relevant, with optional executable scripts attached</li><li>Amplifier — https://github.com/microsoft/amplifier — the recipe system pairs each recipe with an invocation trigger; per the Amplifier team&#x27;s white papers the always-loaded surface stays minimal while recipes enter context on demand</li></ul>
+<ul><li>Diane Sarkis, &quot;Building Agents: When to Fold Subagents Into Your Main Agent Loop&quot; (Anthropic, Oct 2026) — https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop — progressive disclosure as the reason teams no longer need subagents for context economy: short skill/tool descriptions loaded on demand let Anthropic cut Claude Code&#x27;s system prompt by over 80% while keeping one loop</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="just-in-time-retrieval.html"><code>patterns/just-in-time-retrieval.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="gate-the-phases.html"><code>patterns/gate-the-phases.md</code></a></li><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li></ul></article></details>
 </main>

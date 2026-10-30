@@ -292,10 +292,10 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Orchestration"><span>编排</span><span class="n">30</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">31</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
-<summary title="orchestration"><span>编排</span><span class="n">17</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
@@ -312,6 +312,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Run Independent Agents in Parallel" href="../patterns/parallel-independent-tracks.html">并行运行独立的智能体</a>
 <a class="leaf" title="Shape the Workflow as an Attractor" href="../patterns/shape-work-as-an-attractor.html">把工作流塑造成吸引子（Attractor）</a>
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
+<a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
 </details>
 <details class="dim" open>
@@ -446,6 +447,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>Without a quality comparison — deleting nodes by intuition and shipping is how you discover, in production, that the step was load-bearing.</li><li>For steps whose value is compliance, audit, or accountability rather than capability — those gates exist for reasons that model improvement does not retire.</li><li>In the middle of high-stakes delivery — ablate against a baseline in a safe context, not on the run you cannot afford to get wrong.</li><li>When you cannot roll back — only ablate what you can restore if quality drops.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Huang and Sun, &quot;Does the Harness Matter? Lessons from ALE-Claw on Agents&#x27; Last Exam&quot; (2025) — https://agents-last-exam.org/blogs/harness-matters — empirical support: stripping a product-layer harness to its minimal form maintained accuracy while cutting 44% of input tokens and 41% of cost; the authors observe that &quot;much of today&#x27;s scaffolding exists to compensate for current model limitations,&quot; directly motivating scheduled ablation passes.</li><li>Lin et al., &quot;Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses&quot; (arXiv:2604.25850) — https://arxiv.org/abs/2604.25850 — empirical support: closed-loop system that evolves harness components over iterations via component, experience, and decision observability, demonstrating that harnesses are living artifacts to be pruned rather than fixed structures to preserve.</li></ul>
+<ul><li>Diane Sarkis, &quot;Building Agents: When to Fold Subagents Into Your Main Agent Loop&quot; (Anthropic, Oct 2026) — https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop — the ablation method applied to topology: merge tightly coupled specialists first, optionally call remaining subagents as tools as a no-rewrite baseline, then fold one at a time keeping only what scores better; migration kit at github.com/anthropics/single-agent-loop-kit</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="invest-the-expensive-model-in-the-harness.html"><code>patterns/invest-the-expensive-model-in-the-harness.md</code></a></li><li><a href="rebuild-often.html"><code>patterns/rebuild-often.md</code></a></li><li><a href="match-topology-to-the-work.html"><code>patterns/match-topology-to-the-work.md</code></a></li><li><a href="match-model-to-stage.html"><code>patterns/match-model-to-stage.md</code></a></li></ul></article></details>
 </main>

@@ -29,6 +29,7 @@ Every task an orchestrator handles in its own context accumulates tokens: the to
 - LangChain Team — https://www.langchain.com/blog/context-engineering-for-agents — formalizes: names "isolate" as one of the four canonical context-engineering moves; splitting context across agents or environments is the mechanism that prevents orchestrator accumulation
 - Yan, "Don't Build Multi-Agents" — https://cognition.com/blog/dont-build-multi-agents — counterpoint: argues dispersed decision-making across sub-agents fragments context in ways that cause inconsistency; read alongside the "When NOT to" criteria for tasks requiring shared intermediate state
 
+- Diane Sarkis, "Building Agents: When to Fold Subagents Into Your Main Agent Loop" (Anthropic, Oct 2026) — https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop — the counterweight: every subagent call is "a lossy summary" and a nested loop adding latency, and "a single agent with skills frequently outperformed" subagent designs on quality; keep the sink only where isolation genuinely pays (parallel fresh windows, measurable bloat, conflicting tools, user-facing handoff)
 ## Related
 
 - `patterns/context-is-finite.md`

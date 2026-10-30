@@ -155,6 +155,8 @@ digraph wheel {
   "orchestration" -> "shape-work-as-an-attractor";
   "share-full-context" [label="Share Full Context; Every Action Carries Decisions", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "share-full-context";
+  "split-by-context-not-org-chart" [label="Split by Context, Not by Org Chart", fillcolor="#eddabe", fontsize=9];
+  "orchestration" -> "split-by-context-not-org-chart";
   "architect-then-builder" [label="Two-Phase Build: Architect Then Builder", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "architect-then-builder";
   "workflow-discipline" [fillcolor="#cea66d"];

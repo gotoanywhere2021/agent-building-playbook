@@ -28,6 +28,7 @@ Every scaffolding step in a workflow was added to compensate for something a mod
 - Huang and Sun, "Does the Harness Matter? Lessons from ALE-Claw on Agents' Last Exam" (2025) — https://agents-last-exam.org/blogs/harness-matters — empirical support: stripping a product-layer harness to its minimal form maintained accuracy while cutting 44% of input tokens and 41% of cost; the authors observe that "much of today's scaffolding exists to compensate for current model limitations," directly motivating scheduled ablation passes.
 - Lin et al., "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses" (arXiv:2604.25850) — https://arxiv.org/abs/2604.25850 — empirical support: closed-loop system that evolves harness components over iterations via component, experience, and decision observability, demonstrating that harnesses are living artifacts to be pruned rather than fixed structures to preserve.
 
+- Diane Sarkis, "Building Agents: When to Fold Subagents Into Your Main Agent Loop" (Anthropic, Oct 2026) — https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop — the ablation method applied to topology: merge tightly coupled specialists first, optionally call remaining subagents as tools as a no-rewrite baseline, then fold one at a time keeping only what scores better; migration kit at github.com/anthropics/single-agent-loop-kit
 ## Related
 
 - `patterns/invest-the-expensive-model-in-the-harness.md`

@@ -27,6 +27,7 @@ A team's process knowledge — how to brainstorm a spec, how to write a plan, ho
 - Anthropic — https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills — formalizes: Agent Skills are folders of instructions discovered by their descriptions and loaded into context only when relevant, with optional executable scripts attached
 - Amplifier — https://github.com/microsoft/amplifier — the recipe system pairs each recipe with an invocation trigger; per the Amplifier team's white papers the always-loaded surface stays minimal while recipes enter context on demand
 
+- Diane Sarkis, "Building Agents: When to Fold Subagents Into Your Main Agent Loop" (Anthropic, Oct 2026) — https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop — progressive disclosure as the reason teams no longer need subagents for context economy: short skill/tool descriptions loaded on demand let Anthropic cut Claude Code's system prompt by over 80% while keeping one loop
 ## Related
 
 - `patterns/just-in-time-retrieval.md`
