@@ -1,0 +1,14 @@
+flowchart TD
+    A["智能体要执行代码/命令（Agent runs code）"] --> B{"跑在哪？（Where does it run?）"}
+    B -- "可丢弃沙箱（Disposable sandbox）" --> C["容器 / MicroVM / 一次性工作区"]
+    C --> D["爆炸半径 = 删掉重来（Blast radius = delete）"]
+    D --> E["无人值守也安全（Safe unattended）"]
+    B -- "直接跑在你的机器上" --> F["误删 / 注入 / 依赖污染直通生产"]
+    F --> G["一次失误即灾难（One mistake = disaster）"]
+    G -. "读到不可信内容时更糟" .-> C
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D core;
+    class B,F,G gate;
+    class A,E out;

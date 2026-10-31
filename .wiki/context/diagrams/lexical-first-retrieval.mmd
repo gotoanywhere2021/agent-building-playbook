@@ -1,0 +1,15 @@
+flowchart TD
+    A["为智能体搭检索（Design agent retrieval）"] --> B{"默认选什么？（Default choice?）"}
+    B -- "grep / BM25 词法基线" --> C["便宜 · 确定 · 可调试（Debuggable）"]
+    C --> D{"评估显示召回缺口？（Eval shows gaps?）"}
+    D -- "否" --> E["词法已够，省下复杂度（Done）"]
+    D -- "是（转述 / 跨语言）" --> F["加混合臂：向量 + 重排（Hybrid）"]
+    F --> G["词法臂保留，按结构分块（Keep lexical）"]
+    B -- "直接上向量库" --> H["复杂度先付，召回未必涨"]
+    H -. "用评估回头验证" .-> D
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G core;
+    class B,H gate;
+    class A,E out;

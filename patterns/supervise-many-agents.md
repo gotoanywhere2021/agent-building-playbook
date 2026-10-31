@@ -29,6 +29,7 @@ Once a person is running more than a handful of agents — coding sessions, clou
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends checkpoints where agents pause for human feedback; its orchestrator-workers workflow — a central model delegating to parallel workers — is the shape this pattern puts a single supervision surface over
 - Agents Anywhere — https://github.com/anywhere-labs/Agents-Anywhere — control any coding agent on any device: the agent runs headless on an always-on machine while a phone or laptop becomes the supervision surface, so steering and approvals travel to whichever device you're holding
 
+- milind-soni/OpenMausBot — https://github.com/milind-soni/OpenMausBot — agents as chat contacts: each bot is a sidebar contact with its own personality, model, and computer; channels carry their own transcript, shared instructions, working folder, and responder rules — a supervision surface users already know how to read
 ## Related
 
 - `patterns/awareness-layer.md`

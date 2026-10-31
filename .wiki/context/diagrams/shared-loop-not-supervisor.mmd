@@ -1,0 +1,16 @@
+flowchart TD
+    A["团队要扩规模（Scale the team）"] --> B{"瓶颈在哪？（Where is the bottleneck?）"}
+    B -- "主管协调饱和（Supervisor saturated）" --> C["去掉老板：协议当宪法"]
+    C --> D["每人同一循环：取上下文 → 认领 → 执行分享 → 验证 → 合并"]
+    D --> E["共享工件：git 仓库 · 消息频道 · 上下文看板"]
+    E --> F["认领重叠自行协商，冲突 = 合并问题"]
+    F --> G["角色涌现：协商者 / 评审者 / 集成者"]
+    B -- "工人能力或串行延迟" --> H["别上群体：单线程默认仍是起点"]
+    G --> I{"128 → 1024 的边际值多少？（Marginal delta?）"}
+    I -- "+4 个百分点且成本未计" --> J["在回报递减点停下（Stop at diminishing returns）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,E,F,G core;
+    class B,H,I gate;
+    class A,J out;

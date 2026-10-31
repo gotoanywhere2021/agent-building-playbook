@@ -28,6 +28,7 @@ Most agent runs are vapor: they happen once, in a specific context, and what rem
 - REA (Reverse Engineer Anything) — https://github.com/morluto/rea — deterministic, bounded captures of app and process behavior with declared normalization, so a later change is compared against the recorded run; comparisons fail toward "unknown" rather than claiming equivalence from partial evidence
 - Martin Fowler, "Event Sourcing" — https://martinfowler.com/eaaDev/EventSourcing.html — classic antecedent: application state as a replayable sequence of events, with reconstruction, temporal queries, and audit
 
+- Ephemeral-AI-Lab/layerfs — https://github.com/Ephemeral-AI-Lab/layerfs — the append-only principle applied to the filesystem: every tool call commits its delta into a content-addressed store that "only grows," so "what did the agent change at step N" is a diff against recorded state, not an investigation
 ## Related
 
 - `patterns/emit-events.md`

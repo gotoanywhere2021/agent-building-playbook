@@ -1,0 +1,16 @@
+flowchart TD
+    A["长流程需要人类输入（Human input needed）"] --> B{"怎么等？（How to wait?）"}
+    B -- "阻塞式实时等待" --> C["流水线挂在个人日程表上"]
+    C --> D["多任务抢一个人 → 全部排队"]
+    B -- "人类 = 异步 API" --> E["持久化请求 + 等待条件 + 信号"]
+    E --> F["工作流继续跑，答复作为事件到达"]
+    F --> G["断线/重启后可恢复（Durable）"]
+    F --> H{"打断的代价值得吗？（Worth the interruption?）"}
+    H -- "否" --> I["批量排队评审，攒着一起看"]
+    H -- "是（高代价错误）" --> J["立即升级（Escalate now）"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class E,F,G core;
+    class B,C,D,H gate;
+    class A,I,J out;

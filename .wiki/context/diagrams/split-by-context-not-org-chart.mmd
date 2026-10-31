@@ -1,0 +1,17 @@
+flowchart TD
+    A["系统要超过单循环（Outgrow one loop）"] --> B{"切线画在哪？（Where to cut?）"}
+    B -- "按组织架构 / 问题类型" --> C["每部门一个子智能体"]
+    C --> D["传话游戏：交接一次保真度降一级"]
+    C --> E["蔓延：成百个无主专家 + 弗兰肯提示词"]
+    C --> F["每跳 = 嵌套循环，延迟复利"]
+    B -- "按上下文边界" --> G{"隔离本身划算吗？（Does isolation pay?）"}
+    G -- "并行新窗口 / 膨胀 / 工具冲突 / 面向用户" --> H["保留子智能体（Keep the subagent）"]
+    G -- "紧耦合：链式输出 / 同数据 / 常同调" --> I["折入主循环 + 技能承载知识"]
+    I --> J["所有权从智能体移到技能（Own skills, not agents）"]
+    D -. "合并紧耦合专家" .-> I
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class G,I,J core;
+    class B,C,D,E,F gate;
+    class A,H out;

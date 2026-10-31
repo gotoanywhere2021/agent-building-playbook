@@ -42,7 +42,7 @@ FAMILIES: dict[str, dict] = {
     "Context":       {"hue": 205, "dimensions": ["context-engineering", "knowledge"]},
     "Tooling":       {"hue": 145, "dimensions": ["tool-design", "cost-routing"]},
     "Orchestration": {"hue": 35,  "dimensions": ["orchestration", "workflow-discipline"]},
-    "Trust":         {"hue": 352, "dimensions": ["verification", "reliability", "observability"]},
+    "Trust":         {"hue": 352, "dimensions": ["verification", "reliability", "observability", "security"]},
     "People":        {"hue": 305, "dimensions": ["human-factors", "intent"]},
 }
 

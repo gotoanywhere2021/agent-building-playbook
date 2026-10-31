@@ -1,0 +1,14 @@
+flowchart TD
+    A["智能体要操作一个界面（Agent drives a UI）"] --> B{"结构化入口存在吗？（Structured surface?）"}
+    B -- "有：HTML / API / MCP / CLI" --> C["解析结构化数据，确定性执行"]
+    C --> D["可验证 · 抗改版（Verifiable）"]
+    B -- "没有，只能戳屏幕" --> E["每步包验证：断言后置条件"]
+    E --> F["截图比对 · 退避重试（Verify & retry）"]
+    F --> G["把脆弱性记为成本（Fragility as cost）"]
+    D --> H["产品是你的？主动开放智能体界面"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,H core;
+    class B,E,F gate;
+    class A,G out;

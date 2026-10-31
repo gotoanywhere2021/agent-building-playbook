@@ -1,0 +1,15 @@
+flowchart TD
+    A["多会话并行同一个仓库（Parallel sessions）"] --> B{"怎么隔离？（How to isolate?）"}
+    B -- "只隔离上下文" --> C["构建互断 · 未跟踪文件互覆 · 测试互坏"]
+    B -- "一任务一工作树" --> D["git worktree add + 独立分支"]
+    D --> E["开工前验证干净测试基线（Clean baseline）"]
+    E --> F["各树独立干活（Isolated work）"]
+    F --> G["合并 = 唯一集成点（Merge once）"]
+    G --> H{"共享 git 外状态？（Shared non-git state?）"}
+    H -- "是（数据库/部署）" --> I["加数据隔离或改串行"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class D,E,F,G core;
+    class B,H gate;
+    class A,C,I out;

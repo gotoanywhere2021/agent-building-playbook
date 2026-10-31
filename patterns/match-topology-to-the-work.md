@@ -28,7 +28,9 @@ Agentic workflows sit on a spectrum from lightweight to heavyweight, and each po
 - Walden Yan / Cognition — https://cognition.com/blog/dont-build-multi-agents — Don't Build Multi-Agents: argues that parallel subagents fail on interdependent work because actions carry implicit decisions, and conflicting decisions carry bad results; advocates a single sequential agent with full context for those workloads
 - Cemri et al., "Why Do Multi-Agent LLM Systems Fail?" (arXiv:2503.13657) — https://arxiv.org/abs/2503.13657 — empirical taxonomy of 14 failure modes across 7 MAS frameworks; many failures trace to topology-task mismatch (system-design issues and inter-agent misalignment categories)
 - Yarmohammadtoosky & Xie, "LLM-Powered Multi-Agent Systems: A Survey of Collaboration and Learning Strategies" (ICAIDS '26) — https://dl.acm.org/doi/10.1145/3806262.3806263 — formalizes: a taxonomy that matches collaboration structure (hierarchical, centralized, decentralized, custom) to the task, with interaction strategies (cooperation, competition, debate, hybrid) and learning methods (human-in-the-loop, RL, self-improvement, fine-tuning, iterative interaction) as the other two axes
+- Zhan et al., "Agensh" (Microsoft Research, arXiv:2609.26781) — https://arxiv.org/html/2609.26781v1 — populates the decentralized end of the spectrum with data: a bossless 1,024-agent swarm with one shared loop and shared artifacts, and the task properties (massively decomposable rebuilds, verifiable acceptance) that select for it
 
+- Donchitos/Claude-Code-Game-Studios — https://github.com/Donchitos/Claude-Code-Game-Studios — the studio topology made concrete inside one session: 49 role agents in three tiers (directors guard vision, leads own domains, specialists execute), 74 phase skills and 62 templates, with model seniority per role and escalation paths — structure as configuration, not processes
 ## Related
 
 - `patterns/recipe-not-conversation.md`
