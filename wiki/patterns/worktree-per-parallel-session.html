@@ -436,7 +436,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
     class D,E,F,G core;
     class B,H gate;
     class A,C,I out;</pre></section><article class="body"><h3 id="what-it-is">这是什么（What it is）</h3>
-<p>两个智能体共用一个检出目录时，冲突的方式是上下文隔离管不到的：构建互相打断、未跟踪文件互相覆盖、一个会话的半成品状态弄坏另一个的测试。git 原生的解法是工作树（worktree）：一任务、一分支、一工作树（<code>git worktree add ../repo-task feature/task</code>），每个会话有自己的工作目录、共享同一个对象库。让这套机制真正成立的还有两步纪律：开工前先在树里验证干净的测试基线（这样『坏了』永远不会是继承来的悬案）；把合并当作唯一刻意的集成点——冲突在这里由人或集成智能体一次性解决，而不是由碰撞持续解决。</p>
+<p>两个智能体共用一个检出目录时，冲突的方式是上下文隔离管不到的：构建互相打断、未跟踪文件互相覆盖、一个会话的半成品状态弄坏另一个的测试。git 原生的解法是工作树（worktree：同一仓库在磁盘上的多个独立检出目录，各占一个分支）：一任务、一分支、一工作树（<code>git worktree add ../repo-task feature/task</code>），每个会话有自己的工作目录、共享同一个对象库。让这套机制真正成立的还有两步纪律：开工前先在树里验证干净的测试基线（这样『坏了』永远不会是继承来的悬案）；把合并当作唯一刻意的集成点——冲突在这里由人或集成智能体一次性解决，而不是由碰撞持续解决。</p>
 <h3 id="when-to-reach-for-it">适用场景（When to reach for it）</h3>
 <ul><li>多个智能体会话（或智能体与人类）并行操作同一个仓库。</li><li>同一任务的并行尝试或变体比较——每个变体各居一树，胜者再合并（<a href="parallel-attempts-at-one-task.html"><code>patterns/parallel-attempts-at-one-task.md</code></a>、<a href="build-five-to-throw-away.html"><code>patterns/build-five-to-throw-away.md</code></a>）。</li><li>长时后台智能体不能打扰交互会话的工作状态。</li><li>工具链会写固定路径构建产物的任务——同目录必撞，分树即隔离。</li></ul>
 <h3 id="when-not-to">慎用场景（When NOT to）</h3>
