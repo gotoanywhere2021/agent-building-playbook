@@ -29,6 +29,7 @@ An agent executing a task cannot simultaneously evaluate whether the task is goi
 - Sinha et al., "Training Deliberative Monitors for Black-Box Scheming Detection" (arXiv:2605.29601) — https://arxiv.org/abs/2605.29601 — trains small external monitor models to detect agent scheming from trajectories alone, without access to internal reasoning; a concrete implementation of the awareness-layer as an independent observer outside the executing agent's context
 - Dong et al., "AgentOps: Enabling Observability of LLM Agents" (arXiv:2411.05285) — https://arxiv.org/abs/2411.05285 — taxonomy of artifacts to trace across an agent's lifecycle for monitoring and anomaly detection; defines the observability infrastructure an awareness layer depends on
 
+- DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — the Watchdog Session: a separate external control loop that watches infra failures (API errors, state-restore failures) and uses a model to judge whether workers show real progress or are drifting from goals, intervening to repair when needed
 ## Related
 
 - `patterns/emit-events.md`

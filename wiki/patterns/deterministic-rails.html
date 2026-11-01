@@ -294,11 +294,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam" open>
-<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">34</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim" open>
-<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">20</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
+<a class="leaf" title="Act Without Being Asked" href="../patterns/act-without-being-asked.html">不等被叫，主动出手</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
 <a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
@@ -316,6 +317,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
 <a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
+<a class="leaf" title="Workers Execute; the Router Speaks" href="../patterns/workers-execute-router-speaks.html">工人干活，路由器说话</a>
 </details>
 <details class="dim">
 <summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
@@ -451,7 +453,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>Open-ended creative or exploratory work with no checkable success condition — there is no deterministic rail to build, and forcing one constrains the work falsely.</li><li>When a cheap deterministic check would simply duplicate a stronger one already on the edge — add rails where drift actually escapes, not everywhere.</li><li>When the check is harder to maintain than the failure it catches is costly — a brittle validator that breaks more often than the model does is negative leverage.</li><li>Before the work is stable enough to know what &quot;checkable state&quot; even means — rails encode an understood contract, not a guess.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Dex Horthy, &quot;12-Factor Agents&quot; — https://github.com/humanlayer/12-factor-agents — formalizes: the guide describes successful agents as &quot;mostly deterministic code, with LLM steps sprinkled in at just the right points&quot;, and Factor 8 (&quot;Own Your Control Flow&quot;) supplies the oversight payoff — owning control flow lets a workflow pause between the moment of tool selection and the moment of tool invocation</li><li>Safe RL using Ideas from Model Predictive Control (Eurocast 2026) — https://arxiv.org/abs/2607.07252 — the control-theoretic form of this pattern: offline MPC computations precompute a feasible state-action space from the dynamics model, and a safety filter projects every learned-policy action onto that set during both training and deployment</li><li>Yun, Li &amp; Azizan, &quot;Provably Safe, Yet Scalable Reinforcement Learning&quot; (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL scales the idea: instead of synthesizing explicit certificate functions (which blow up with state dimension), a learned backup policy constructs the safe set implicitly and a differentiable projection layer strictly enforces it during policy training</li></ul>
-<ul><li>Donchitos/Claude-Code-Game-Studios — https://github.com/Donchitos/Claude-Code-Game-Studios — 14 path-scoped coding standards enforced by hooks when editing gameplay/engine/UI files, plus 15 lifecycle hooks validating commits, pushes, asset changes, and design-doc reads — rails scoped to where each rule applies</li></ul>
+<ul><li>Donchitos/Claude-Code-Game-Studios — https://github.com/Donchitos/Claude-Code-Game-Studios — 14 path-scoped coding standards enforced by hooks when editing gameplay/engine/UI files, plus 15 lifecycle hooks validating commits, pushes, asset changes, and design-doc reads — rails scoped to where each rule applies</li><li>DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — two-stage trigger filtering as rails: &quot;先通过程序规则过滤事件，再交由大模型判断是否需要采取行动&quot; — cheap deterministic rules cut the event stream before any model call</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li></ul></article></details>
 </main>

@@ -41,6 +41,7 @@ The decisive rule is that the system should NOT inject all layers by default. It
 - Sumers et al., "Cognitive Architectures for Language Agents" (arXiv:2309.02427) — https://arxiv.org/abs/2309.02427 — CoALA framework: formalizes modular memory layers for language agents; the layered memory taxonomy in this pattern's table directly parallels CoALA's decomposition into working, episodic, semantic, and procedural memory
 - Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes compaction (summarize-and-reinitiate) and external note files as first-class strategies; the most directly applicable engineering reference for implementing this pattern
 
+- DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — two memory mechanisms: Inline & Spill (recent-relevant in context; over-budget or low-frequency content stays outside, readable on demand) and Chain of Recall (链式召回) — the model walks references among Triggers, Threads, and Worker Sessions by ID to recover task history
 ## Related
 
 - `patterns/context-is-finite.md`

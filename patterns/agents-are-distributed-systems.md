@@ -26,6 +26,7 @@ Once an agent calls tools, talks over networks, and mutates external state, it i
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1o3tU6TEbE — "Agents Are Where Microservices Were in 2015": the operational maturity curve agents will follow, and what early adopters should steal now
 - AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV178gS6AEke — "Why We Killed Our Multi-Agent Pipeline": a post-mortem where missing distributed-systems discipline, not model quality, sank the project
 
+- DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — computation/state/environment separation: computation and persistent state live in the cloud while a lightweight daemon runs commands on the user's own machine (BYOM); long tool calls become async start/stop whose results re-enter the loop as events
 ## Related
 
 - `patterns/three-primitives.md`

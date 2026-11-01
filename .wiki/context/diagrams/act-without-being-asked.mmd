@@ -1,0 +1,18 @@
+flowchart TD
+    A["环境事件流（群聊 · CI · 评审 · 日历）"] --> B["两段式过滤（Two-stage filter）"]
+    B --> C["程序规则先滤（Cheap rules first）"]
+    C --> D{"LLM 判断：需要行动？（Needs action?）"}
+    D -- "否" --> E["静默略过（Stay quiet）"]
+    D -- "是" --> F["建 Thread（一个话题 / 一个 PR = 一条任务线）"]
+    F --> G{"投机执行（Speculative run）"}
+    G --> H["预演 · 复现 · 起草（Prepare quietly）"]
+    H --> I{"价值确认？（Value confirmed?）"}
+    I -- "是" --> J["交付结果（Deliver）"]
+    I -- "否" --> E
+    J --> K["长任务立即返回 Started，完成作为事件重入"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class C,D,F,G,H core;
+    class I,J,K gate;
+    class A,E out;

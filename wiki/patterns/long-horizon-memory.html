@@ -294,11 +294,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">34</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
-<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">20</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
+<a class="leaf" title="Act Without Being Asked" href="../patterns/act-without-being-asked.html">不等被叫，主动出手</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
 <a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
@@ -316,6 +317,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
 <a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
+<a class="leaf" title="Workers Execute; the Router Speaks" href="../patterns/workers-execute-router-speaks.html">工人干活，路由器说话</a>
 </details>
 <details class="dim">
 <summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
@@ -461,6 +463,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>Short tasks that complete in a single session with no carry-over — the overhead of a notes file and compaction strategy is not warranted.</li><li>Tasks where the full history is required to make correct decisions at every step (some legal, compliance, or audit workflows) — compaction must not destroy the audit trail; archive it instead of replacing it.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Packer et al., &quot;MemGPT: Towards LLMs as Operating Systems&quot; (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — canonical formalization of virtual context management with tiered memory and OS-style paging between fast and slow storage; the theoretical model most directly underlying this pattern&#x27;s compaction+notes+isolation stack</li><li>Park et al., &quot;Generative Agents: Interactive Simulacra of Human Behavior&quot; (arXiv:2304.03442) — https://arxiv.org/abs/2304.03442 — empirical demonstration of a memory+reflection+retrieval architecture sustaining coherent behavior across a 25-agent simulation; an early practical grounding for long-horizon memory strategies</li><li>Sumers et al., &quot;Cognitive Architectures for Language Agents&quot; (arXiv:2309.02427) — https://arxiv.org/abs/2309.02427 — CoALA framework: formalizes modular memory layers for language agents; the layered memory taxonomy in this pattern&#x27;s table directly parallels CoALA&#x27;s decomposition into working, episodic, semantic, and procedural memory</li><li>Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes compaction (summarize-and-reinitiate) and external note files as first-class strategies; the most directly applicable engineering reference for implementing this pattern</li></ul>
+<ul><li>DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — two memory mechanisms: Inline &amp; Spill (recent-relevant in context; over-budget or low-frequency content stays outside, readable on demand) and Chain of Recall (链式召回) — the model walks references among Triggers, Threads, and Worker Sessions by ID to recover task history</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="checkpoint-handoff-file.html"><code>patterns/checkpoint-handoff-file.md</code></a></li><li><a href="persist-environment-facts.html"><code>patterns/persist-environment-facts.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li><li><a href="subagents-as-context-sinks.html"><code>patterns/subagents-as-context-sinks.md</code></a></li><li><a href="scope-and-expire-memory.html"><code>patterns/scope-and-expire-memory.md</code></a></li></ul></article></details>
 </main>

@@ -30,6 +30,7 @@ A productive agentic workflow is rarely "all AI." The strongest systems alternat
 - Yun, Li & Azizan, "Provably Safe, Yet Scalable Reinforcement Learning" (arXiv:2606.14536) — https://arxiv.org/abs/2606.14536 — PS2-RL scales the idea: instead of synthesizing explicit certificate functions (which blow up with state dimension), a learned backup policy constructs the safe set implicitly and a differentiable projection layer strictly enforces it during policy training
 
 - Donchitos/Claude-Code-Game-Studios — https://github.com/Donchitos/Claude-Code-Game-Studios — 14 path-scoped coding standards enforced by hooks when editing gameplay/engine/UI files, plus 15 lifecycle hooks validating commits, pushes, asset changes, and design-doc reads — rails scoped to where each rule applies
+- DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — two-stage trigger filtering as rails: "先通过程序规则过滤事件，再交由大模型判断是否需要采取行动" — cheap deterministic rules cut the event stream before any model call
 ## Related
 
 - `patterns/shape-work-as-an-attractor.md`

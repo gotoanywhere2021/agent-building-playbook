@@ -1,0 +1,18 @@
+flowchart TD
+    A["人类（Humans）"] <--> B["Router：唯一对外口 · 全局上下文 · 分派"]
+    B --> C["Worker 1 隔离会话"]
+    B --> D["Worker 2 隔离会话"]
+    B --> E["Worker N 隔离会话"]
+    C --> F["只回报状态与结果，不直接回话"]
+    D --> F
+    E --> F
+    F --> B
+    G["Thread = 一个话题 / 一个 PR 的触发序列"] --> H{"负载高？（Under load?）"}
+    H -- "是" --> I["Worker 直订本 Thread，绕过路由"]
+    H -- "积压" --> J["批处理摊薄单次推理 6.4s → 1.6s"]
+    classDef core fill:#1a5fd0,stroke:#12449e,color:#ffffff;
+    classDef gate fill:#fdf0ef,stroke:#e0b4b4,color:#8a3a34;
+    classDef out fill:#edf1f7,stroke:#c9d6e6,color:#182430;
+    class B,F core;
+    class G,H gate;
+    class A,C,D,E,I,J out;

@@ -129,6 +129,8 @@ digraph wheel {
   "Orchestration" -> "orchestration";
   "shared-loop-not-supervisor" [label="A Shared Loop, Not a Supervisor", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "shared-loop-not-supervisor";
+  "act-without-being-asked" [label="Act Without Being Asked", fillcolor="#eddabe", fontsize=9];
+  "orchestration" -> "act-without-being-asked";
   "autonomy-when-justified" [label="Add Autonomy Only When Justified", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "autonomy-when-justified";
   "three-primitives" [label="Build From Three Primitives", fillcolor="#eddabe", fontsize=9];
@@ -163,6 +165,8 @@ digraph wheel {
   "orchestration" -> "split-by-context-not-org-chart";
   "architect-then-builder" [label="Two-Phase Build: Architect Then Builder", fillcolor="#eddabe", fontsize=9];
   "orchestration" -> "architect-then-builder";
+  "workers-execute-router-speaks" [label="Workers Execute; the Router Speaks", fillcolor="#eddabe", fontsize=9];
+  "orchestration" -> "workers-execute-router-speaks";
   "workflow-discipline" [fillcolor="#cea66d"];
   "Orchestration" -> "workflow-discipline";
   "self-ablating-harness" [label="Ablate the Harness as Models Improve", fillcolor="#eddabe", fontsize=9];

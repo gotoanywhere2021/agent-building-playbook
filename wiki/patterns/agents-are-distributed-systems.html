@@ -294,11 +294,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">34</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
-<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">20</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
+<a class="leaf" title="Act Without Being Asked" href="../patterns/act-without-being-asked.html">不等被叫，主动出手</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
 <a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
@@ -316,6 +317,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
 <a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
+<a class="leaf" title="Workers Execute; the Router Speaks" href="../patterns/workers-execute-router-speaks.html">工人干活，路由器说话</a>
 </details>
 <details class="dim">
 <summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
@@ -450,6 +452,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>A single well-crafted LLM call with no external state — the discipline is overhead there (<a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a>).</li><li>Pure computation over local files where all state is process-local and cheap to redo.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1i3tU6TEeb — &quot;AI Agents Are Just Distributed Systems Now&quot;: idempotency keys, scoped permissions, compensation, circuit breakers, and cache-with-authority memory for agents</li><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV1o3tU6TEbE — &quot;Agents Are Where Microservices Were in 2015&quot;: the operational maturity curve agents will follow, and what early adopters should steal now</li><li>AI Engineer podcast (Mindofuture zh-dub) — https://www.bilibili.com/video/BV178gS6AEke — &quot;Why We Killed Our Multi-Agent Pipeline&quot;: a post-mortem where missing distributed-systems discipline, not model quality, sank the project</li></ul>
+<ul><li>DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — computation/state/environment separation: computation and persistent state live in the cloud while a lightweight daemon runs commands on the user&#x27;s own machine (BYOM); long tool calls become async start/stop whose results re-enter the loop as events</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="three-primitives.html"><code>patterns/three-primitives.md</code></a></li><li><a href="deterministic-rails.html"><code>patterns/deterministic-rails.md</code></a></li><li><a href="make-runs-replayable.html"><code>patterns/make-runs-replayable.md</code></a></li><li><a href="workflows-vs-agents.html"><code>patterns/workflows-vs-agents.md</code></a></li></ul></article></details>
 </main>

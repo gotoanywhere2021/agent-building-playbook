@@ -294,11 +294,12 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 </details>
 </details>
 <details class="fam">
-<summary title="Orchestration"><span>编排</span><span class="n">32</span></summary>
+<summary title="Orchestration"><span>编排</span><span class="n">34</span></summary>
 <a class="ov" href="../families/orchestration.html">总览（Overview）</a>
 <details class="dim">
-<summary title="orchestration"><span>编排</span><span class="n">18</span></summary>
+<summary title="orchestration"><span>编排</span><span class="n">20</span></summary>
 <a class="leaf" title="A Shared Loop, Not a Supervisor" href="../patterns/shared-loop-not-supervisor.html">共享同一个循环，而不是一个主管</a>
+<a class="leaf" title="Act Without Being Asked" href="../patterns/act-without-being-asked.html">不等被叫，主动出手</a>
 <a class="leaf" title="Add Autonomy Only When Justified" href="../patterns/autonomy-when-justified.html">只在论证充分时增加自主性（Autonomy）</a>
 <a class="leaf" title="Build From Three Primitives" href="../patterns/three-primitives.html">从三个原语（Primitive）开始构建</a>
 <a class="leaf" title="Close the Loop From Production Back to Fix" href="../patterns/production-feedback-loop.html">把生产闭环回到修复</a>
@@ -316,6 +317,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <a class="leaf" title="Share Full Context; Every Action Carries Decisions" href="../patterns/share-full-context.html">共享完整上下文——每个动作都承载决策</a>
 <a class="leaf" title="Split by Context, Not by Org Chart" href="../patterns/split-by-context-not-org-chart.html">按上下文切分，而不是按组织架构</a>
 <a class="leaf" title="Two-Phase Build: Architect Then Builder" href="../patterns/architect-then-builder.html">两阶段构建：先架构师（Architect）后施工队（Builder）</a>
+<a class="leaf" title="Workers Execute; the Router Speaks" href="../patterns/workers-execute-router-speaks.html">工人干活，路由器说话</a>
 </details>
 <details class="dim">
 <summary title="workflow-discipline"><span>工作流纪律</span><span class="n">14</span></summary>
@@ -450,6 +452,7 @@ details.original article { color:#44515f; font-size:14px; margin-top:.6em; }
 <ul><li>When the task is short and the entire execution is observable in a single context window — the awareness layer&#x27;s value comes from its external vantage point; for short tasks, that vantage point is not needed.</li><li>When adding a watcher would double the compute cost of a task whose budget is tight and whose failure modes are already cheap and visible — awareness layers are investments; not every task justifies the cost.</li><li>When the watcher itself introduces more complexity than it resolves — a poorly specified awareness layer that fires false alarms or interrupts correct work is worse than no watcher. Start with monitoring, not intervention.</li></ul>
 <h3 id="exemplars-2">Exemplars</h3>
 <ul><li>Amplifier — https://github.com/microsoft/amplifier-foundation — the session-analyst agent: a dedicated observer that analyzes session event streams (events.jsonl), diagnoses failures, and searches session history — surfacing patterns the executing agents cannot observe about themselves, from outside their context</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and monitoring for long-running agentic tasks as a form of awareness that the agent cannot provide for itself</li><li>Sinha et al., &quot;Training Deliberative Monitors for Black-Box Scheming Detection&quot; (arXiv:2605.29601) — https://arxiv.org/abs/2605.29601 — trains small external monitor models to detect agent scheming from trajectories alone, without access to internal reasoning; a concrete implementation of the awareness-layer as an independent observer outside the executing agent&#x27;s context</li><li>Dong et al., &quot;AgentOps: Enabling Observability of LLM Agents&quot; (arXiv:2411.05285) — https://arxiv.org/abs/2411.05285 — taxonomy of artifacts to trace across an agent&#x27;s lifecycle for monitoring and anomaly detection; defines the observability infrastructure an awareness layer depends on</li></ul>
+<ul><li>DeepSeek Harness 团队，《Super-agent 设计探索：迈向更自主的 Agent 系统》（转载镜像） — https://tech.ifeng.com/c/8xg9tbvWnnf — the Watchdog Session: a separate external control loop that watches infra failures (API errors, state-restore failures) and uses a model to judge whether workers show real progress or are drifting from goals, intervening to repair when needed</li></ul>
 <h3 id="related-2">Related</h3>
 <ul><li><a href="emit-events.html"><code>patterns/emit-events.md</code></a></li><li><a href="session-archaeology.html"><code>patterns/session-archaeology.md</code></a></li><li><a href="real-environment-execution.html"><code>patterns/real-environment-execution.md</code></a></li></ul></article></details>
 </main>
